@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State var name : String = "Joe"
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("Bonjour, \(name)")
                 .font(.system(size: 24, weight: .medium))
                 .lineSpacing(8)
@@ -20,6 +20,18 @@ struct HomeView: View {
                 .foregroundStyle(.secondary)
                 .lineSpacing(8)
 
+            
+            ZStack{
+                Rectangle()
+                    .frame(height: 200)
+                    .foregroundStyle(.orange)
+                VStack {
+                    HStack{
+                        
+                    }
+                }
+                
+            }
 
         }
         .padding()
