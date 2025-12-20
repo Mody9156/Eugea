@@ -9,30 +9,74 @@ import SwiftUI
 
 struct HomeView: View {
     @State var name : String = "Joe"
+    let emojis = ["😢", "😕", "😐", "🙂", "😊"]
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Bonjour, \(name)")
                 .font(.system(size: 24, weight: .medium))
                 .lineSpacing(8)
-
+            
             Text("Comment vous sentez-vous aujourd'hui ?")
                 .font(.system(size: 16, weight: .regular))
                 .foregroundStyle(.secondary)
                 .lineSpacing(8)
-
             
-            ZStack{
-                Rectangle()
-                    .frame(height: 200)
-                    .foregroundStyle(.orange)
-                VStack {
-                    HStack{
-                        
+            
+            VStack(alignment: .leading, spacing: 16) {
+                HStack(spacing: 8) {
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 18))
+                    Text("Check-in quotidien")
+                        .font(.system(size: 14, weight: .medium))
+                        .opacity(0.9)
+                }
+                
+                Text("Comment allez-vous ?")
+                    .font(.system(size: 20, weight: .medium))
+                    .lineSpacing(6)
+                
+                HStack(spacing: 12) {
+                    ForEach(emojis, id: \.self) { emoji in
+                        Button {
+                            // action
+                        } label: {
+                            Text(emoji)
+                                .font(.system(size: 24))
+                                .frame(width: 48, height: 48)
+                                .background(.white.opacity(0.2))
+                                .clipShape(Circle())
+                                .background(.ultraThinMaterial)
+                        }
                     }
                 }
                 
+                Button {
+                    // action
+                } label: {
+                    Text("Enregistrer mon humeur")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.purple)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(Color.white)
+                        .clipShape(Capsule())
+                }
             }
-
+            .padding(24)
+            .background(
+                LinearGradient(
+                    colors: [
+                        Color.purple,
+                        Color.blue
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .foregroundColor(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .padding(.bottom, 24)
         }
         .padding()
     }
