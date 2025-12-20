@@ -14,14 +14,13 @@ struct HomeView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Bonjour, \(name)")
-                .font(.system(size: 24, weight: .medium))
-                .lineSpacing(8)
+                .fontWeight(.medium)
+                .font(.largeTitle)
             
             Text("Comment vous sentez-vous aujourd'hui ?")
-                .font(.system(size: 16, weight: .regular))
+                .fontWeight(.regular)
+                .font(.title3)
                 .foregroundStyle(.secondary)
-                .lineSpacing(8)
-            
             
             VStack(alignment: .leading, spacing: 16) {
                 HStack(spacing: 8) {
@@ -76,7 +75,9 @@ struct HomeView: View {
             )
             .foregroundColor(.white)
             .clipShape(RoundedRectangle(cornerRadius: 24))
-            .padding(.bottom, 24)
+            .padding(.bottom)
+            
+            Spacer()
         }
         .padding()
     }
