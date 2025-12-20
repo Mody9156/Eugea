@@ -11,7 +11,7 @@ import SwiftUI
 struct EugeaApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
