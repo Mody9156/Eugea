@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State var name : String = "Joe"
     let emojis = ["😢", "😕", "😐", "🙂", "😊"]
+    @State private var selectedEmojis : Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,7 +25,7 @@ struct HomeView: View {
             
             VStack(alignment: .leading, spacing: 16) {
                 HStack(spacing: 8) {
-                    Image(systemName: "heart.fill")
+                    Image(systemName: "heart")
                         .font(.system(size: 18))
                     Text("Check-in quotidien")
                         .font(.system(size: 14, weight: .medium))
@@ -38,14 +39,12 @@ struct HomeView: View {
                 HStack(spacing: 12) {
                     ForEach(emojis, id: \.self) { emoji in
                         Button {
-                            // action
+                            selectedEmojis.toggle()
                         } label: {
                             Text(emoji)
                                 .font(.system(size: 24))
                                 .frame(width: 48, height: 48)
-                                .background(.white.opacity(0.2))
-                                .clipShape(Circle())
-                                .background(.ultraThinMaterial)
+                                .glassEffect()
                         }
                     }
                 }
@@ -55,7 +54,7 @@ struct HomeView: View {
                 } label: {
                     Text("Enregistrer mon humeur")
                         .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.purple)
+                        .foregroundColor(.orange)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
                         .background(Color.white)
