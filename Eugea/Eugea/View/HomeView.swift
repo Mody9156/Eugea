@@ -11,6 +11,7 @@ struct HomeView: View {
     @State var name : String = "Joe"
     let emojis = ["😢", "😕", "😐", "🙂", "😊"]
     @State private var selectedEmojis : Bool = false
+    @State private var saveEmojis : String = ""
     
     var body: some View {
         VStack(alignment: .leading) {
