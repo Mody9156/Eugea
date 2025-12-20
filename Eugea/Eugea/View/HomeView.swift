@@ -66,8 +66,8 @@ struct HomeView: View {
             .background(
                 LinearGradient(
                     colors: [
-                        Color.purple,
-                        Color.blue
+                        Color.orange,
+                        Color.yellow
                     ],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
