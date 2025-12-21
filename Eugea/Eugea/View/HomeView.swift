@@ -37,17 +37,21 @@ struct HomeView: View {
                     .font(.system(size: 20, weight: .medium))
                     .lineSpacing(6)
                 
-                
-                
                 if selectedEmojis {
-                    Button {
-                        selectedEmojis.toggle()
-                        saveEmojis = ""
-                    } label: {
-                        Text(saveEmojis)
-                            .padding()
-                            .glassEffect()
+                    
+                    VStack {
+                        Button {
+                            selectedEmojis.toggle()
+                            saveEmojis = ""
+                        } label: {
+                            Text(saveEmojis)
+                                .font(.system(size: 30))
+                                .frame(width: 50, height: 50)   // vrai gros bouton
+                                .multilineTextAlignment(.center)
+                                .glassEffect()
+                        }
                     }
+                  
                 }else {
                     HStack(spacing: 12) {
                         ForEach(emojis, id: \.self) { emoji in
@@ -56,8 +60,8 @@ struct HomeView: View {
                                 saveEmojis = emoji
                             } label: {
                                 Text(emoji)
-                                    .font(.system(size: 24))
-                                    .frame(width: 48, height: 48)
+                                    .font(.system(size: 30))
+                                    .frame(width: 50, height: 50)
                                     .glassEffect()
                             }
                         }
@@ -65,7 +69,7 @@ struct HomeView: View {
                 }
                 
                 Button {
-                    // action
+                   //action
                 } label: {
                     Text("Enregistrer mon humeur")
                         .font(.system(size: 16, weight: .medium))
@@ -91,6 +95,32 @@ struct HomeView: View {
             .clipShape(RoundedRectangle(cornerRadius: 24))
             .padding(.bottom)
             
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: 16),
+                    GridItem(.flexible(), spacing: 16)
+                ],
+                spacing: 16
+            ) {
+                StatCard(
+                    icon: "chart.line.uptrend.xyaxis",
+                    label: "Niveau de stress",
+                    value: "6/10",
+                    subtext: "Légèrement élevé",
+                    color: .orange
+                )
+
+                StatCard(
+                    icon: "moon.fill",
+                    label: "Sommeil",
+                    value: "7h 24m",
+                    subtext: "Bonne nuit",
+                    color: .blue
+                )
+            }
+            .padding(.bottom, 24)
+            .padding(.horizontal)
+
             Spacer()
         }
         .padding()
@@ -99,4 +129,43 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+}
+
+
+struct StatCard: View {
+    let icon: String
+    let label: String
+    let value: String
+    let subtext: String
+    let color: Color
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+
+            HStack {
+                Image(systemName: icon)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(color)
+
+                Spacer()
+            }
+
+            Text(label)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+
+            Text(value)
+                .font(.title2)
+                .fontWeight(.semibold)
+
+            Text(subtext)
+                .font(.footnote)
+                .foregroundStyle(color)
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(.secondarySystemBackground))
+        )
+    }
 }
