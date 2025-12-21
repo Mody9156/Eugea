@@ -94,12 +94,10 @@ struct HomeView: View {
             .foregroundColor(.white)
             .clipShape(RoundedRectangle(cornerRadius: 24))
             .padding(.bottom)
-            
+     
             LazyVGrid(
-                columns: [
-                    GridItem(.flexible(), spacing: 16),
-                    GridItem(.flexible(), spacing: 16)
-                ],
+                columns:
+                    [.init(.flexible()),.init(.flexible())],
                 spacing: 16
             ) {
                 StatCard(
@@ -120,7 +118,7 @@ struct HomeView: View {
             }
             .padding(.bottom, 24)
             .padding(.horizontal)
-
+            
             Spacer()
         }
         .padding()
