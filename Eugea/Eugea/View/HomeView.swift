@@ -128,6 +128,8 @@ struct HomeView: View {
                 
                 
                 HStack {
+                    Image(systemName: "")
+                    
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Méditation anti-stress")
                             .font(.headline)
