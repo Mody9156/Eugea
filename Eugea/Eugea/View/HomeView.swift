@@ -124,6 +124,34 @@ struct HomeView: View {
                     .fontWeight(.regular)
                     .font(.title3)
                     .foregroundStyle(.secondary)
+                    .padding()
+                
+                
+                HStack {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Méditation anti-stress")
+                            .font(.headline)
+                            .fontWeight(.medium)
+                        
+                        Text("Basée sur votre niveau de stress actuel, nous recommandons une séance de 10 minutes")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        
+                        HStack {
+                            Spacer()
+                            Label("Commencer", systemImage: "chevron.right")
+                                .font(.subheadline)
+                                .foregroundColor(Color.purple)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        Color("CardBackground") // couleur définie dans Assets pour light/dark
+                    )
+                    .cornerRadius(10)
+                    .shadow(radius: 2)
+                    .padding(.horizontal)
+                }
                 
                 Spacer()
             }
