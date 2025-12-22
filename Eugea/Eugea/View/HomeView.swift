@@ -177,6 +177,12 @@ struct HomeView: View {
                 .shadow(radius: 2)
                 .padding(.horizontal)
                 
+            Text("Actions rapides")
+                    .fontWeight(.regular)
+                    .font(.title3)
+                    .foregroundStyle(.secondary)
+                    .padding()
+                
                 Spacer()
             }
             .padding()
