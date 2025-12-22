@@ -153,7 +153,15 @@ struct HomeView: View {
                     }
                     .padding()
                     .background(
-                        Color("CardBackground") // couleur définie dans Assets pour light/dark
+                        LinearGradient(
+                            colors: [
+                                Color(red: 238/255, green: 242/255, blue: 255/255),
+                                Color(red: 250/255, green: 245/255, blue: 255/255)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+
                     )
                     .cornerRadius(10)
                     .shadow(radius: 2)
