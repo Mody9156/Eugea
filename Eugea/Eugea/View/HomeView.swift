@@ -126,14 +126,20 @@ struct HomeView: View {
                     .foregroundStyle(.secondary)
                     .padding()
                 
-                
-                HStack {
-                    Image(systemName: "")
+        
+               
+                    
+                HStack(alignment: .top) {
+                    Image(systemName: "sparkles")
                     
                     VStack(alignment: .leading, spacing: 8) {
+                        
+                        
+                        
                         Text("Méditation anti-stress")
                             .font(.headline)
                             .fontWeight(.medium)
+                        
                         
                         Text("Basée sur votre niveau de stress actuel, nous recommandons une séance de 10 minutes")
                             .font(.subheadline)
@@ -148,25 +154,25 @@ struct HomeView: View {
                             .font(.subheadline)
                             .foregroundColor(Color.purple)
                             .labelStyle(.titleAndIcon)
-                          
+                            
                         }
                     }
-                    .padding()
-                    .background(
-                        LinearGradient(
-                            colors: [
-                                Color(red: 238/255, green: 242/255, blue: 255/255),
-                                Color(red: 250/255, green: 245/255, blue: 255/255)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-
-                    )
-                    .cornerRadius(10)
-                    .shadow(radius: 2)
-                    .padding(.horizontal)
+                  
                 }
+                .padding()
+                .background(
+                    LinearGradient(
+                        colors: [
+                            Color(red: 238/255, green: 242/255, blue: 255/255),
+                            Color(red: 250/255, green: 245/255, blue: 255/255)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .cornerRadius(10)
+                .shadow(radius: 2)
+                .padding(.horizontal)
                 
                 Spacer()
             }
