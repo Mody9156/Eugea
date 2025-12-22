@@ -127,8 +127,6 @@ struct HomeView: View {
                     .padding()
                 
         
-               
-                    
                 HStack(alignment: .top) {
                     
                     ZStack{
