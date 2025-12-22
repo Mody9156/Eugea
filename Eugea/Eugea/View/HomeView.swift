@@ -140,9 +140,15 @@ struct HomeView: View {
                             .foregroundColor(.secondary)
                         
                         HStack {
-                            Label("Commencer", systemImage: "chevron.right")
-                                .font(.subheadline)
-                                .foregroundColor(Color.purple)
+                            Label {
+                                Image(systemName: "chevron.right")
+                            } icon: {
+                                Text("Commencer")
+                            }
+                            .font(.subheadline)
+                            .foregroundColor(Color.purple)
+                            .labelStyle(.titleAndIcon)
+                          
                         }
                     }
                     .padding()
