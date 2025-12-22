@@ -119,9 +119,11 @@ struct HomeView: View {
                 }
                 .padding(.bottom, 24)
                 .padding(.horizontal)
-                
-                
+
                 Text("Recommandation du jour")
+                    .fontWeight(.regular)
+                    .font(.title3)
+                    .foregroundStyle(.secondary)
                 
                 Spacer()
             }
