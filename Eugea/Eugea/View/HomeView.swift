@@ -130,12 +130,16 @@ struct HomeView: View {
                
                     
                 HStack(alignment: .top) {
-                    Image(systemName: "sparkles")
+                    
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 12)
+                            .frame(width: 50,height: 50)
+                            .foregroundStyle(.purple)
+                        
+                        Image(systemName: "sparkles")
+                    }
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        
-                        
-                        
                         Text("Méditation anti-stress")
                             .font(.headline)
                             .fontWeight(.medium)
