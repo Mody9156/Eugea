@@ -178,13 +178,24 @@ struct HomeView: View {
                     .shadow(radius: 2)
                     .padding(.horizontal)
                     
-                    Text("Actions rapides")
-                        .fontWeight(.regular)
-                        .font(.title3)
-                        .foregroundStyle(.secondary)
-                        .padding()
-                    
-                    CustomNavigationLink(icone: "", name: "", description: "")
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Actions rapides")
+                            .font(.title3)
+                            .fontWeight(.medium)
+
+                        CustomNavigationLink(
+                            icon: "heart.fill",
+                            name: "Journal quotidien",
+                            description: "Notez vos pensées"
+                        )
+
+                        CustomNavigationLink(
+                            icon: "sparkles",
+                            name: "Exercice de respiration",
+                            description: "5 minutes"
+                        )
+                    }
+                    .padding()
 
                     
                     Spacer()
@@ -199,15 +210,57 @@ struct HomeView: View {
     HomeView()
 }
 
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: .alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        self.init(
+            red: Double((int >> 16) & 0xFF) / 255,
+            green: Double((int >> 8) & 0xFF) / 255,
+            blue: Double(int & 0xFF) / 255
+        )
+    }
+}
+
 
 struct CustomNavigationLink: View {
-    var icone,name,description : String
-    
+    var icon,name,description: String
+
     var body: some View {
         NavigationLink {
-            
+            // Destination
         } label: {
-            
+            HStack(spacing: 12) {
+
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color(hex: "#F3E8FF"))
+
+                    Image(systemName: icon)
+                        .foregroundStyle(Color(hex: "#9333EA"))
+                }
+                .frame(width: 40, height: 40)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(name)
+                        .foregroundStyle(Color(hex: "#030213"))
+                        .font(.system(size: 16, weight: .medium))
+
+                    Text(description)
+                        .foregroundStyle(Color(hex: "#717182"))
+                        .font(.system(size: 14))
+                }
+
+                Spacer()
+            }
+            .padding()
+            .background(Color(hex: "#FFFFFF"))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color(hex: "#E5E7EB"), lineWidth: 1)
+            )
+            .cornerRadius(16)
         }
     }
 }
