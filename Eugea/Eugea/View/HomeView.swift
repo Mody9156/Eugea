@@ -184,7 +184,8 @@ struct HomeView: View {
                         .foregroundStyle(.secondary)
                         .padding()
                     
-                    
+                    CustomNavigationLink()
+
                     
                     Spacer()
                 }
@@ -198,6 +199,16 @@ struct HomeView: View {
     HomeView()
 }
 
+
+struct CustomNavigationLink: View {
+    var body: some View {
+        NavigationLink {
+            
+        } label: {
+            
+        }
+    }
+}
 
 struct StatCard: View {
     let icon: String
