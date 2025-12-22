@@ -120,6 +120,9 @@ struct HomeView: View {
                 .padding(.bottom, 24)
                 .padding(.horizontal)
                 
+                
+                Text("Recommandation du jour")
+                
                 Spacer()
             }
             .padding()
