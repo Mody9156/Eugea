@@ -133,10 +133,11 @@ struct HomeView: View {
                     
                     ZStack{
                         RoundedRectangle(cornerRadius: 12)
-                            .frame(width: 50,height: 50)
+                            .frame(width: 40,height: 40)
                             .foregroundStyle(.purple)
                         
                         Image(systemName: "sparkles")
+                            .foregroundStyle(.white)
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
