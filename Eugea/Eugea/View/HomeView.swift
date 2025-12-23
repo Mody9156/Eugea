@@ -182,7 +182,7 @@ struct HomeView: View {
                         Text("Actions rapides")
                             .font(.title3)
                             .fontWeight(.medium)
-
+                       
                         CustomNavigationLink(
                             icon: "heart.fill",
                             name: "Journal quotidien",
