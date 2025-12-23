@@ -150,14 +150,24 @@ struct HomeView: View {
                                 .foregroundColor(.secondary)
                             
                             HStack {
-                                Label {
-                                    Image(systemName: "chevron.right")
-                                } icon: {
-                                    Text("Commencer")
+                                
+                                Button(action: {
+                                    
+                                }) {
+                                    Label {
+                                        Image(systemName: "chevron.right")
+                                    } icon: {
+                                        Text("Commencer")
+                                    }
+                                    .font(.subheadline)
+                                    .foregroundColor(Color.purple)
+                                    .labelStyle(.titleAndIcon)
                                 }
-                                .font(.subheadline)
-                                .foregroundColor(Color.purple)
-                                .labelStyle(.titleAndIcon)
+                                .navigationDestination(
+                                    isPresented: <#T##Binding<Bool>#>,
+                                    destination: <#T##() -> View#>
+                                )
+                                
                                 
                             }
                         }
