@@ -169,7 +169,6 @@ struct HomeView: View {
                                     }
                             }
                         }
-                        
                     }
                     .padding()
                     .background(
@@ -190,13 +189,13 @@ struct HomeView: View {
                         Text("Actions rapides")
                             .font(.title3)
                             .fontWeight(.medium)
-                       
+                        
                         CustomNavigationLink(
                             icon: "heart.fill",
                             name: "Journal quotidien",
                             description: "Notez vos pensées"
                         )
-
+                        
                         CustomNavigationLink(
                             icon: "sparkles",
                             name: "Exercice de respiration",
@@ -204,7 +203,7 @@ struct HomeView: View {
                         )
                     }
                     .padding()
-
+                    
                     
                     Spacer()
                 }
@@ -234,32 +233,32 @@ extension Color {
 
 struct CustomNavigationLink: View {
     var icon,name,description: String
-
+    
     var body: some View {
         NavigationLink {
             // Destination
         } label: {
             HStack(spacing: 12) {
-
+                
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color(hex: "#F3E8FF"))
-
+                    
                     Image(systemName: icon)
                         .foregroundStyle(Color(hex: "#9333EA"))
                 }
                 .frame(width: 40, height: 40)
-
+                
                 VStack(alignment: .leading, spacing: 2) {
                     Text(name)
                         .foregroundStyle(Color(hex: "#030213"))
                         .font(.system(size: 16, weight: .medium))
-
+                    
                     Text(description)
                         .foregroundStyle(Color(hex: "#717182"))
                         .font(.system(size: 14))
                 }
-
+                
                 Spacer()
             }
             .padding()
@@ -279,26 +278,26 @@ struct StatCard: View {
     let value: String
     let subtext: String
     let color: Color
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-
+            
             HStack {
                 Image(systemName: icon)
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundStyle(color)
-
+                
                 Spacer()
             }
-
+            
             Text(label)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
-
+            
             Text(value)
                 .font(.title2)
                 .fontWeight(.semibold)
-
+            
             Text(subtext)
                 .font(.footnote)
                 .foregroundStyle(color)
