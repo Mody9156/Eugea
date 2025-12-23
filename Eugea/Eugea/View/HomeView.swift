@@ -152,7 +152,7 @@ struct HomeView: View {
                             HStack {
                                 
                                 Button(action: {
-                                    
+                                    activNavigation = true
                                 }) {
                                     Label {
                                         Image(systemName: "chevron.right")
@@ -164,11 +164,9 @@ struct HomeView: View {
                                     .labelStyle(.titleAndIcon)
                                 }
                                 .navigationDestination(
-                                    isPresented: <#T##Binding<Bool>#>,
-                                    destination: <#T##() -> View#>
-                                )
-                                
-                                
+                                    isPresented: $activNavigation) {
+                                        SleepView()
+                                    }
                             }
                         }
                         
