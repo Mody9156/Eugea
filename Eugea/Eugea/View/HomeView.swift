@@ -12,7 +12,7 @@ struct HomeView: View {
     let emojis = ["😢", "😕", "😐", "🙂", "😊"]
     @State private var selectedEmojis : Bool = false
     @State private var saveEmojis : String = ""
-    
+    @State private var activNavigation:Bool = false
     var body: some View {
         NavigationStack {
             ScrollView {
