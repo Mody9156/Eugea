@@ -207,10 +207,6 @@ struct HomeView: View {
     HomeView()
 }
 
-#Preview {
-    HomeView()
-}
-
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: .alphanumerics.inverted)
