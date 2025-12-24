@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  Eugea
 //
 //  Created by Modibo on 19/12/2025.
@@ -8,113 +8,109 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State var name : String = "Joe"
-    let emojis = ["😢", "😕", "😐", "🙂", "😊"]
-    @State private var isEmojiSelected : Bool = false
-    @State private var selectedEmoji : String = ""
-    @State private var activNavigation:Bool = false
-    @State private var isEmojiRegistered : Bool = false
     
+    // MARK: - State
+    @State private var name: String = "Joe"
+    @State private var selectedEmoji: String? = nil
+    @State private var isEmojiRegistered: Bool = false
+    @State private var isNavigationActive: Bool = false
+    
+    private let emojis = ["😢", "😕", "😐", "🙂", "😊"]
+    
+    // MARK: - View
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading) {
-                    Text("Bonjour, \(name)")
-                        .fontWeight(.medium)
-                        .font(.largeTitle)
+                VStack(alignment: .leading, spacing: 24) {
                     
-                    Text("Comment vous sentez-vous aujourd'hui ?")
-                        .fontWeight(.regular)
-                        .font(.title3)
-                        .foregroundStyle(.secondary)
+                    // MARK: - Header
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Bonjour, \(name)")
+                            .font(.largeTitle)
+                            .fontWeight(.medium)
+                        
+                        Text("Comment vous sentez-vous aujourd'hui ?")
+                            .font(.title3)
+                            .foregroundStyle(.secondary)
+                    }
                     
-                    VStack {
-                        VStack(
-                            alignment: isEmojiRegistered ? .center :.leading,
-                            spacing: 16
-                        ){
-                            HStack(spacing: 8) {
-                                Image(systemName: "heart")
-                                    .font(.system(size: 18))
-                                Text("Check-in quotidien")
-                                    .font(.system(size: 14, weight: .medium))
-                                    .opacity(0.9)
-                                Spacer()
-                            }
-                            HStack(spacing: 8) {
-                                Text("Comment allez-vous ?")
-                                    .font(.system(size: 20, weight: .medium))
-                                    .lineSpacing(6)
-                                Spacer()
-                            }
+                    // MARK: - Check-in Card
+                    VStack(alignment: isEmojiRegistered ? .center : .leading, spacing: 16) {
                         
+                        HStack {
+                            Image(systemName: "heart")
+                            Text("Check-in quotidien")
+                                .font(.system(size: 14, weight: .medium))
+                            Spacer()
+                        }
+                        .opacity(0.9)
                         
-                      
-                            if isEmojiSelected {
-                                Button {
-                                    if !isEmojiRegistered {
-                                        isEmojiSelected.toggle()
-                                        selectedEmoji = ""
-                                    }
-                                   
-                                } label: {
-                                    Text(selectedEmoji)
-                                        .font(.system(size: isEmojiRegistered ? 80:30))
-                                        .frame(width:isEmojiRegistered ? 100 : 50, height:isEmojiRegistered ? 100 : 50)
-                                        .glassEffect()
+                        Text("Comment allez-vous ?")
+                            .font(.system(size: 20, weight: .medium))
+                        
+                        // Emoji selection
+                        if let emoji = selectedEmoji {
+                            Button {
+                                if !isEmojiRegistered {
+                                    selectedEmoji = nil
                                 }
-                        }else {
+                            } label: {
+                                Text(emoji)
+                                    .font(.system(size: isEmojiRegistered ? 80 : 32))
+                                    .frame(
+                                        width: isEmojiRegistered ? 120 : 56,
+                                        height: isEmojiRegistered ? 120 : 56
+                                    )
+                                    .glassEffect()
+                                    .accessibilityLabel("Humeur sélectionnée \(emoji)")
+                            }
+                        } else {
                             HStack(spacing: 12) {
                                 ForEach(emojis, id: \.self) { emoji in
                                     Button {
-                                        isEmojiSelected.toggle()
                                         selectedEmoji = emoji
                                     } label: {
                                         Text(emoji)
                                             .font(.system(size: 30))
                                             .frame(width: 50, height: 50)
                                             .glassEffect()
+                                            .accessibilityLabel("Sélectionner l’humeur \(emoji)")
                                     }
                                 }
                             }
                         }
-                    }
-                   
+                        
+                        // Action Button
                         Button {
-                            //action
-                            if !selectedEmoji.isEmpty{
+                            if selectedEmoji != nil {
                                 isEmojiRegistered.toggle()
-                                
                             }
-                            
                         } label: {
-                            Text(isEmojiRegistered ? "Retire l'humeur sélectionnée" : "Enregistrer mon humeur")
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(.orange)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background(Color.white)
-                                .clipShape(Capsule())
+                            Text(isEmojiRegistered
+                                 ? "Supprimer l’humeur"
+                                 : "Enregistrer mon humeur")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.orange)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(Color.white)
+                            .clipShape(Capsule())
                         }
                     }
                     .padding(24)
                     .background(
                         LinearGradient(
-                            colors: [
-                                Color.orange,
-                                Color.yellow
-                            ],
+                            colors: [.orange, .yellow],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
                     )
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .padding(.bottom)
                     
+                    // MARK: - Stats
                     LazyVGrid(
-                        columns:
-                            [.init(.flexible()),.init(.flexible())],
+                        columns: [.init(.flexible()), .init(.flexible())],
                         spacing: 16
                     ) {
                         StatCard(
@@ -133,22 +129,17 @@ struct HomeView: View {
                             color: .blue
                         )
                     }
-                    .padding(.bottom, 24)
-                    .padding(.horizontal)
                     
+                    // MARK: - Recommendation
                     Text("Recommandation du jour")
-                        .fontWeight(.regular)
                         .font(.title3)
                         .foregroundStyle(.secondary)
-                        .padding()
                     
-                    
-                    HStack(alignment: .top) {
-                        
-                        ZStack{
+                    HStack(alignment: .top, spacing: 12) {
+                        ZStack {
                             RoundedRectangle(cornerRadius: 12)
-                                .frame(width: 40,height: 40)
-                                .foregroundStyle(.purple)
+                                .fill(.purple)
+                                .frame(width: 40, height: 40)
                             
                             Image(systemName: "sparkles")
                                 .foregroundStyle(.white)
@@ -157,32 +148,20 @@ struct HomeView: View {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Méditation anti-stress")
                                 .font(.headline)
-                                .fontWeight(.medium)
                             
-                            
-                            Text("Basée sur votre niveau de stress actuel, nous recommandons une séance de 10 minutes")
+                            Text("Basée sur votre niveau de stress actuel, nous recommandons une séance de 10 minutes.")
                                 .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                             
-                            HStack {
-                                
-                                Button(action: {
-                                    activNavigation = true
-                                }) {
-                                    Label {
-                                        Image(systemName: "chevron.right")
-                                    } icon: {
-                                        Text("Commencer")
-                                    }
+                            
+                            NavigationLink {
+                                SleepView()
+                            } label: {
+                                Label("Commencer", systemImage: "chevron.right")
                                     .font(.subheadline)
-                                    .foregroundColor(Color.purple)
-                                    .labelStyle(.titleAndIcon)
-                                }
-                                .navigationDestination(
-                                    isPresented: $activNavigation) {
-                                        SleepView()
-                                    }
+                                    .foregroundColor(.purple)
                             }
+                            
                         }
                     }
                     .padding()
@@ -196,10 +175,10 @@ struct HomeView: View {
                             endPoint: .bottomTrailing
                         )
                     )
-                    .cornerRadius(10)
+                    .cornerRadius(12)
                     .shadow(radius: 2)
-                    .padding(.horizontal)
                     
+                    // MARK: - Quick Actions
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Actions rapides")
                             .font(.title3)
@@ -217,15 +196,15 @@ struct HomeView: View {
                             description: "5 minutes"
                         )
                     }
-                    .padding()
-                    
-                    
-                    Spacer()
                 }
                 .padding()
             }
         }
     }
+}
+
+#Preview {
+    HomeView()
 }
 
 #Preview {
@@ -244,17 +223,16 @@ extension Color {
         )
     }
 }
-
-
 struct CustomNavigationLink: View {
-    var icon,name,description: String
+    let icon: String
+    let name: String
+    let description: String
     
     var body: some View {
         NavigationLink {
-            // Destination
+            Text(name)
         } label: {
             HStack(spacing: 12) {
-                
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color(hex: "#F3E8FF"))
@@ -277,7 +255,7 @@ struct CustomNavigationLink: View {
                 Spacer()
             }
             .padding()
-            .background(Color(hex: "#FFFFFF"))
+            .background(Color.white)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(Color(hex: "#E5E7EB"), lineWidth: 1)
@@ -286,6 +264,7 @@ struct CustomNavigationLink: View {
         }
     }
 }
+
 
 struct StatCard: View {
     let icon: String
