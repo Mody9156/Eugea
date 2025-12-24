@@ -13,7 +13,8 @@ struct HomeView: View {
     @State private var selectedEmojis : Bool = false
     @State private var saveEmojis : String = ""
     @State private var activNavigation:Bool = false
-    @State private var registreEmojis : Bool = false 
+    @State private var registreEmojis : Bool = false
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -27,22 +28,29 @@ struct HomeView: View {
                         .font(.title3)
                         .foregroundStyle(.secondary)
                     
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack(spacing: 8) {
-                            Image(systemName: "heart")
-                                .font(.system(size: 18))
-                            Text("Check-in quotidien")
-                                .font(.system(size: 14, weight: .medium))
-                                .opacity(0.9)
-                        }
+                    VStack {
+                        VStack(
+                            alignment: registreEmojis ? .center :.leading,
+                            spacing: 16
+                        ){
+                            HStack(spacing: 8) {
+                                Image(systemName: "heart")
+                                    .font(.system(size: 18))
+                                Text("Check-in quotidien")
+                                    .font(.system(size: 14, weight: .medium))
+                                    .opacity(0.9)
+                                Spacer()
+                            }
+                            HStack(spacing: 8) {
+                                Text("Comment allez-vous ?")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .lineSpacing(6)
+                                Spacer()
+                            }
                         
-                        Text("Comment allez-vous ?")
-                            .font(.system(size: 20, weight: .medium))
-                            .lineSpacing(6)
                         
+                      
                         if selectedEmojis {
-                            
-                            VStack {
                                 Button {
                                     selectedEmojis.toggle()
                                     saveEmojis = ""
@@ -53,8 +61,6 @@ struct HomeView: View {
                                         .multilineTextAlignment(.center)
                                         .glassEffect()
                                 }
-                            }
-                            
                         }else {
                             HStack(spacing: 12) {
                                 ForEach(emojis, id: \.self) { emoji in
@@ -70,9 +76,14 @@ struct HomeView: View {
                                 }
                             }
                         }
+                    }
                         
                         Button {
                             //action
+                            if !saveEmojis.isEmpty{
+                                registreEmojis.toggle()
+                            }
+                            
                         } label: {
                             Text("Enregistrer mon humeur")
                                 .font(.system(size: 16, weight: .medium))
