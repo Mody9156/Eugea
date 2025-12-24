@@ -50,7 +50,7 @@ struct HomeView: View {
                         
                         
                       
-                        if selectedEmojis {
+                            if selectedEmojis && !registreEmojis{
                                 Button {
                                     selectedEmojis.toggle()
                                     saveEmojis = ""
@@ -77,6 +77,15 @@ struct HomeView: View {
                             }
                         }
                     }
+                        
+                        if registreEmojis{
+                            Text(saveEmojis)
+                                .font(.system(size: 30))
+                                .frame(width: 50, height: 50)   // vrai gros bouton
+                                .multilineTextAlignment(.center)
+                                .glassEffect()
+                        }
+                        
                         
                         Button {
                             //action
