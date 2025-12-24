@@ -88,7 +88,7 @@ struct HomeView: View {
                             }
                             
                         } label: {
-                            Text("Enregistrer mon humeur")
+                            Text(registreEmojis ? "Retire l'humeur sélectionnée" : "Enregistrer mon humeur")
                                 .font(.system(size: 16, weight: .medium))
                                 .foregroundColor(.orange)
                                 .frame(maxWidth: .infinity)
