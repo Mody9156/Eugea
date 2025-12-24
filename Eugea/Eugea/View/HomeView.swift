@@ -50,14 +50,17 @@ struct HomeView: View {
                         
                         
                       
-                            if selectedEmojis && !registreEmojis{
+                            if selectedEmojis {
                                 Button {
-                                    selectedEmojis.toggle()
-                                    saveEmojis = ""
+                                    if !registreEmojis {
+                                        selectedEmojis.toggle()
+                                        saveEmojis = ""
+                                    }
+                                   
                                 } label: {
                                     Text(saveEmojis)
-                                        .font(.system(size: 30))
-                                        .frame(width: 50, height: 50)   // vrai gros bouton
+                                        .font(.system(size: registreEmojis ? 80:30))
+                                        .frame(width:registreEmojis ? 100 : 50, height:registreEmojis ? 100 : 50)   // vrai gros bouton
                                         .multilineTextAlignment(.center)
                                         .glassEffect()
                                 }
@@ -77,16 +80,7 @@ struct HomeView: View {
                             }
                         }
                     }
-                        
-                        if registreEmojis{
-                            Text(saveEmojis)
-                                .font(.system(size: 30))
-                                .frame(width: 50, height: 50)   // vrai gros bouton
-                                .multilineTextAlignment(.center)
-                                .glassEffect()
-                        }
-                        
-                        
+                   
                         Button {
                             //action
                             if !saveEmojis.isEmpty{
