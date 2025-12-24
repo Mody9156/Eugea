@@ -13,6 +13,7 @@ struct HomeView: View {
     @State private var selectedEmojis : Bool = false
     @State private var saveEmojis : String = ""
     @State private var activNavigation:Bool = false
+    @State private var registreEmojis : Bool = false 
     var body: some View {
         NavigationStack {
             ScrollView {
