@@ -46,8 +46,8 @@ struct HomeView: View {
                         .opacity(0.9)
                         
                         Text("Comment allez-vous ?")
-                            .font(.system(size: 20, weight: .medium))
-                        
+                                .font(.system(size: 20, weight: .medium))
+                       
                         // Emoji selection
                         if let emoji = selectedEmoji {
                             Button {
@@ -153,15 +153,21 @@ struct HomeView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                             
-                            
                             NavigationLink {
                                 SleepView()
                             } label: {
-                                Label("Commencer", systemImage: "chevron.right")
-                                    .font(.subheadline)
-                                    .foregroundColor(.purple)
+                                Label {
+                                    Image(systemName: "chevron.right")
+                                        .font(.subheadline)
+                                        .foregroundColor(.purple)
+                                } icon: {
+                                    Text("Commencer")
+                                        .font(.subheadline)
+                                        .foregroundColor(.purple)
+                                }
+                                
+                                
                             }
-                            
                         }
                     }
                     .padding()
