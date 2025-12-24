@@ -10,10 +10,10 @@ import SwiftUI
 struct HomeView: View {
     @State var name : String = "Joe"
     let emojis = ["😢", "😕", "😐", "🙂", "😊"]
-    @State private var selectedEmojis : Bool = false
-    @State private var saveEmojis : String = ""
+    @State private var isEmojiSelected : Bool = false
+    @State private var selectedEmoji : String = ""
     @State private var activNavigation:Bool = false
-    @State private var registreEmojis : Bool = false
+    @State private var isEmojiRegistered : Bool = false
     
     var body: some View {
         NavigationStack {
@@ -30,7 +30,7 @@ struct HomeView: View {
                     
                     VStack {
                         VStack(
-                            alignment: registreEmojis ? .center :.leading,
+                            alignment: isEmojiRegistered ? .center :.leading,
                             spacing: 16
                         ){
                             HStack(spacing: 8) {
@@ -50,26 +50,25 @@ struct HomeView: View {
                         
                         
                       
-                            if selectedEmojis {
+                            if isEmojiSelected {
                                 Button {
-                                    if !registreEmojis {
-                                        selectedEmojis.toggle()
-                                        saveEmojis = ""
+                                    if !isEmojiRegistered {
+                                        isEmojiSelected.toggle()
+                                        selectedEmoji = ""
                                     }
                                    
                                 } label: {
-                                    Text(saveEmojis)
-                                        .font(.system(size: registreEmojis ? 80:30))
-                                        .frame(width:registreEmojis ? 100 : 50, height:registreEmojis ? 100 : 50)   // vrai gros bouton
-                                        .multilineTextAlignment(.center)
+                                    Text(selectedEmoji)
+                                        .font(.system(size: isEmojiRegistered ? 80:30))
+                                        .frame(width:isEmojiRegistered ? 100 : 50, height:isEmojiRegistered ? 100 : 50)
                                         .glassEffect()
                                 }
                         }else {
                             HStack(spacing: 12) {
                                 ForEach(emojis, id: \.self) { emoji in
                                     Button {
-                                        selectedEmojis.toggle()
-                                        saveEmojis = emoji
+                                        isEmojiSelected.toggle()
+                                        selectedEmoji = emoji
                                     } label: {
                                         Text(emoji)
                                             .font(.system(size: 30))
@@ -83,12 +82,13 @@ struct HomeView: View {
                    
                         Button {
                             //action
-                            if !saveEmojis.isEmpty{
-                                registreEmojis.toggle()
+                            if !selectedEmoji.isEmpty{
+                                isEmojiRegistered.toggle()
+                                
                             }
                             
                         } label: {
-                            Text(registreEmojis ? "Retire l'humeur sélectionnée" : "Enregistrer mon humeur")
+                            Text(isEmojiRegistered ? "Retire l'humeur sélectionnée" : "Enregistrer mon humeur")
                                 .font(.system(size: 16, weight: .medium))
                                 .foregroundColor(.orange)
                                 .frame(maxWidth: .infinity)
