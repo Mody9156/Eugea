@@ -37,7 +37,7 @@ enum StressLevel: Int, CaseIterable {
         case 3...4: return .low
         case 5...6: return .medium
         case 7...8: return .high
-        default:    return .veryHigh
+        default:    return .veryLow
         }
     }
 }

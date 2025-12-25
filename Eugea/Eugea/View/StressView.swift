@@ -14,6 +14,7 @@ struct StressView: View {
     @State var activityName : String = ""
     
     var body: some View {
+       
         VStack{
             Slider(value: $speed, in: 0...10){
                 Text("Speed")
@@ -24,7 +25,10 @@ struct StressView: View {
             } onEditingChanged: { editing in
                 isEditing = editing
             }
-            Text("\(Int(speed))")
+            Text("\(Int(speed))/10")
+            let stressLevel = StressLevel.from(value: Int(speed))
+            Text(stressLevel.name)
+                
         }
     }
 }
