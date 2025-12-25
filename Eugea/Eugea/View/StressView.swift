@@ -11,13 +11,11 @@ import SwiftData
 struct StressView: View {
     @State private var speed = 0.0
     @State private var isEditing = false
-    @State var activityName : String = ""
-    @State var stressLevel : Int = 0
     @Environment(\.modelContext) var context
-    
+
     var body: some View {
         let stressLevel = StressLevel.from(value: Int(speed))
-        
+
         VStack(spacing: 30) {
             // Carte principale
             ZStack {
@@ -54,9 +52,12 @@ struct StressView: View {
             }
             
             // Slider stylé
-            VStack {
+            VStack(spacing: 10) {
+                Text("Valeur: \(Int(speed))")
+                    .foregroundStyle(stressLevel.color)
+                    .font(.headline)
+                
                 Slider(value: $speed, in: 0...10) {
-                   
                 } minimumValueLabel: {
                     Text("0")
                         .font(.caption)
@@ -71,6 +72,25 @@ struct StressView: View {
                 .accentColor(stressLevel.color)
                 .padding(.horizontal, 40)
             }
+            
+            // Bouton Enregistrer
+            Button {
+                let stressData = StressData(
+                    activityName: stressLevel.name,
+                    stressLevel: Int(speed)
+                )
+                context.insert(stressData)
+            } label: {
+                Text("Enregistrer")
+                    .bold()
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(stressLevel.color.opacity(0.8))
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
+                    .shadow(radius: 4)
+            }
+            .padding(.horizontal, 40)
         }
         .padding()
     }
