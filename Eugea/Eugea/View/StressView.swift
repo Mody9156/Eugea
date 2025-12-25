@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct StressView: View {
     @State private var speed = 0.0
     @State private var isEditing = false
+    @State var activityName : String = ""
+    @State var stressLevel : Int = 0
+    @Environment(\.modelContext) var context
     
     var body: some View {
         let stressLevel = StressLevel.from(value: Int(speed))
