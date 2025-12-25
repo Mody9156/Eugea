@@ -49,8 +49,8 @@ struct HomeView: View {
                         .opacity(0.9)
                         
                         Text("Comment allez-vous ?")
-                                .font(.system(size: 20, weight: .medium))
-                       
+                            .font(.system(size: 20, weight: .medium))
+                        
                         // Emoji selection
                         if let emoji = selectedEmoji {
                             Button {
@@ -116,19 +116,19 @@ struct HomeView: View {
                         columns: [.init(.flexible()), .init(.flexible())],
                         spacing: 16
                     ) {
-                       
-                            if let lastData = stressData.last {
-                                StatCard(
-                                    icon: stressLevel.symbole,
-                                    label: "Niveau de stress",
-                                    value: "\(lastData.stressLevel)/10",
-                                    subtext:lastData.activityName,
-                                    color: stressLevel.color,
-                                    speed: $speed
-                                )
-                            }
-                          
-                                               
+                        
+                        if let lastData = stressData.last {
+                            StatCard(
+                                icon: stressLevel.symbole,
+                                label: "Niveau de stress",
+                                value: "\(lastData.stressLevel)/10",
+                                subtext:lastData.activityName,
+                                color: stressLevel.color,
+                                speed: $speed
+                            )
+                        }
+                        
+                        
                         StatCard(
                             icon: "moon.fill",
                             label: "Sommeil",
@@ -302,15 +302,16 @@ struct StatCard: View {
                 
                 Text(label)
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.gray)
                 
                 Text(value)
                     .font(.title2)
                     .fontWeight(.semibold)
+                    .foregroundStyle(color)
                 
                 Text(subtext)
                     .font(.footnote)
-                    .foregroundStyle(color)
+                    .foregroundStyle(.gray)
             }
             .padding()
             .background(
