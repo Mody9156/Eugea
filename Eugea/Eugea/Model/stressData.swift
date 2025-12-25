@@ -10,6 +10,6 @@ import Foundation
 
 struct StressData:Identifiable {
     let id = UUID()
-    var name : String
+    var activityName : String
     var stressLevel : Int
 }
