@@ -6,10 +6,15 @@
 //
 
 import Foundation
+import SwiftData
 
-
-struct StressData:Identifiable {
-    let id = UUID()
+@Model
+class StressData {
     var activityName : String
     var stressLevel : Int
+    
+    init(activityName: String, stressLevel: Int) {
+        self.activityName = activityName
+        self.stressLevel = stressLevel
+    }
 }
