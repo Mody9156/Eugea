@@ -33,15 +33,30 @@ enum StressLevel: Int, CaseIterable {
     var symbole: String {
         switch self {
         case .veryLow:
-            return "arrow.down.circle"
+            return "chart.line.downtrend.xyaxis"   // forte baisse
         case .low:
-            return "arrow.down"
+            return "chart.line.downtrend.xyaxis"   // baisse
         case .medium:
-            return "minus"
+            return "chart.line.flattrend.xyaxis"   // stable
         case .high:
-            return "arrow.up"
+            return "chart.line.uptrend.xyaxis"     // hausse
         case .veryHigh:
-            return "arrow.up.circle"
+            return "chart.line.uptrend.xyaxis"     // forte hausse
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .veryLow:
+            return .green        // stress très faible → positif
+        case .low:
+            return .green.opacity(0.7)   // stress faible
+        case .medium:
+            return .gray         // stress modéré → neutre
+        case .high:
+            return .orange       // stress élevé → attention
+        case .veryHigh:
+            return .red          // stress très élevé → alerte
         }
     }
 
@@ -53,6 +68,7 @@ enum StressLevel: Int, CaseIterable {
         case 3...4: return .low
         case 5...6: return .medium
         case 7...8: return .high
+        case 9...10: return .veryHigh
         default:    return .veryLow
         }
     }

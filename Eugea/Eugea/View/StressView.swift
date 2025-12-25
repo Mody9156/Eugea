@@ -12,8 +12,10 @@ struct StressView: View {
     @State private var isEditing = false
     @State var stressLevel: Int = 0
     @State var activityName : String = ""
-    
+   
+
     var body: some View {
+        let stressLevel = StressLevel.from(value: Int(speed))
         VStack{
             ZStack{
                 RoundedRectangle(cornerRadius: 12)
@@ -23,16 +25,15 @@ struct StressView: View {
                     )
                 
                 VStack{
+                    Image(systemName: stressLevel.symbole)
+                        
                     Text("\(Int(speed))/10")
-                    let stressLevel = StressLevel.from(value: Int(speed))
+                   
                     Text(stressLevel.name)
                         .font(Font.subheadline.smallCaps())
                 }
             }
          
-                
-            
-            
             Slider(value: $speed, in: 0...10){
                 Text("Speed")
             } minimumValueLabel: {
