@@ -10,42 +10,65 @@ import SwiftUI
 struct StressView: View {
     @State private var speed = 0.0
     @State private var isEditing = false
-    @State var stressLevel: Int = 0
-    @State var activityName : String = ""
-   
-
+    
     var body: some View {
         let stressLevel = StressLevel.from(value: Int(speed))
-        VStack{
-            ZStack{
-                RoundedRectangle(cornerRadius: 12)
-                    .frame(width: 300,height: 300)
+        
+        VStack(spacing: 30) {
+            // Carte principale
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
                     .foregroundStyle(
-                           Color(.secondarySystemBackground)
+                        LinearGradient(colors: [Color(.secondarySystemBackground), Color(.systemBackground)], startPoint: .top, endPoint: .bottom)
                     )
+                    .frame(width: 320, height: 320)
+                    .shadow(radius: 8)
                 
-                VStack{
+                VStack(spacing: 15) {
+                    // Icône avec animation légère
                     Image(systemName: stressLevel.symbole)
-                        
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 60, height: 60)
+                        .foregroundStyle(stressLevel.color)
+                        .scaleEffect(isEditing ? 1.2 : 1.0)
+                        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: speed)
+                    
+                    // Texte
+                    Text("Niveau de stress")
+                        .font(.title2.bold())
+                    
                     Text("\(Int(speed))/10")
-                   
+                        .font(.system(size: 40, weight: .bold))
+                        .foregroundStyle(stressLevel.color)
+                    
                     Text(stressLevel.name)
-                        .font(Font.subheadline.smallCaps())
+                        .font(.subheadline.smallCaps())
+                        .foregroundStyle(stressLevel.color.opacity(0.8))
                 }
+                .padding()
             }
-         
-            Slider(value: $speed, in: 0...10){
-                Text("Speed")
-            } minimumValueLabel: {
-                Text("0")
-            } maximumValueLabel: {
-                Text("10")
-            } onEditingChanged: { editing in
-                isEditing = editing
-            }
-            .padding()
             
+            // Slider stylé
+            VStack {
+                Slider(value: $speed, in: 0...10) {
+                   
+                } minimumValueLabel: {
+                    Text("0")
+                        .font(.caption)
+                        .foregroundStyle(.gray)
+                } maximumValueLabel: {
+                    Text("10")
+                        .font(.caption)
+                        .foregroundStyle(.gray)
+                } onEditingChanged: { editing in
+                    isEditing = editing
+                }
+                .accentColor(stressLevel.color)
+                .padding(.horizontal, 40)
+            }
         }
+        .padding()
     }
 }
 
