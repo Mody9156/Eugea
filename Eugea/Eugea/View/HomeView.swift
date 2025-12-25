@@ -123,7 +123,8 @@ struct HomeView: View {
                                     label: "Niveau de stress",
                                     value: "\(lastData.stressLevel)/10",
                                     subtext:lastData.activityName,
-                                    color: stressLevel.color
+                                    color: stressLevel.color,
+                                    speed: $speed
                                 )
                             }
                           
@@ -133,7 +134,8 @@ struct HomeView: View {
                             label: "Sommeil",
                             value: "7h 24m",
                             subtext: "Bonne nuit",
-                            color: .blue
+                            color: .blue,
+                            speed: $speed
                         )
                     }
                     
@@ -283,10 +285,10 @@ struct StatCard: View {
     let value: String
     let subtext: String
     let color: Color
-    
+    @Binding var speed: Double
     var body: some View {
         NavigationLink {
-            StressView()
+            StressView(speed: $speed)
         } label: {
             VStack(alignment: .leading, spacing: 12) {
                 
