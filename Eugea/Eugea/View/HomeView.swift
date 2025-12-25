@@ -17,9 +17,11 @@ struct HomeView: View {
     @State private var isNavigationActive: Bool = false
     @Query(sort:\StressData.activityName,order:.forward) var stressData: [StressData]
     private let emojis = ["😢", "😕", "😐", "🙂", "😊"]
-    
+    @State private var speed = 0.0
     // MARK: - View
     var body: some View {
+        let stressLevel = StressLevel.from(value: Int(speed))
+        
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
@@ -115,13 +117,13 @@ struct HomeView: View {
                         spacing: 16
                     ) {
                        
-                            if let lastData = stressData.first {
+                            if let lastData = stressData.last {
                                 StatCard(
-                                    icon: "chart.line.uptrend.xyaxis",
+                                    icon: stressLevel.symbole,
                                     label: "Niveau de stress",
                                     value: "\(lastData.stressLevel)/10",
                                     subtext:lastData.activityName,
-                                    color: .orange
+                                    color: stressLevel.color
                                 )
                             }
                           
