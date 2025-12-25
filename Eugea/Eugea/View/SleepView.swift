@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct SleepView: View {
-    @State var stressLevel: Int = 0
-    @State var activityName : String = ""
 
     var body: some View {
         Text("Hello, World!")

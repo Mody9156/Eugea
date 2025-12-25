@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct StressView: View {
+    @State var stressLevel: Int = 0
+    @State var activityName : String = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Hello, World!")
     }
 }
 
