@@ -13,6 +13,7 @@ struct StressView: View {
     @State private var isEditing = false
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         let stressLevel = StressLevel.from(value: Int(speed))
 
@@ -80,6 +81,8 @@ struct StressView: View {
                     stressLevel: Int(speed)
                 )
                 context.insert(stressData)
+                
+                dismiss()
             } label: {
                 Text("Enregistrer")
                     .bold()
