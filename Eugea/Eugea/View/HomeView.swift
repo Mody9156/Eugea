@@ -115,23 +115,23 @@ struct HomeView: View {
                         spacing: 16
                     ) {
                        
-                        
-                        StatCard(
-                            icon: "chart.line.uptrend.xyaxis",
-                            label: "Niveau de stress",
-                            value: "6/10",
-                            subtext: "Légèrement élevé",
-                            color: .orange,
-                            view: StressView()
-                        )
+                        ForEach(stressData.suffix(1)) { data in
+                          
+                            StatCard(
+                                icon: "chart.line.uptrend.xyaxis",
+                                label: "Niveau de stress",
+                                value: "\(data.stressLevel)/10",
+                                subtext:data.activityName,
+                                color: .orange
+                            )
+                        }
                         
                         StatCard(
                             icon: "moon.fill",
                             label: "Sommeil",
                             value: "7h 24m",
                             subtext: "Bonne nuit",
-                            color: .blue,
-                            view: StressView()
+                            color: .blue
                         )
                     }
                     
@@ -273,17 +273,18 @@ struct CustomNavigationLink: View {
 }
 
 
+
+
 struct StatCard: View {
     let icon: String
     let label: String
     let value: String
     let subtext: String
     let color: Color
-    let view: any View
     
     var body: some View {
         NavigationLink {
-            
+            StressView()
         } label: {
             VStack(alignment: .leading, spacing: 12) {
                 
@@ -315,3 +316,4 @@ struct StatCard: View {
         }
     }
 }
+
