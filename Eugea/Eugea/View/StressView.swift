@@ -9,10 +9,12 @@ import SwiftUI
 import SwiftData
 
 struct StressView: View {
-    @State private var speed = 0.0
+    @Binding  var speed : Double
     @State private var isEditing = false
     @Environment(\.modelContext) var context
-
+    @Environment(\.dismiss) var dismiss
+    @Query var stressData: [StressData]
+    
     var body: some View {
         let stressLevel = StressLevel.from(value: Int(speed))
 
@@ -80,6 +82,8 @@ struct StressView: View {
                     stressLevel: Int(speed)
                 )
                 context.insert(stressData)
+                
+                dismiss()
             } label: {
                 Text("Enregistrer")
                     .bold()
@@ -97,5 +101,6 @@ struct StressView: View {
 }
 
 #Preview {
-    StressView()
+    @Previewable @State var speed : Double = 0.0
+    StressView(speed: $speed)
 }

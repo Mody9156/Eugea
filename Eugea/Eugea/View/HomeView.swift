@@ -15,11 +15,13 @@ struct HomeView: View {
     @State private var selectedEmoji: String? = nil
     @State private var isEmojiRegistered: Bool = false
     @State private var isNavigationActive: Bool = false
-    @Query var stressData: [StressData]
+    @Query(sort:\StressData.activityName,order:.forward) var stressData: [StressData]
     private let emojis = ["😢", "😕", "😐", "🙂", "😊"]
-    
+    @State private var speed = 0.0
     // MARK: - View
     var body: some View {
+        let stressLevel = StressLevel.from(value: Int(speed))
+        
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
@@ -47,8 +49,8 @@ struct HomeView: View {
                         .opacity(0.9)
                         
                         Text("Comment allez-vous ?")
-                                .font(.system(size: 20, weight: .medium))
-                       
+                            .font(.system(size: 20, weight: .medium))
+                        
                         // Emoji selection
                         if let emoji = selectedEmoji {
                             Button {
@@ -114,16 +116,18 @@ struct HomeView: View {
                         columns: [.init(.flexible()), .init(.flexible())],
                         spacing: 16
                     ) {
-                       
                         
-                        StatCard(
-                            icon: "chart.line.uptrend.xyaxis",
-                            label: "Niveau de stress",
-                            value: "6/10",
-                            subtext: "Légèrement élevé",
-                            color: .orange,
-                            view: StressView()
-                        )
+                        if let lastData = stressData.last {
+                            StatCard(
+                                icon: stressLevel.symbole,
+                                label: "Niveau de stress",
+                                value: "\(lastData.stressLevel)/10",
+                                subtext:lastData.activityName,
+                                color: stressLevel.color,
+                                speed: $speed
+                            )
+                        }
+                        
                         
                         StatCard(
                             icon: "moon.fill",
@@ -131,7 +135,7 @@ struct HomeView: View {
                             value: "7h 24m",
                             subtext: "Bonne nuit",
                             color: .blue,
-                            view: StressView()
+                            speed: $speed
                         )
                     }
                     
@@ -273,17 +277,18 @@ struct CustomNavigationLink: View {
 }
 
 
+
+
 struct StatCard: View {
     let icon: String
     let label: String
     let value: String
     let subtext: String
     let color: Color
-    let view: any View
-    
+    @Binding var speed: Double
     var body: some View {
         NavigationLink {
-            
+            StressView(speed: $speed)
         } label: {
             VStack(alignment: .leading, spacing: 12) {
                 
@@ -297,15 +302,16 @@ struct StatCard: View {
                 
                 Text(label)
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.gray)
                 
                 Text(value)
                     .font(.title2)
                     .fontWeight(.semibold)
+                    .foregroundStyle(color)
                 
                 Text(subtext)
                     .font(.footnote)
-                    .foregroundStyle(color)
+                    .foregroundStyle(.gray)
             }
             .padding()
             .background(
@@ -315,3 +321,4 @@ struct StatCard: View {
         }
     }
 }
+
