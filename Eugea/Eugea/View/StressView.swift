@@ -12,7 +12,7 @@ struct StressView: View {
     @State private var speed = 0.0
     @State private var isEditing = false
     @Environment(\.modelContext) var context
-
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         let stressLevel = StressLevel.from(value: Int(speed))
 
