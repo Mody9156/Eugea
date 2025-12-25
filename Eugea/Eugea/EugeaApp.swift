@@ -6,12 +6,31 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct EugeaApp: App {
+    @Environment(\.modelContext) private var context
+    
+    var shareModelContainer: ModelContainer = {
+        let schema = Schema([
+            StressData.self
+        ])
+        
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        
+        do{
+            return try ModelContainer(for: schema, configurations: modelConfiguration)
+        }catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
+    
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .modelContainer(shareModelContainer)
+                
         }
     }
 }
