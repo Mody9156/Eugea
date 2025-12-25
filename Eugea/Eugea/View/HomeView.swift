@@ -118,7 +118,8 @@ struct HomeView: View {
                             label: "Niveau de stress",
                             value: "6/10",
                             subtext: "Légèrement élevé",
-                            color: .orange
+                            color: .orange,
+                            view: StressView()
                         )
                         
                         StatCard(
@@ -126,7 +127,8 @@ struct HomeView: View {
                             label: "Sommeil",
                             value: "7h 24m",
                             subtext: "Bonne nuit",
-                            color: .blue
+                            color: .blue,
+                            view: StressView()
                         )
                     }
                     
@@ -274,34 +276,39 @@ struct StatCard: View {
     let value: String
     let subtext: String
     let color: Color
+    let view: any View
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        NavigationLink {
             
-            HStack {
-                Image(systemName: icon)
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(color)
+        } label: {
+            VStack(alignment: .leading, spacing: 12) {
                 
-                Spacer()
+                HStack {
+                    Image(systemName: icon)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(color)
+                    
+                    Spacer()
+                }
+                
+                Text(label)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                
+                Text(value)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                
+                Text(subtext)
+                    .font(.footnote)
+                    .foregroundStyle(color)
             }
-            
-            Text(label)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            
-            Text(value)
-                .font(.title2)
-                .fontWeight(.semibold)
-            
-            Text(subtext)
-                .font(.footnote)
-                .foregroundStyle(color)
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color(.secondarySystemBackground))
+            )
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.secondarySystemBackground))
-        )
     }
 }
