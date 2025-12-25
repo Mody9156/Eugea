@@ -12,7 +12,9 @@ struct StressView: View {
     @State var activityName : String = ""
     
     var body: some View {
-        Text("Hello, World!")
+        VStack{
+            
+        }
     }
 }
 
