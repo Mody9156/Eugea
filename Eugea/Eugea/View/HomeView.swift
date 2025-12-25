@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
     
@@ -14,7 +15,7 @@ struct HomeView: View {
     @State private var selectedEmoji: String? = nil
     @State private var isEmojiRegistered: Bool = false
     @State private var isNavigationActive: Bool = false
-    
+    @Query var stressData: [StressData]
     private let emojis = ["😢", "😕", "😐", "🙂", "😊"]
     
     // MARK: - View
@@ -113,12 +114,15 @@ struct HomeView: View {
                         columns: [.init(.flexible()), .init(.flexible())],
                         spacing: 16
                     ) {
+                       
+                        
                         StatCard(
                             icon: "chart.line.uptrend.xyaxis",
                             label: "Niveau de stress",
                             value: "6/10",
                             subtext: "Légèrement élevé",
-                            color: .orange
+                            color: .orange,
+                            view: StressView()
                         )
                         
                         StatCard(
@@ -126,7 +130,8 @@ struct HomeView: View {
                             label: "Sommeil",
                             value: "7h 24m",
                             subtext: "Bonne nuit",
-                            color: .blue
+                            color: .blue,
+                            view: StressView()
                         )
                     }
                     
@@ -274,34 +279,39 @@ struct StatCard: View {
     let value: String
     let subtext: String
     let color: Color
+    let view: any View
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        NavigationLink {
             
-            HStack {
-                Image(systemName: icon)
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(color)
+        } label: {
+            VStack(alignment: .leading, spacing: 12) {
                 
-                Spacer()
+                HStack {
+                    Image(systemName: icon)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(color)
+                    
+                    Spacer()
+                }
+                
+                Text(label)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                
+                Text(value)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                
+                Text(subtext)
+                    .font(.footnote)
+                    .foregroundStyle(color)
             }
-            
-            Text(label)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            
-            Text(value)
-                .font(.title2)
-                .fontWeight(.semibold)
-            
-            Text(subtext)
-                .font(.footnote)
-                .foregroundStyle(color)
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color(.secondarySystemBackground))
+            )
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.secondarySystemBackground))
-        )
     }
 }
