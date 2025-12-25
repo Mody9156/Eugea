@@ -15,7 +15,7 @@ struct HomeView: View {
     @State private var selectedEmoji: String? = nil
     @State private var isEmojiRegistered: Bool = false
     @State private var isNavigationActive: Bool = false
-    @Query var stressData: [StressData]
+    @Query(sort:\StressData.activityName,order:.forward) var stressData: [StressData]
     private let emojis = ["😢", "😕", "😐", "🙂", "😊"]
     
     // MARK: - View
@@ -115,17 +115,17 @@ struct HomeView: View {
                         spacing: 16
                     ) {
                        
-                        ForEach(stressData.suffix(1)) { data in
+                            if let lastData = stressData.first {
+                                StatCard(
+                                    icon: "chart.line.uptrend.xyaxis",
+                                    label: "Niveau de stress",
+                                    value: "\(lastData.stressLevel)/10",
+                                    subtext:lastData.activityName,
+                                    color: .orange
+                                )
+                            }
                           
-                            StatCard(
-                                icon: "chart.line.uptrend.xyaxis",
-                                label: "Niveau de stress",
-                                value: "\(data.stressLevel)/10",
-                                subtext:data.activityName,
-                                color: .orange
-                            )
-                        }
-                        
+                                               
                         StatCard(
                             icon: "moon.fill",
                             label: "Sommeil",
