@@ -14,8 +14,18 @@ struct StressView: View {
     @State var activityName : String = ""
     
     var body: some View {
-       
         VStack{
+            ZStack{
+                RoundedRectangle(cornerRadius: 12)
+                    .frame(width: 300,height: 300)
+            }
+            Text("\(Int(speed))/10")
+            let stressLevel = StressLevel.from(value: Int(speed))
+            Text(stressLevel.name)
+                .font(Font.subheadline.smallCaps())
+                
+            
+            
             Slider(value: $speed, in: 0...10){
                 Text("Speed")
             } minimumValueLabel: {
@@ -25,10 +35,8 @@ struct StressView: View {
             } onEditingChanged: { editing in
                 isEditing = editing
             }
-            Text("\(Int(speed))/10")
-            let stressLevel = StressLevel.from(value: Int(speed))
-            Text(stressLevel.name)
-                
+            .padding()
+            
         }
     }
 }
