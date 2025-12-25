@@ -18,11 +18,18 @@ struct StressView: View {
             ZStack{
                 RoundedRectangle(cornerRadius: 12)
                     .frame(width: 300,height: 300)
+                    .foregroundStyle(
+                           Color(.secondarySystemBackground)
+                    )
+                
+                VStack{
+                    Text("\(Int(speed))/10")
+                    let stressLevel = StressLevel.from(value: Int(speed))
+                    Text(stressLevel.name)
+                        .font(Font.subheadline.smallCaps())
+                }
             }
-            Text("\(Int(speed))/10")
-            let stressLevel = StressLevel.from(value: Int(speed))
-            Text(stressLevel.name)
-                .font(Font.subheadline.smallCaps())
+         
                 
             
             

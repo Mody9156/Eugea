@@ -30,6 +30,22 @@ enum StressLevel: Int, CaseIterable {
         }
     }
     
+    var symbole: String {
+        switch self {
+        case .veryLow:
+            return "arrow.down.circle"
+        case .low:
+            return "arrow.down"
+        case .medium:
+            return "minus"
+        case .high:
+            return "arrow.up"
+        case .veryHigh:
+            return "arrow.up.circle"
+        }
+    }
+
+    
     /// Convertit une valeur 1–10 en StressLevel
     static func from(value: Int) -> StressLevel {
         switch value {
