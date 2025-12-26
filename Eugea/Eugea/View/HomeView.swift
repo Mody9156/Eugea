@@ -13,7 +13,7 @@ struct HomeView: View {
     // MARK: - State & Storage
     @State private var name: String = "Joe"
     @State private var speed = 0.0
-
+    @State private var animateHint = false
     @AppStorage("symbole") private var registeredEmoji: String?
 
     @Query(sort: \StressData.activityName, order: .forward)
@@ -87,6 +87,7 @@ struct HomeView: View {
                             Text("Touchez l’emoji pour le supprimer")
                                 .font(.footnote)
                                 .foregroundStyle(.white.opacity(0.8))
+                            
                         }
                     }
                     .padding(24)
