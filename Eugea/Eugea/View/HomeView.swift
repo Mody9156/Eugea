@@ -88,6 +88,7 @@ struct HomeView: View {
                         Button {
                             if selectedEmoji != nil {
                                 isEmojiRegistered.toggle()
+                                registeredEmoji = selectedEmoji
                             }
                         } label: {
                             Text(isEmojiRegistered
