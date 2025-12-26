@@ -9,70 +9,68 @@ import SwiftUI
 import SwiftData
 
 struct HomeView: View {
-    
-    // MARK: - State
+
+    // MARK: - State & Storage
     @State private var name: String = "Joe"
-    @State private var selectedEmoji: String? = nil
-    @State private var isEmojiRegistered: Bool = false
-    @State private var isNavigationActive: Bool = false
-    @Query(sort:\StressData.activityName,order:.forward) var stressData: [StressData]
-    @AppStorage("symbole") var registeredEmoji: String? 
-    private let emojis = ["😢", "😕", "😐", "🙂", "😊"]
     @State private var speed = 0.0
+
+    @AppStorage("symbole") private var registeredEmoji: String?
+
+    @Query(sort: \StressData.activityName, order: .forward)
+    private var stressData: [StressData]
+
+    private let emojis = ["😢", "😕", "😐", "🙂", "😊"]
+
     // MARK: - View
     var body: some View {
         let stressLevel = StressLevel.from(value: Int(speed))
-        
+
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    
+
                     // MARK: - Header
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Bonjour, \(name)")
                             .font(.largeTitle)
                             .fontWeight(.medium)
-                        
+
                         Text("Comment vous sentez-vous aujourd'hui ?")
                             .font(.title3)
                             .foregroundStyle(.secondary)
                     }
-                    
+
                     // MARK: - Check-in Card
-                    VStack(alignment: isEmojiRegistered ? .center : .leading, spacing: 16) {
-                        
+                    VStack(spacing: 16) {
+
                         HStack {
                             Image(systemName: "heart")
                             Text("Check-in quotidien")
                                 .font(.system(size: 14, weight: .medium))
                             Spacer()
                         }
-                        .opacity(0.9)
-                        
+
                         Text("Comment allez-vous ?")
                             .font(.system(size: 20, weight: .medium))
-                        
-                        // Emoji selection
-                        if let emoji = selectedEmoji {
+
+                        // MARK: Emoji section
+                        if let emoji = registeredEmoji {
+                            // Emoji sauvegardé
                             Button {
-                                if !isEmojiRegistered {
-                                    selectedEmoji = nil
-                                }
+                                registeredEmoji = nil
                             } label: {
                                 Text(emoji)
-                                    .font(.system(size: isEmojiRegistered ? 80 : 32))
-                                    .frame(
-                                        width: isEmojiRegistered ? 120 : 56,
-                                        height: isEmojiRegistered ? 120 : 56
-                                    )
+                                    .font(.system(size: 80))
+                                    .frame(width: 120, height: 120)
                                     .glassEffect()
-                                    .accessibilityLabel("Humeur sélectionnée \(emoji)")
+                                    .accessibilityLabel("Supprimer l’humeur \(emoji)")
                             }
                         } else {
+                            // Sélection des emojis
                             HStack(spacing: 12) {
                                 ForEach(emojis, id: \.self) { emoji in
                                     Button {
-                                        selectedEmoji = emoji
+                                        registeredEmoji = emoji
                                     } label: {
                                         Text(emoji)
                                             .font(.system(size: 30))
@@ -83,23 +81,12 @@ struct HomeView: View {
                                 }
                             }
                         }
-                        
-                        // Action Button
-                        Button {
-                            if selectedEmoji != nil {
-                                isEmojiRegistered.toggle()
-                                registeredEmoji = selectedEmoji
-                            }
-                        } label: {
-                            Text(isEmojiRegistered
-                                 ? "Supprimer l’humeur"
-                                 : "Enregistrer mon humeur")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.orange)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(Color.white)
-                            .clipShape(Capsule())
+
+                        // Action text
+                        if registeredEmoji != nil {
+                            Text("Touchez l’emoji pour le supprimer")
+                                .font(.footnote)
+                                .foregroundStyle(.white.opacity(0.8))
                         }
                     }
                     .padding(24)
@@ -112,39 +99,38 @@ struct HomeView: View {
                     )
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 24))
-                    
+
                     // MARK: - Stats
                     LazyVGrid(
                         columns: [.init(.flexible()), .init(.flexible())],
                         spacing: 16
                     ) {
-                        
+
                         if let lastData = stressData.last {
                             StatCard(
                                 icon: stressLevel.symbole,
                                 label: "Niveau de stress",
                                 value: "\(lastData.stressLevel)/10",
-                                subtext:lastData.activityName,
+                                subtext: lastData.activityName,
                                 color: stressLevel.color,
                                 speed: $speed
                             )
-                        }else {
+                        } else {
                             NavigationLink {
                                 StressView(speed: $speed)
                             } label: {
                                 StatCard(
-                                            icon: "exclamationmark.triangle",
-                                            label: "Niveau de stress",
-                                            value: "-- /10",
-                                            subtext: "Configurer le stress",
-                                            color: .gray,
-                                            speed: $speed
-                                        )
+                                    icon: "exclamationmark.triangle",
+                                    label: "Niveau de stress",
+                                    value: "-- /10",
+                                    subtext: "Configurer le stress",
+                                    color: .gray,
+                                    speed: $speed
+                                )
                             }
                             .buttonStyle(.plain)
                         }
-                        
-                        
+
                         StatCard(
                             icon: "moon.fill",
                             label: "Sommeil",
@@ -154,44 +140,36 @@ struct HomeView: View {
                             speed: $speed
                         )
                     }
-                    
+
                     // MARK: - Recommendation
                     Text("Recommandation du jour")
                         .font(.title3)
                         .foregroundStyle(.secondary)
-                    
+
                     HStack(alignment: .top, spacing: 12) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 12)
                                 .fill(.purple)
                                 .frame(width: 40, height: 40)
-                            
+
                             Image(systemName: "sparkles")
                                 .foregroundStyle(.white)
                         }
-                        
+
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Méditation anti-stress")
                                 .font(.headline)
-                            
+
                             Text("Basée sur votre niveau de stress actuel, nous recommandons une séance de 10 minutes.")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
-                            
+
                             NavigationLink {
                                 SleepView()
                             } label: {
-                                Label {
-                                    Image(systemName: "chevron.right")
-                                        .font(.subheadline)
-                                        .foregroundColor(.purple)
-                                } icon: {
-                                    Text("Commencer")
-                                        .font(.subheadline)
-                                        .foregroundColor(.purple)
-                                }
-                                
-                                
+                                Label("Commencer", systemImage: "chevron.right")
+                                    .font(.subheadline)
+                                    .foregroundColor(.purple)
                             }
                         }
                     }
@@ -208,19 +186,19 @@ struct HomeView: View {
                     )
                     .cornerRadius(12)
                     .shadow(radius: 2)
-                    
+
                     // MARK: - Quick Actions
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Actions rapides")
                             .font(.title3)
                             .fontWeight(.medium)
-                        
+
                         CustomNavigationLink(
                             icon: "heart.fill",
                             name: "Journal quotidien",
                             description: "Notez vos pensées"
                         )
-                        
+
                         CustomNavigationLink(
                             icon: "sparkles",
                             name: "Exercice de respiration",
@@ -233,6 +211,7 @@ struct HomeView: View {
         }
     }
 }
+
 
 #Preview {
     HomeView()
