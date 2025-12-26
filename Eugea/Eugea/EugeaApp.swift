@@ -28,8 +28,20 @@ struct EugeaApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .modelContainer(shareModelContainer)
+            TabView{
+                Tab("Acceuil", systemImage: "house"){
+                    HomeView()
+                        .modelContainer(shareModelContainer)
+                        .foregroundStyle(.purple)
+                }
+                
+                Tab("Méditer", systemImage: "sparkles"){
+                    HomeView()
+                        .modelContainer(shareModelContainer)
+                        .foregroundStyle(.purple)
+                }
+            }
+            
                 
         }
     }
