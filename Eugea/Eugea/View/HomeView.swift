@@ -16,7 +16,7 @@ struct HomeView: View {
     @State private var isEmojiRegistered: Bool = false
     @State private var isNavigationActive: Bool = false
     @Query(sort:\StressData.activityName,order:.forward) var stressData: [StressData]
-    @AppStorage("symbol") var registeredEmoji: String = ""
+    @AppStorage("symbole") var registeredEmoji: String? 
     private let emojis = ["😢", "😕", "😐", "🙂", "😊"]
     @State private var speed = 0.0
     // MARK: - View
