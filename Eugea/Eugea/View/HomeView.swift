@@ -87,7 +87,15 @@ struct HomeView: View {
                             Text("Touchez l’emoji pour le supprimer")
                                 .font(.footnote)
                                 .foregroundStyle(.white.opacity(0.8))
-                            
+                                .opacity(animateHint ? 0.3 : 0.8)
+                                    .onAppear {
+                                        withAnimation(
+                                            .easeInOut(duration: 1.2)
+                                            .repeatForever(autoreverses: true)
+                                        ) {
+                                            animateHint = true
+                                        }
+                                    }
                         }
                     }
                     .padding(24)
