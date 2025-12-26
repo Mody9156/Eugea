@@ -32,13 +32,11 @@ struct EugeaApp: App {
                 Tab("Acceuil", systemImage: "house"){
                     HomeView()
                         .modelContainer(shareModelContainer)
-                        .foregroundStyle(.purple)
                 }
                 
                 Tab("Méditer", systemImage: "sparkles"){
-                    HomeView()
+                    MedidationView()
                         .modelContainer(shareModelContainer)
-                        .foregroundStyle(.purple)
                 }
             }
             
