@@ -126,6 +126,20 @@ struct HomeView: View {
                                 color: stressLevel.color,
                                 speed: $speed
                             )
+                        }else {
+                            NavigationLink {
+                                StressView(speed: $speed)
+                            } label: {
+                                StatCard(
+                                            icon: "exclamationmark.triangle",
+                                            label: "Niveau de stress",
+                                            value: "-- /10",
+                                            subtext: "Configurer le stress",
+                                            color: .gray,
+                                            speed: $speed
+                                        )
+                            }
+                            .buttonStyle(.plain)
                         }
                         
                         
