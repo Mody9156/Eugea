@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct BreathingView: View {
+    @State private var player: AVPlayer?
+    @State private var isPlaying = false
+    
     var body: some View {
         Text("Respiration")
     }
