@@ -10,7 +10,7 @@ import SwiftData
 
 struct StressView: View {
     @Binding  var speed : Double
-    @State private var isEditing = false
+    @State var isEditing: Bool = false
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
     @Query var stressData: [StressData]
