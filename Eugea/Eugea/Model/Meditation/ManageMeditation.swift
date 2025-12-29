@@ -22,7 +22,7 @@ class ManageMeditation: Medidation {
     func fetchRequest(url: URLRequest) async throws -> (Data, URLResponse) {
         let (data,response) = try await  session.data(for: url)
         
-        guard let URLResponse = response as? HTTPURLResponse , URLResponse.statusCode == 200 else {
+        guard let http_url_response = response as? HTTPURLResponse , http_url_response.statusCode == 200 else {
             throw ThorwsErrors.badServerResponse
         }
         return (data,response)

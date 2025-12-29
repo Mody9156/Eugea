@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Welcome
-struct Welcome: Codable {
+struct MeditationType: Codable {
     let data: DataClass
     let type: String
 }
