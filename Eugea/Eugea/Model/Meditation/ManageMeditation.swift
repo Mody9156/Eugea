@@ -15,11 +15,16 @@ class ManageMeditation: Medidation {
         self.session = session
     }
     
-    
-    
-    func fetchRequest(url: URLRequest) -> (Data, URLResponse) {
-        <#code#>
+    enum ThorwsErrors:Error {
+        case badServerResponse
     }
-
     
+    func fetchRequest(url: URLRequest) async throws -> (Data, URLResponse) {
+        let (data,response) = try await  session.data(for: url)
+        
+        guard let URLResponse = response as? HTTPURLResponse , URLResponse.statusCode == 200 else {
+            throw ThorwsErrors.badServerResponse
+        }
+        return (data,response)
+    }
 }
