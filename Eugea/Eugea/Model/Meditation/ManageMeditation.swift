@@ -7,6 +7,19 @@
 
 import Foundation
 
-class ManageMeditation {
+class ManageMeditation: Medidation {
+    
+    let session : URLSession
+    
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
+    
+    
+    
+    func fetchRequest(url: URLRequest) -> (Data, URLResponse) {
+        <#code#>
+    }
+
     
 }
