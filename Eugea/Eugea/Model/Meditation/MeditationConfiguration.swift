@@ -25,7 +25,7 @@ class MeditationConfiguration {
         return request
     }
     
-    func fetchResult_ofMeditation(data: Data) async throws -> MeditationType {
+    func fetchResult_ofMeditation() async throws -> MeditationType {
         let (data,reponse) = try await session.fetchRequest(url: fetchUrlRequest())
         
         guard let http_url_response = reponse as? HTTPURLResponse,  http_url_response.statusCode == 200 else {
