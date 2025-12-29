@@ -8,5 +8,5 @@
 import Foundation
 
 protocol Medidation {
-    func urlRequest(url:URLRequest) -> (Data, URLResponse)
+    func fetchRequest(url:URLRequest) -> (Data, URLResponse)
 }
