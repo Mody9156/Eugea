@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol Medidation {
+    func urlRequest(url:URLRequest) -> (Data, URLResponse)
+}
