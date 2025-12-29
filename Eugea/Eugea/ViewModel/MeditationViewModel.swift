@@ -6,3 +6,15 @@
 //
 
 import Foundation
+import Observation
+
+@Observable
+class MeditationViewModel {
+    let meditationConfiguration: MeditationConfiguration
+    
+    init(meditationConfiguration: MeditationConfiguration = MeditationConfiguration()) {
+        self.meditationConfiguration = meditationConfiguration
+    }
+    
+    
+}
