@@ -1,5 +1,5 @@
 //
-//  MeidationType.swift
+//  MeditationType.swift
 //  Eugea
 //
 //  Created by Modibo on 29/12/2025.
@@ -17,7 +17,7 @@ struct MeditationType: Codable {
 struct DataClass: Codable {
     let result: String
     let interactive: Bool
-    let state: State
+    let state: MeditationState   // ✅ renommé ici
     let components: [Component]
     let actions: [Action]
     let styles, scripts: String
@@ -66,12 +66,13 @@ struct Metadata: Codable {
     let features, accessibility: [String]
 }
 
-// MARK: - State
-struct State: Codable {
+// MARK: - MeditationState ✅ (ex-State)
+struct MeditationState: Codable {
     let meditationType: String
     let duration: Int
     let backgroundMusic: String
-    let isRunning, isPaused: Bool
+    let isRunning: Bool
+    let isPaused: Bool
     let remainingTime: Int
     let language: String
     let content: Content
@@ -79,6 +80,7 @@ struct State: Codable {
 
 // MARK: - Content
 struct Content: Codable {
-    let name, description: String
+    let name: String
+    let description: String
     let steps: [String]
 }

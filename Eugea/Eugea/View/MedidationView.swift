@@ -10,80 +10,106 @@ import SwiftUI
 struct MedidationView: View {
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-
-                // MARK: - Header
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Méditation")
-                        .font(.largeTitle)
-                        .fontWeight(.medium)
-
-                    Text("Trouvez votre calme intérieur")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-
-                // MARK: - Featured Session
-                FeaturedMeditationCard()
-
-                // MARK: - Categories
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Catégories")
-                        .font(.title3)
-                        .fontWeight(.medium)
-
-                    LazyVGrid(
-                        columns: [.init(.flexible()), .init(.flexible())],
-                        spacing: 12
-                    ) {
-                        CategoryCard(icon: "wind", title: "Respiration", sessions: "12 séances", colors: [.cyan, .blue])
-                        CategoryCard(icon: "heart.fill", title: "Anti-stress", sessions: "18 séances", colors: [.pink, .red])
-                        CategoryCard(icon: "moon.fill", title: "Sommeil", sessions: "15 séances", colors: [.indigo, .purple])
-                        CategoryCard(icon: "face.smiling", title: "Bonheur", sessions: "10 séances", colors: [.yellow, .orange])
+        NavigationStack{
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
+                    
+                    // MARK: - Header
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Méditation")
+                            .font(.largeTitle)
+                            .fontWeight(.medium)
+                        
+                        Text("Trouvez votre calme intérieur")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    
+                    // MARK: - Featured Session
+                    FeaturedMeditationCard()
+                    
+                    // MARK: - Categories
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Catégories")
+                            .font(.title3)
+                            .fontWeight(.medium)
+                        
+                        LazyVGrid(
+                            columns: [.init(.flexible()), .init(.flexible())],
+                            spacing: 12
+                        ) {
+                            CategoryCard(
+                                icon: "wind",
+                                title: "Respiration",
+                                sessions: "12 séances",
+                                colors: [.cyan, .blue],
+                                type: "respiration"
+                            )
+                            CategoryCard(
+                                icon: "heart.fill",
+                                title: "Anti-stress",
+                                sessions: "18 séances",
+                                colors: [.pink, .red],
+                                type: "stress"
+                            )
+                            CategoryCard(
+                                icon: "moon.fill",
+                                title: "Sommeil",
+                                sessions: "15 séances",
+                                colors: [.indigo, .purple],
+                                type: "sleep"
+                            )
+                            CategoryCard(
+                                icon: "face.smiling",
+                                title: "Bonheur",
+                                sessions: "10 séances",
+                                colors: [.yellow, .orange],
+                                type: "happiness"
+                            )
+                        }
+                    }
+                    
+                    // MARK: - Popular Sessions
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Séances populaires")
+                            .font(.title3)
+                            .fontWeight(.medium)
+                        
+                        SessionRow(
+                            title: "Respiration 4-7-8",
+                            duration: "5 min",
+                            difficulty: "Débutant",
+                            icon: "wind",
+                            color: .cyan
+                        )
+                        
+                        SessionRow(
+                            title: "Scan corporel",
+                            duration: "15 min",
+                            difficulty: "Intermédiaire",
+                            icon: "sparkles",
+                            color: .purple
+                        )
+                        
+                        SessionRow(
+                            title: "Méditation du sommeil",
+                            duration: "20 min",
+                            difficulty: "Tous niveaux",
+                            icon: "moon.fill",
+                            color: .indigo
+                        )
+                        
+                        SessionRow(
+                            title: "Gratitude quotidienne",
+                            duration: "8 min",
+                            difficulty: "Débutant",
+                            icon: "heart.fill",
+                            color: .pink
+                        )
                     }
                 }
-
-                // MARK: - Popular Sessions
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Séances populaires")
-                        .font(.title3)
-                        .fontWeight(.medium)
-
-                    SessionRow(
-                        title: "Respiration 4-7-8",
-                        duration: "5 min",
-                        difficulty: "Débutant",
-                        icon: "wind",
-                        color: .cyan
-                    )
-
-                    SessionRow(
-                        title: "Scan corporel",
-                        duration: "15 min",
-                        difficulty: "Intermédiaire",
-                        icon: "sparkles",
-                        color: .purple
-                    )
-
-                    SessionRow(
-                        title: "Méditation du sommeil",
-                        duration: "20 min",
-                        difficulty: "Tous niveaux",
-                        icon: "moon.fill",
-                        color: .indigo
-                    )
-
-                    SessionRow(
-                        title: "Gratitude quotidienne",
-                        duration: "8 min",
-                        difficulty: "Débutant",
-                        icon: "heart.fill",
-                        color: .pink
-                    )
-                }
+                .padding()
             }
-            .padding()
         }
     }
 }
@@ -137,36 +163,87 @@ struct FeaturedMeditationCard: View {
     }
 }
 
+enum MeditationTypeKind: String {
+    case respiration
+    case sleep
+    case happiness
+    case stress
+}
+
 struct CategoryCard: View {
     let icon: String
     let title: String
     let sessions: String
     let colors: [Color]
+    let type: String
+    
+    @ViewBuilder
+    var destination : some View {
+        switch type {
+        case "respiration":
+            SleepView()
 
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Image(systemName: icon)
-                .font(.title2)
+        case "sleep":
+            SleepView()
 
-            Text(title)
-                .font(.subheadline)
-                .fontWeight(.medium)
+        case "happiness":
+            SleepView()
 
-            Text(sessions)
-                .font(.caption)
-                .opacity(0.9)
+        case "stress":
+            SleepView() // ✅ Binding obligatoire
+
+        default:
+            EmptyView()
         }
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            LinearGradient(
-                colors: colors,
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
+    }
+  
+    
+    @ViewBuilder
+    func destination(for type: MeditationTypeKind) -> some View {
+        switch type {
+        case .respiration, .sleep:
+            SleepView()
+
+        case .happiness:
+            SleepView()
+
+        case .stress:
+            SleepView()
+        }
+    }
+    var body: some View {
+        NavigationLink {
+            destination(
+                for: MeditationTypeKind(
+                    rawValue: (MeditationTypeKind(rawValue: type)?.rawValue)!
+                ) ?? .respiration
             )
-        )
-        .foregroundColor(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+            
+        } label: {
+            VStack(alignment: .leading, spacing: 8) {
+                Image(systemName: icon)
+                    .font(.title2)
+
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+
+                Text(sessions)
+                    .font(.caption)
+                    .opacity(0.9)
+            }
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                LinearGradient(
+                    colors: colors,
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .foregroundColor(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+        }
     }
 }
 

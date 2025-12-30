@@ -101,6 +101,7 @@ struct StressView: View {
 }
 
 #Preview {
-    StressView()
+    @Previewable @State var speed: Double = 0.0
+    StressView(speed: $speed)
 }
 
