@@ -224,6 +224,7 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .modelContainer(for: StressData.self, inMemory: true)
 }
 
 extension Color {

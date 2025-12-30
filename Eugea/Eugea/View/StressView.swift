@@ -10,7 +10,7 @@ import SwiftData
 
 struct StressView: View {
     @Binding  var speed : Double
-    @State var isEditing: Bool = false
+    @State private var isEditing: Bool = false
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
     @Query var stressData: [StressData]
@@ -101,6 +101,6 @@ struct StressView: View {
 }
 
 #Preview {
-    @Previewable @State var speed : Double = 0.0
-    StressView(speed: $speed)
+    StressView()
 }
+
