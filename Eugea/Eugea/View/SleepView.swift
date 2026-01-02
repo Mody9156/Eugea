@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct SleepView: View {
-
+    @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         Text("Hello, World!")
     }
