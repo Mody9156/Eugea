@@ -15,8 +15,11 @@ struct antiAnxietyView: View {
             ForEach(
                 antiAnxietyViewModel.meditationType
             ) { type in
-                Text("")
+                Text(type.type)
+               
+                
             }
+
         }
         .task {
             try? await antiAnxietyViewModel.showExercise()
