@@ -9,7 +9,7 @@ import Foundation
 import Observation
 
 @Observable
-class antiAnxietyViewModel {
+class AntiAnxietyViewModel {
         let meditationConfiguration: MeditationConfiguration
         var MeditationType : [MeditationType] = []
     
