@@ -10,7 +10,9 @@ import SwiftUI
 struct antiAnxietyView: View {
     var antiAnxietyViewModel : AntiAnxietyViewModel
     var body: some View {
-        Text("Hello, World!")
+        VStack {
+            Text("Hello, World!")
+        }
     }
 }
 
