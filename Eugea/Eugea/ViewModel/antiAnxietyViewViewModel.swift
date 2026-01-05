@@ -11,7 +11,7 @@ import Observation
 @Observable
 class AntiAnxietyViewModel {
         let meditationConfiguration: MeditationConfiguration
-        var MeditationType : [MeditationType] = []
+        var meditationType : [MeditationType] = []
     
         init(meditationConfiguration: MeditationConfiguration = MeditationConfiguration()) {
             self.meditationConfiguration = meditationConfiguration
@@ -24,7 +24,7 @@ class AntiAnxietyViewModel {
         func showExercise() async throws {
             do{
                 let result =  try await meditationConfiguration.fetchResult_ofMeditation()
-                self.MeditationType = [result]
+                self.meditationType = [result]
             }catch{
                 throw ThrowableError.someError
             }

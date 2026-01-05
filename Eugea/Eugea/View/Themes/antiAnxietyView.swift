@@ -9,9 +9,17 @@ import SwiftUI
 
 struct antiAnxietyView: View {
     var antiAnxietyViewModel : AntiAnxietyViewModel
+    
     var body: some View {
         VStack {
-            Text("Hello, World!")
+            ForEach(
+                antiAnxietyViewModel.meditationType
+            ) { type in
+                Text("")
+            }
+        }
+        .task {
+            try? await antiAnxietyViewModel.showExercise()
         }
     }
 }
