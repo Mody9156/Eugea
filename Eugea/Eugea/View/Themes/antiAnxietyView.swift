@@ -12,13 +12,13 @@ struct antiAnxietyView: View {
     
     var body: some View {
         VStack {
-            ForEach(
-                antiAnxietyViewModel.meditationType
-            ) { type in
-                Text(type.type)
-               
-                
-            }
+//            ForEach(
+//                antiAnxietyViewModel.meditationType
+//            ) { type in
+//                Text(type.type)
+//               
+//                
+//            }
 
         }
         .task {
