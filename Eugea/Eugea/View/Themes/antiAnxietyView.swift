@@ -9,16 +9,15 @@ import SwiftUI
 
 struct antiAnxietyView: View {
     var antiAnxietyViewModel : AntiAnxietyViewModel
-    
+    var meditationType : [MeditationType] = []
     var body: some View {
         VStack {
-//            ForEach(
-//                antiAnxietyViewModel.meditationType
-//            ) { type in
-//                Text(type.type)
-//               
-//                
-//            }
+            ForEach(
+                meditationType
+            ) { type in
+                Text(type.type)
+                    .foregroundStyle(.blue)
+            }
 
         }
         .task {
