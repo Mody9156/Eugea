@@ -16,7 +16,7 @@ struct antiAnxietyView: View {
     var body: some View {
         VStack {
             ForEach(antiAnxietyViewModel.meditationType) { meditation in
-                Text(meditation.type)
+                Text(meditation.data.result)
                     .foregroundStyle(.red)
             }
         }

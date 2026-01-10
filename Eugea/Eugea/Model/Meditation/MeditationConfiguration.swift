@@ -52,10 +52,10 @@ class MeditationConfiguration {
             print("mauvaise réponse ")
             throw ThorwsErrors.badServerResponse
         }
-        print(" réponse: \(http_url_response) ")
         let decode = JSONDecoder()
         
         guard let data_meditation = try? decode.decode(MeditationType.self, from: data) else {
+            print(" error:")
             throw ThorwsErrors.badRequest
         }
         print(" decodage: \(data_meditation) ")
