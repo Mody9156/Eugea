@@ -32,8 +32,9 @@ class AntiAnxietyViewModel {
             )
             
             self.meditationType = [result]
-            
+            print("super")
         }catch{
+            print("dommage")
             throw ThrowableError.someError
         }
     }
