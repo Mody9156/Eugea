@@ -9,13 +9,17 @@ import SwiftUI
 
 struct antiAnxietyView: View {
     var antiAnxietyViewModel : AntiAnxietyViewModel
+    @State var backgroundMusic: String = "meditation-background-409198.mp3"
+    @State var duration: Int = 15
+    @State var meditationType: String = "loving-kindness"
+    
     var body: some View {
         VStack {
-           
 
         }
         .task {
-            try? await antiAnxietyViewModel.showExercise()
+            try? await antiAnxietyViewModel
+                .showExercise(backgroundMusic: backgroundMusic, duration: duration, meditationType: meditationType)
         }
     }
 }
