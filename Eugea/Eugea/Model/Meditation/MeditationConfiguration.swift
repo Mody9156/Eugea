@@ -22,7 +22,8 @@ class MeditationConfiguration {
     
     func fetchUrlRequest() -> URLRequest {
         let url = URL(string: "https://elysiatools.com/fr/api/tools/guided-meditation")!
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
         return request
     }
     
