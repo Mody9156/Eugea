@@ -16,7 +16,8 @@ class MeditationConfiguration {
     }
     
     enum ThorwsErrors:Error {
-        case badServerResponse
+        case badServerResponse,badRequest
+        
     }
     
     func fetchUrlRequest() -> URLRequest {
@@ -33,7 +34,9 @@ class MeditationConfiguration {
         }
         let decode = JSONDecoder()
         
-        let data_meditation:MeditationType = try decode.decode(MeditationType.self, from: data)
+        guard let data_meditation = try? decode.decode(MeditationType.self, from: data) else {
+            throw ThorwsErrors.badRequest
+        }
         return data_meditation
     }
 }
