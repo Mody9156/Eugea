@@ -11,11 +11,7 @@ struct antiAnxietyView: View {
     var antiAnxietyViewModel : AntiAnxietyViewModel
     var body: some View {
         VStack {
-            ForEach(
-                antiAnxietyViewModel.meditationType
-            ) { type in
-                
-            }
+           
 
         }
         .task {

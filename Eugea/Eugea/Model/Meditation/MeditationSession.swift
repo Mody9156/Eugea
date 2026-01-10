@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MeditationSession: Codable {
+struct MeditationSession: Encodable {
     var backgroundMusic: String
     var duration: Int
     var meditationType: String
