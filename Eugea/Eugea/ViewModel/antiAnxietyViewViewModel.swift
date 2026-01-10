@@ -10,23 +10,34 @@ import Observation
 
 @Observable
 class AntiAnxietyViewModel {
-        let meditationConfiguration: MeditationConfiguration
-        var meditationType : [MeditationType] = []
+    let meditationConfiguration: MeditationConfiguration
+    var meditationType : [MeditationType] = []
     
-        init(meditationConfiguration: MeditationConfiguration = MeditationConfiguration()) {
-            self.meditationConfiguration = meditationConfiguration
-        }
+    init(meditationConfiguration: MeditationConfiguration = MeditationConfiguration()) {
+        self.meditationConfiguration = meditationConfiguration
+    }
     
-        enum ThrowableError: Swift.Error {
-            case someError
-        }
+    enum ThrowableError: Swift.Error {
+        case someError
+    }
     
-        func showExercise() async throws {
-            do{
-                let result =  try await meditationConfiguration.fetchResult_ofMeditation()
-                self.meditationType = [result]
-            }catch{
-                throw ThrowableError.someError
-            }
+    func showExercise(
+        backgroundMusic: String,
+        duration: Int,
+        meditationType: String) async throws {
+        
+        do{
+            let result = try await meditationConfiguration.fetchResult_ofMeditation(
+                backgroundMusic: backgroundMusic,
+                duration: duration,
+                meditationType: meditationType
+            )
+            
+            self.meditationType = [result]
+            print("super")
+        }catch{
+            print("dommage")
+            throw ThrowableError.someError
         }
+    }
 }

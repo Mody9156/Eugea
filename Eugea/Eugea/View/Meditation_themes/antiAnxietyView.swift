@@ -8,20 +8,21 @@
 import SwiftUI
 
 struct antiAnxietyView: View {
-    var antiAnxietyViewModel : AntiAnxietyViewModel
-    var meditationType : [MeditationType] = []
+   var antiAnxietyViewModel : AntiAnxietyViewModel
+    @State var backgroundMusic: String = "meditation-background-409198.mp3"
+    @State var duration: Int = 15
+    @State var meditationType: String = "loving-kindness"
+    
     var body: some View {
         VStack {
-            ForEach(
-                meditationType
-            ) { type in
-                Text(type.type)
-                    .foregroundStyle(.blue)
+            ForEach(antiAnxietyViewModel.meditationType) { meditation in
+                Text(meditation.data.result)
+                    .foregroundStyle(.red)
             }
-
         }
         .task {
-            try? await antiAnxietyViewModel.showExercise()
+            try? await antiAnxietyViewModel
+                .showExercise(backgroundMusic: backgroundMusic, duration: duration, meditationType: meditationType)
         }
     }
 }

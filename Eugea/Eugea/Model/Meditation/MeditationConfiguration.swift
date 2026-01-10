@@ -16,24 +16,49 @@ class MeditationConfiguration {
     }
     
     enum ThorwsErrors:Error {
-        case badServerResponse
+        case badServerResponse,badRequest
+        
     }
     
-    func fetchUrlRequest() -> URLRequest {
+    func fetchUrlRequest(backgroundMusic: String,
+                         duration: Int,
+                         meditationType: String) throws  -> URLRequest {
         let url = URL(string: "https://elysiatools.com/fr/api/tools/guided-meditation")!
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let meditation = MeditationSession(
+            backgroundMusic: backgroundMusic,
+            duration: duration,
+            meditationType: meditationType
+        )
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let result = try JSONEncoder().encode(meditation)
+        request.httpBody = result
         return request
     }
     
-    func fetchResult_ofMeditation() async throws -> MeditationType {
-        let (data,reponse) = try await session.fetchRequest(url: fetchUrlRequest())
+    func fetchResult_ofMeditation(backgroundMusic: String,
+                                  duration: Int,
+                                  meditationType: String) async throws -> MeditationType {
+        let (data,reponse) = try await session.fetchRequest(
+            url: fetchUrlRequest(
+                backgroundMusic: backgroundMusic,
+                duration: duration,
+                meditationType: meditationType
+            )
+        )
         
         guard let http_url_response = reponse as? HTTPURLResponse,  http_url_response.statusCode == 200 else {
+            print("mauvaise réponse ")
             throw ThorwsErrors.badServerResponse
         }
         let decode = JSONDecoder()
         
-        let data_meditation:MeditationType = try decode.decode(MeditationType.self, from: data)
+        guard let data_meditation = try? decode.decode(MeditationType.self, from: data) else {
+            print(" error:")
+            throw ThorwsErrors.badRequest
+        }
+        print(" decodage: \(data_meditation) ")
         return data_meditation
     }
 }
