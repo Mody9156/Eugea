@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Welcome
-struct MeditationType: Decodable,Identifiable {
+struct MeditationType: Codable,Identifiable {
     var id = UUID()
     let data: DataClass
     let type: String
