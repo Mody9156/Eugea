@@ -12,9 +12,6 @@ import Observation
 class AntiAnxietyViewModel {
     let meditationConfiguration: MeditationConfiguration
     var meditationType : [MeditationSession] = []
-    var backgroundMusic: String = ""
-    var duration: Int = 0
-    var  meditationType: String = ""
     
     init(meditationConfiguration: MeditationConfiguration = MeditationConfiguration()) {
         self.meditationConfiguration = meditationConfiguration
