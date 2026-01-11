@@ -16,13 +16,13 @@ struct antiAnxietyView: View {
     var body: some View {
         VStack {
             ForEach(antiAnxietyViewModel.meditationType) { meditation in
-                Text(meditation.data.result)
+                Text(meditation.data.scripts)
                     .foregroundStyle(.red)
             }
         }
         .task {
-            try? await antiAnxietyViewModel
-                .showExercise(backgroundMusic: backgroundMusic, duration: duration, meditationType: meditationType)
+             try? await antiAnxietyViewModel
+                .showExercise()
         }
     }
 }
