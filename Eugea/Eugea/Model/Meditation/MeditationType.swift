@@ -8,7 +8,8 @@
 import Foundation
 
 // MARK: - Welcome
-struct MeditationType: Codable,Identifiable {
+// MARK: - Welcome
+struct MeditationType: Codable, Identifiable {
     var id = UUID()
     let data: DataClass
     let type: String
@@ -18,7 +19,7 @@ struct MeditationType: Codable,Identifiable {
 struct DataClass: Codable {
     let result: String
     let interactive: Bool
-    let state: MeditationState   // ✅ renommé ici
+    let state: State
     let components: [Component]
     let actions: [Action]
     let styles, scripts: String
@@ -67,13 +68,12 @@ struct Metadata: Codable {
     let features, accessibility: [String]
 }
 
-// MARK: - MeditationState ✅ (ex-State)
-struct MeditationState: Codable {
+// MARK: - State
+struct State: Codable {
     let meditationType: String
     let duration: Int
     let backgroundMusic: String
-    let isRunning: Bool
-    let isPaused: Bool
+    let isRunning, isPaused: Bool
     let remainingTime: Int
     let language: String
     let content: Content
@@ -81,7 +81,6 @@ struct MeditationState: Codable {
 
 // MARK: - Content
 struct Content: Codable {
-    let name: String
-    let description: String
+    let name, description: String
     let steps: [String]
 }

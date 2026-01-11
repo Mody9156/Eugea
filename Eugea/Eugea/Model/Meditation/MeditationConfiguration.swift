@@ -15,7 +15,7 @@ class MeditationConfiguration {
         self.session = session
     }
     
-    enum ThorwsErrors:Error {
+    enum ThrowsError:Error {
         case badServerResponse,badRequest
         
     }
@@ -32,7 +32,9 @@ class MeditationConfiguration {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let result = try JSONEncoder().encode(meditation)
         request.httpBody = result
-        print("result:\(String(describing: result))")
+        if let json = String(data: result, encoding: .utf8) {
+            print("📤 Body JSON:\n\(json)")
+        }
         print("request.httpBody:\(String(describing: request.httpBody))")
         return request
     }
@@ -44,15 +46,17 @@ class MeditationConfiguration {
         
         guard let http_url_response = reponse as? HTTPURLResponse,  http_url_response.statusCode == 200 else {
             print("mauvaise réponse ")
-            throw ThorwsErrors.badServerResponse
+            throw ThrowsError.badServerResponse
         }
         let decode = JSONDecoder()
         
-        guard let data_meditation = try? decode.decode(MeditationType.self, from: data) else {
-            print(" error:")
-            throw ThorwsErrors.badRequest
+        
+        do {
+            let meditation = try decode.decode(MeditationType.self, from: data)
+            return meditation
+        } catch {
+            print("❌ Decoding error:", error)
+            throw ThrowsError.badRequest
         }
-        print(" decodage: \(data_meditation) ")
-        return data_meditation
     }
 }
