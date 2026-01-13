@@ -57,7 +57,7 @@ class MeditationConfiguration {
         
         do {
             let decode = JSONDecoder()
-            let  meditation = try decode.decode(MeditationType.self, from: data)
+            let meditation = try decode.decode(MeditationType.self, from: data)
             return meditation
         } catch {
             print("❌ Decoding error:", error)
