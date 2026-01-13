@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ManageMeditation: Medidation {
+class ManageMeditation: Meditation {
     
     let session : URLSession
     

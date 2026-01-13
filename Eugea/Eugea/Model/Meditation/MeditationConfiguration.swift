@@ -8,9 +8,9 @@
 import Foundation
 
 class MeditationConfiguration {
-    let session : Medidation
+    let session : Meditation
     
-    init(session: Medidation = ManageMeditation()) {
+    init(session: Meditation = ManageMeditation()) {
         self.session = session
     }
     
