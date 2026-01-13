@@ -9,53 +9,59 @@ import Foundation
 
 
 class MeditationConfiguration {
-    let session : Medidation
+    let session: Meditation
     
-    init(session: Medidation = ManageMeditation()) {
+    init(session: Meditation = ManageMeditation()) {
         self.session = session
     }
     
-    enum ThrowsError:Error {
-        case badServerResponse,badRequest
-        
+    enum MeditationError: Error {
+        case badServerResponse
+        case badRequest
     }
     
-    func fetchUrlRequest() throws  -> URLRequest {
-        let url = URL(string: "https://elysiatools.com/fr/api/tools/guided-meditation")!
+    func fetchUrlRequest() throws -> URLRequest {
+        guard let url = URL(string: "https://elysiatools.com/fr/api/tools/guided-meditation") else {
+            fatalError("URL invalide")
+        }
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         let meditation = MeditationSession(
             backgroundMusic: "meditation-background-409198.mp3",
             duration: 15,
             meditationType: "loving-kindness"
         )
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let result = try JSONEncoder().encode(meditation)
-        request.httpBody = result
-        if let json = String(data: result, encoding: .utf8) {
+        
+        let data = try JSONEncoder().encode(meditation)
+        request.httpBody = data
+        
+        if let json = String(data: data, encoding: .utf8) {
             print("📤 Body JSON:\n\(json)")
         }
-        print("request.httpBody:\(String(describing: request.httpBody))")
+        
         return request
     }
     
     func fetchResult_ofMeditation() async throws -> MeditationType {
-        let (data,reponse) = try await session.fetchRequest(
-            url: fetchUrlRequest()
-        )
+        let (data, response) = try await session.fetchRequest(url: fetchUrlRequest())
         
-        guard let http_url_response = reponse as? HTTPURLResponse,  http_url_response.statusCode == 200 else {
-            print("mauvaise réponse ")
-            throw ThrowsError.badServerResponse
-        }        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            print("❌ Mauvaise réponse du serveur")
+            throw MeditationError.badServerResponse
+        }
         
         do {
-            let decode = JSONDecoder()
-            let meditation = try decode.decode(MeditationType.self, from: data)
+            let meditation = try JSONDecoder().decode(MeditationType.self, from: data)
             return meditation
         } catch {
-            print("❌ Decoding error:", error)
-            throw ThrowsError.badRequest
+            print("❌ Erreur de décodage:", error)
+            if let json = String(data: data, encoding: .utf8) {
+                print("📥 Contenu reçu:\n\(json)")
+            }
+            throw MeditationError.badRequest
         }
     }
 }
