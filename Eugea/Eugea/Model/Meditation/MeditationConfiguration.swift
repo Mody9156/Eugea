@@ -47,11 +47,10 @@ class MeditationConfiguration {
         guard let http_url_response = reponse as? HTTPURLResponse,  http_url_response.statusCode == 200 else {
             print("mauvaise réponse ")
             throw ThrowsError.badServerResponse
-        }
-        let decode = JSONDecoder()
-        
+        }        
         
         do {
+            let decode = JSONDecoder()
             let meditation = try decode.decode(MeditationType.self, from: data)
             return meditation
         } catch {
