@@ -7,35 +7,41 @@
 
 import Foundation
 
-
 class MeditationConfiguration {
-    let session : Medidation
+    let session : Meditation
     
-    init(session: Medidation = ManageMeditation()) {
+    init(session: Meditation = ManageMeditation()) {
         self.session = session
     }
     
-    enum ThrowsError:Error {
-        case badServerResponse,badRequest
-        
+    enum MeditationError: Error {
+        case badServerResponse
+        case badRequest
+        case badUrl
     }
     
     func fetchUrlRequest() throws  -> URLRequest {
-        let url = URL(string: "https://elysiatools.com/fr/api/tools/guided-meditation")!
+        guard let url = URL(string: "https://elysiatools.com/fr/api/tools/guided-meditation") else {
+            throw MeditationError.badUrl
+        }
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         let meditation = MeditationSession(
             backgroundMusic: "meditation-background-409198.mp3",
             duration: 15,
             meditationType: "loving-kindness"
         )
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let result = try JSONEncoder().encode(meditation)
-        request.httpBody = result
-        if let json = String(data: result, encoding: .utf8) {
+        
+        let data = try JSONEncoder().encode(meditation)
+        request.httpBody = data
+        
+        if let json = String(data: data, encoding: .utf8) {
             print("📤 Body JSON:\n\(json)")
         }
-        print("request.httpBody:\(String(describing: request.httpBody))")
+        
         return request
     }
     
@@ -46,17 +52,16 @@ class MeditationConfiguration {
         
         guard let http_url_response = reponse as? HTTPURLResponse,  http_url_response.statusCode == 200 else {
             print("mauvaise réponse ")
-            throw ThrowsError.badServerResponse
+            throw MeditationError.badServerResponse
         }
-        let decode = JSONDecoder()
-        
         
         do {
+            let decode = JSONDecoder()
             let meditation = try decode.decode(MeditationType.self, from: data)
             return meditation
         } catch {
             print("❌ Decoding error:", error)
-            throw ThrowsError.badRequest
+            throw MeditationError.badRequest
         }
     }
 }

@@ -17,7 +17,7 @@ class AntiAnxietyViewModel {
         self.meditationConfiguration = meditationConfiguration
     }
     
-    enum ThrowableError: Swift.Error {
+    enum ThrowableError: Error {
         case someError
     }
     

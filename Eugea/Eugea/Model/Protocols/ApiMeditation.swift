@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol Medidation {
+protocol Meditation {
     func fetchRequest(url:URLRequest) async throws -> (Data, URLResponse)
 }

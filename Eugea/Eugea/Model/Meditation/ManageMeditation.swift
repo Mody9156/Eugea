@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ManageMeditation: Medidation {
+class ManageMeditation: Meditation {
     
     let session : URLSession
     
@@ -20,7 +20,7 @@ class ManageMeditation: Medidation {
     }
     
     func fetchRequest(url: URLRequest) async throws -> (Data, URLResponse) {
-        let (data,response) = try await  session.data(for: url)
+        let (data,response) = try await session.data(for: url)
         
         guard let http_url_response = response as? HTTPURLResponse , http_url_response.statusCode == 200 else {
             throw ThorwsErrors.badServerResponse
