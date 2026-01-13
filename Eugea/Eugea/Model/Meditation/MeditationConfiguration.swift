@@ -9,20 +9,21 @@ import Foundation
 
 
 class MeditationConfiguration {
-    let session: Meditation
+    let session : Medidation
     
-    init(session: Meditation = ManageMeditation()) {
+    init(session: Medidation = ManageMeditation()) {
         self.session = session
     }
     
     enum MeditationError: Error {
         case badServerResponse
         case badRequest
+        case badUrl
     }
     
-    func fetchUrlRequest() throws -> URLRequest {
+    func fetchUrlRequest() throws  -> URLRequest {
         guard let url = URL(string: "https://elysiatools.com/fr/api/tools/guided-meditation") else {
-            fatalError("URL invalide")
+            throw MeditationError.badUrl
         }
         
         var request = URLRequest(url: url)
@@ -46,21 +47,21 @@ class MeditationConfiguration {
     }
     
     func fetchResult_ofMeditation() async throws -> MeditationType {
-        let (data, response) = try await session.fetchRequest(url: fetchUrlRequest())
+        let (data,reponse) = try await session.fetchRequest(
+            url: fetchUrlRequest()
+        )
         
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            print("❌ Mauvaise réponse du serveur")
+        guard let http_url_response = reponse as? HTTPURLResponse,  http_url_response.statusCode == 200 else {
+            print("mauvaise réponse ")
             throw MeditationError.badServerResponse
         }
         
         do {
-            let meditation = try JSONDecoder().decode(MeditationType.self, from: data)
+            let decode = JSONDecoder()
+            let  meditation = try decode.decode(MeditationType.self, from: data)
             return meditation
         } catch {
-            print("❌ Erreur de décodage:", error)
-            if let json = String(data: data, encoding: .utf8) {
-                print("📥 Contenu reçu:\n\(json)")
-            }
+            print("❌ Decoding error:", error)
             throw MeditationError.badRequest
         }
     }
