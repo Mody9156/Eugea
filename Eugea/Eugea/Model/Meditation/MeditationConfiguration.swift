@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class MeditationConfiguration {
     let session : Medidation
     
