@@ -51,7 +51,7 @@ class MeditationConfiguration {
         )
         
         guard let http_url_response = reponse as? HTTPURLResponse,  http_url_response.statusCode == 200 else {
-            print("mauvaise réponse ")
+            print("❌ mauvaise réponse")
             throw MeditationError.badServerResponse
         }
         
