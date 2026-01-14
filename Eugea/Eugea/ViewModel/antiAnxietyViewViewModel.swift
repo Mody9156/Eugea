@@ -11,7 +11,7 @@ import Observation
 @Observable
 class AntiAnxietyViewModel {
     let meditationConfiguration: MeditationConfiguration
-    var meditationType : [MeditationType] = []
+    var meditation : [Meditation] = []
     
     init(meditationConfiguration: MeditationConfiguration = MeditationConfiguration()) {
         self.meditationConfiguration = meditationConfiguration
@@ -26,11 +26,11 @@ class AntiAnxietyViewModel {
         do{
             let result = try await meditationConfiguration.fetchResult_ofMeditation()
             
-            self.meditationType = [result]
+            self.meditation = [result]
             print("super")
         }catch{
-            print("meditationType \(meditationType.count)")
-            print("meditationType \(meditationType.description)")
+            print("meditationType \(meditation.count)")
+            print("meditationType \(meditation.description)")
             print("dommage")
             throw ThrowableError.someError
         }

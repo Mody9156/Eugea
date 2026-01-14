@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Welcome
-struct MeditationType: Codable, Identifiable {
+struct Meditation: Codable, Identifiable {
     var id = UUID()
     var data: DataClass
     var type: String
@@ -68,7 +68,7 @@ struct Metadata: Codable {
 }
 
 // MARK: - State
-struct State: Codable {
+struct MeditationState: Codable {
     var meditationType: String
     var duration: Int
     var backgroundMusic: String

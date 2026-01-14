@@ -45,7 +45,7 @@ class MeditationConfiguration {
         return request
     }
     
-    func fetchResult_ofMeditation() async throws -> MeditationType {
+    func fetchResult_ofMeditation() async throws -> Meditation {
         let (data,reponse) = try await session.fetchRequest(
             url: fetchUrlRequest()
         )
@@ -57,7 +57,7 @@ class MeditationConfiguration {
         
         do {
             let decode = JSONDecoder()
-            let meditation = try decode.decode(MeditationType.self, from: data)
+            let meditation = try decode.decode(Meditation.self, from: data)
             return meditation
         } catch {
             print("❌ Decoding error:", error)
