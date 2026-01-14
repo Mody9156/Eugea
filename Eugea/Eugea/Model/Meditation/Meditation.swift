@@ -10,15 +10,15 @@ import Foundation
 // MARK: - Welcome
 struct Meditation: Codable, Identifiable {
     var id = UUID()
-    var data: DataClass
+    var data: MeditationDataClass
     var type: String
 }
 
 // MARK: - DataClass
-struct DataClass: Codable {
+struct MeditationDataClass: Codable {
     var result: String
     var interactive: Bool
-    var state: State
+    var state: MeditationState
     var components: [Component]
     var actions: [Action]
     var styles, scripts: String
