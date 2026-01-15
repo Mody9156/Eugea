@@ -21,10 +21,16 @@ class AntiAnxietyViewModel {
         case someError
     }
     
-    func showExercise() async throws {
+    func showExercise(backgroundMusic: String,
+                      duration: Int,
+                      meditationType: String) async throws {
         
         do{
-            let result = try await meditationConfiguration.fetchResult_ofMeditation()
+            let result = try await meditationConfiguration.fetchResult_ofMeditation(
+                backgroundMusic: backgroundMusic,
+                duration: duration,
+                meditationType: meditationType
+            )
             
             self.meditation = [result]
             print("super")

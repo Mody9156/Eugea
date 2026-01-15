@@ -9,9 +9,10 @@ import Foundation
 
 // MARK: - Welcome
 struct Meditation: Codable, Identifiable {
-    var id = UUID()
     var data: MeditationDataClass
     var type: String
+    
+    var id: String?
 }
 
 // MARK: - DataClass
