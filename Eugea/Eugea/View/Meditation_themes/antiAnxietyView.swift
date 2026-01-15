@@ -9,14 +9,14 @@ import SwiftUI
 
 struct antiAnxietyView: View {
    var antiAnxietyViewModel : AntiAnxietyViewModel
-//    @State var backgroundMusic: String = "meditation-background-409198.mp3"
-//    @State var duration: Int = 15
-//    @State var meditationType: String = "loving-kindness"
-//    
+    @State var backgroundMusic: String = "meditation-background-409198.mp3"
+    @State var duration: Int = 15
+    @State var meditationType: String = "loving-kindness"
+    
     var body: some View {
         VStack {
             ForEach(antiAnxietyViewModel.meditation) { meditation in
-                Text(meditation.data.scripts)
+                Text(meditation.data.state.meditationType)
                     .foregroundStyle(.red)
             }
         }
