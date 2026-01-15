@@ -20,7 +20,9 @@ class MeditationConfiguration {
         case badUrl
     }
     
-    func fetchUrlRequest() throws  -> URLRequest {
+    func fetchUrlRequest(backgroundMusic: String,
+                         duration: Int,
+                         meditationType: String) throws  -> URLRequest {
         guard let url = URL(string: "https://elysiatools.com/fr/api/tools/guided-meditation") else {
             throw MeditationError.badUrl
         }
@@ -30,9 +32,9 @@ class MeditationConfiguration {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let meditation = MeditationSession(
-            backgroundMusic: "meditation-background-409198.mp3",
-            duration: 15,
-            meditationType: "loving-kindness"
+            backgroundMusic: backgroundMusic,
+            duration: duration,
+            meditationType: meditationType
         )
         
         let data = try JSONEncoder().encode(meditation)
@@ -45,9 +47,15 @@ class MeditationConfiguration {
         return request
     }
     
-    func fetchResult_ofMeditation() async throws -> Meditation {
+    func fetchResult_ofMeditation( backgroundMusic: String,
+                                   duration: Int,
+                                   meditationType: String) async throws -> Meditation {
         let (data,reponse) = try await session.fetchRequest(
-            url: fetchUrlRequest()
+            url: fetchUrlRequest(
+                backgroundMusic: backgroundMusic,
+                duration: duration,
+                meditationType: meditationType
+            )
         )
         
         guard let http_url_response = reponse as? HTTPURLResponse,  http_url_response.statusCode == 200 else {
