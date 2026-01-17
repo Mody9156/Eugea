@@ -22,6 +22,20 @@ struct antiAnxietyView: View {
                 Text("\(meditation.data.state.duration)")
                 Text(meditation.data.state.meditationType)
                     .foregroundStyle(.red)
+                
+                Button {
+                    
+                } label: {
+                    Text("Jouer")
+                }
+                .padding()
+                .background(Color.purple)
+                .foregroundStyle(.white)
+                .font(.callout.bold())
+                
+                
+
+                
             }
         }
         .task {
