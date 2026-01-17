@@ -15,9 +15,11 @@ struct antiAnxietyView: View {
     
     var body: some View {
         VStack {
+            
             Image(systemName: "play.fill")
             
             ForEach(antiAnxietyViewModel.meditation) { meditation in
+                Text("\(meditation.data.state.duration)")
                 Text(meditation.data.state.meditationType)
                     .foregroundStyle(.red)
             }
