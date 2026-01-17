@@ -12,31 +12,31 @@ struct antiAnxietyView: View {
     @State var backgroundMusic: String = "meditation-background-409198.mp3"
     @State var duration: Int = 15
     @State var meditationType: String = "loving-kindness"
+    @State var description : [String] = []
     
     var body: some View {
         VStack {
             
-            Image(systemName: "play.fill")
-            
             ForEach(antiAnxietyViewModel.meditation) { meditation in
+                Text(meditation.data.state.content.description)
+                Text(meditation.data.state.content.name)
+//                Text(meditation.data.state.content.steps.description)
                 Text("\(meditation.data.state.duration)")
                 Text(meditation.data.state.meditationType)
                     .foregroundStyle(.red)
                 
-                Button {
-                    
-                } label: {
-                    Text("Jouer")
-                }
-                .padding()
-                .background(Color.purple)
-                .foregroundStyle(.white)
-                .font(.callout.bold())
-                
-                
-
                 
             }
+            
+            Button {
+                
+            } label: {
+                Text("Jouer")
+            }
+            .padding()
+            .background(Color.purple)
+            .foregroundStyle(.white)
+            .font(.callout.bold())
         }
         .task {
             try? await antiAnxietyViewModel
