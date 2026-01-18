@@ -22,13 +22,17 @@ struct antiAnxietyView: View {
                 Text(meditation.data.state.content.description)
                 Text(meditation.data.state.content.name)
                 
-//                ForEach(
-//                    meditation.data.state.content.steps.description,id: \.self
-//                    id: \.self
-//                ) { description in
-//                    Text("")
-//                }
-                
+                if let steps = meditation.data.state.content.steps as? [String] {
+                    ForEach(steps, id: \.self) { step in
+                        Text(step)
+                    }
+                } else {
+                    // Fallback: split description into lines if it's a single String
+                    ForEach(meditation.data.state.content.steps.description.split(separator: "\n").map(String.init), id: \.self) { line in
+                        Text(line)
+                    }
+                }
+//
                 Text("\(meditation.data.state.duration)")
                 Text(meditation.data.state.meditationType)
                     .foregroundStyle(.red)
