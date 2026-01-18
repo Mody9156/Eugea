@@ -25,20 +25,15 @@ struct antiAnxietyView: View {
                 if let steps = meditation.data.state.content.steps as? [String] {
                     ForEach(steps, id: \.self) { step in
                         Text(step)
-                    }
-                } else {
-                    // Fallback: split description into lines if it's a single String
-                    ForEach(meditation.data.state.content.steps.description.split(separator: "\n").map(String.init), id: \.self) { line in
-                        Text(line)
+                            .foregroundStyle(.green)
                     }
                 }
-//
+
                 Text("\(meditation.data.state.duration)")
                 Text(meditation.data.state.meditationType)
                     .foregroundStyle(.red)
                 
             }
-           
             
             Button {
                 
