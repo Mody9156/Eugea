@@ -22,12 +22,14 @@ struct antiAnxietyView: View {
                 Text(meditation.data.state.content.description)
                 Text(meditation.data.state.content.name)
                 
-                if let steps = meditation.data.state.content.steps as? [String] {
+                 let steps = meditation.data.state.content.steps
+                
                     ForEach(steps, id: \.self) { step in
+                        
                         Text(step)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(.black)
                     }
-                }
+                
 
                 Text("\(meditation.data.state.duration)")
                 Text(meditation.data.state.meditationType)
