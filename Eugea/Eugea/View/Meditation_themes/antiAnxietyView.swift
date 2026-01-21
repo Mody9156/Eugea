@@ -48,6 +48,9 @@ struct antiAnxietyView: View {
                     RoundedRectangle(cornerRadius: 12)
                         .frame(height: 100)
                         .foregroundStyle(.primary.opacity(0.4))
+                        .overlay {
+                           //Write 
+                        }
                     
                     // 📦 Cartes de méditation
                     ForEach(antiAnxietyViewModel.meditation) { meditation in
