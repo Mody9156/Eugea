@@ -24,6 +24,8 @@ struct antiAnxietyView: View {
             )
             .ignoresSafeArea()
 
+          
+            
             ScrollView {
                 VStack(spacing: 24) {
 
@@ -43,6 +45,10 @@ struct antiAnxietyView: View {
                     }
                     .padding(.top, 40)
 
+                    RoundedRectangle(cornerRadius: 12)
+                        .frame(height: 100)
+                        .foregroundStyle(.primary.opacity(0.4))
+                    
                     // 📦 Cartes de méditation
                     ForEach(antiAnxietyViewModel.meditation) { meditation in
                         VStack(alignment: .leading, spacing: 16) {
