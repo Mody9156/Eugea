@@ -15,44 +15,118 @@ struct antiAnxietyView: View {
     
     
     var body: some View {
-       
-        VStack {
-            
-            ForEach(antiAnxietyViewModel.meditation) { meditation in
-                Text(meditation.data.state.content.description)
-                Text(meditation.data.state.content.name)
-                
-                 let steps = meditation.data.state.content.steps
-                
-                    ForEach(steps, id: \.self) { step in
-                        
-                        Text(step)
-                            .foregroundStyle(.black)
-                    }
-                
+        ZStack {
+            // 🌈 Background doux
+            LinearGradient(
+                colors: [Color.purple.opacity(0.4), Color.blue.opacity(0.3)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
 
-                Text("\(meditation.data.state.duration)")
-                Text(meditation.data.state.meditationType)
-                    .foregroundStyle(.red)
-                
+            ScrollView {
+                VStack(spacing: 24) {
+
+                    // 🧘‍♀️ Titre
+                    VStack(spacing: 8) {
+                        Image(systemName: "brain.head.profile")
+                            .font(.system(size: 40))
+                            .foregroundStyle(.white)
+
+                        Text("Anti-Anxiété")
+                            .font(.largeTitle.bold())
+                            .foregroundStyle(.white)
+
+                        Text("Prenez un moment pour respirer")
+                            .font(.subheadline)
+                            .foregroundStyle(.white.opacity(0.8))
+                    }
+                    .padding(.top, 40)
+
+                    // 📦 Cartes de méditation
+                    ForEach(antiAnxietyViewModel.meditation) { meditation in
+                        VStack(alignment: .leading, spacing: 16) {
+
+                            Text(meditation.data.state.content.name)
+                                .font(.title2.bold())
+
+                            Text(meditation.data.state.content.description)
+                                .font(.body)
+                                .foregroundStyle(.secondary)
+
+                            Divider()
+
+                            VStack(alignment: .leading, spacing: 10) {
+                                ForEach(meditation.data.state.content.steps, id: \.self) { step in
+                                    HStack(alignment: .top) {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundStyle(.purple)
+                                        Text(step)
+                                            .font(.callout)
+                                    }
+                                }
+                            }
+
+                            Divider()
+
+                            HStack {
+                                Label(
+                                    "\(meditation.data.state.duration) min",
+                                    systemImage: "clock"
+                                )
+
+                                Spacer()
+
+                                Label(
+                                    meditation.data.state.meditationType,
+                                    systemImage: "heart.fill"
+                                )
+                                .foregroundStyle(.purple)
+                            }
+                            .font(.caption.bold())
+                        }
+                        .padding()
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                        .shadow(radius: 8)
+                    }
+
+                    // ▶️ Bouton jouer
+                    Button {
+                        // Action play
+                    } label: {
+                        HStack {
+                            Image(systemName: "play.fill")
+                            Text("Commencer la méditation")
+                                .font(.headline)
+                        }
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                    }
+                    .background(
+                        LinearGradient(
+                            colors: [.purple, .blue],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .foregroundStyle(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
+                    .shadow(radius: 10)
+                    .padding(.vertical, 30)
+                }
+                .padding(.horizontal)
             }
-            
-            Button {
-                
-            } label: {
-                Text("Jouer")
-            }
-            .padding()
-            .background(Color.purple)
-            .foregroundStyle(.white)
-            .font(.callout.bold())
         }
         .task {
-            try? await antiAnxietyViewModel
-                .showExercise(backgroundMusic: backgroundMusic, duration: duration, meditationType: meditationType)
+            try? await antiAnxietyViewModel.showExercise(
+                backgroundMusic: backgroundMusic,
+                duration: duration,
+                meditationType: meditationType
+            )
         }
-        
     }
+
 }
 
 
