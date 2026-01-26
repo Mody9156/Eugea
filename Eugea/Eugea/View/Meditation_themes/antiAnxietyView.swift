@@ -12,7 +12,7 @@ struct antiAnxietyView: View {
     @State var backgroundMusic: String = "meditation-background-409198.mp3"
     @State var duration: Int = 15
     @State var meditationType: String = "loving-kindness"
-    
+    @State private var activeButton : Bool = false
     
     var body: some View {
         ZStack {
