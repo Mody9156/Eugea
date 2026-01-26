@@ -96,10 +96,11 @@ struct antiAnxietyView: View {
                     // ▶️ Bouton jouer
                     Button {
                         // Action play
+                        activeButton.toggle()
                     } label: {
                         HStack {
-                            Image(systemName: "play.fill")
-                            Text("Commencer la méditation")
+                            Image(systemName: activeButton ? "pause" : "play.fill")
+                            Text(activeButton ? "Stopper la méditation" : "Commencer la méditation")
                                 .font(.headline)
                         }
                         .padding()
