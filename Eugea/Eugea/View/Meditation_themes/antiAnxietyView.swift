@@ -16,7 +16,6 @@ struct antiAnxietyView: View {
     
     var body: some View {
         ZStack {
-            // 🌈 Background doux
             LinearGradient(
                 colors: [Color.purple.opacity(0.4), Color.blue.opacity(0.3)],
                 startPoint: .topLeading,
@@ -24,11 +23,8 @@ struct antiAnxietyView: View {
             )
             .ignoresSafeArea()
 
-          
-            
             ScrollView {
                 VStack(spacing: 24) {
-
                     // 🧘‍♀️ Titre
                     VStack(spacing: 8) {
                         Image(systemName: "brain.head.profile")
@@ -48,9 +44,6 @@ struct antiAnxietyView: View {
                     RoundedRectangle(cornerRadius: 12)
                         .frame(height: 100)
                         .foregroundStyle(.primary.opacity(0.4))
-                        .overlay {
-                           //Write 
-                        }
                     
                     // 📦 Cartes de méditation
                     ForEach(antiAnxietyViewModel.meditation) { meditation in
