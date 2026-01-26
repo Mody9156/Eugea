@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct antiAnxietyView: View {
-    var antiAnxietyViewModel : AntiAnxietyViewModel
-    @State var backgroundMusic: String = "meditation-background-409198.mp3"
-    @State var duration: Int = 15
-    @State var meditationType: String = "loving-kindness"
-    @State private var activeButton : Bool = false
-    
+
+    var antiAnxietyViewModel: AntiAnxietyViewModel
+
+    @State private var backgroundMusic: String = "meditation-background-409198.mp3"
+    @State private var duration: Int = 15
+    @State private var meditationType: String = "loving-kindness"
+
+    // State dynamique
+    @State private var isRunning: Bool = false
+    @State private var isPaused: Bool = false
+    @State private var remainingTime: Int = 0
+
     var body: some View {
         ZStack {
             LinearGradient(
@@ -25,7 +31,8 @@ struct antiAnxietyView: View {
 
             ScrollView {
                 VStack(spacing: 24) {
-                    // 🧘‍♀️ Titre
+
+                    // MARK: - Header
                     VStack(spacing: 8) {
                         Image(systemName: "brain.head.profile")
                             .font(.system(size: 40))
@@ -41,23 +48,22 @@ struct antiAnxietyView: View {
                     }
                     .padding(.top, 40)
 
-                    RoundedRectangle(cornerRadius: 12)
-                        .frame(height: 100)
-                        .foregroundStyle(.primary.opacity(0.4))
-                    
-                    // 📦 Cartes de méditation
+                    // MARK: - Meditations
                     ForEach(antiAnxietyViewModel.meditation) { meditation in
                         VStack(alignment: .leading, spacing: 16) {
 
+                            // Title
                             Text(meditation.data.state.content.name)
                                 .font(.title2.bold())
 
+                            // Description
                             Text(meditation.data.state.content.description)
                                 .font(.body)
                                 .foregroundStyle(.secondary)
 
                             Divider()
 
+                            // Steps
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(meditation.data.state.content.steps, id: \.self) { step in
                                     HStack(alignment: .top) {
@@ -71,52 +77,133 @@ struct antiAnxietyView: View {
 
                             Divider()
 
+                            // Components dynamiques
+                            ForEach(meditation.data.components, id: \.id) { component in
+                                switch component.type {
+
+                                case "text":
+                                    Text(component.config.text ?? "")
+                                        .font(.callout)
+                                        .foregroundStyle(.secondary)
+
+                                case "timer":
+                                    VStack(alignment: .leading) {
+                                        Text("Progression")
+                                            .font(.caption)
+                                        ProgressView(
+                                            value: Double(component.config.currentTime ?? 0),
+                                            total: Double(component.config.totalTime ?? 1)
+                                        )
+                                    }
+
+                                case "phases":
+                                    if let phases = component.config.phases {
+                                        VStack(alignment: .leading) {
+                                            Text("Phases")
+                                                .font(.caption.bold())
+                                            ForEach(phases, id: \.self) {
+                                                Text("• \($0)")
+                                                    .font(.caption)
+                                            }
+                                        }
+                                    }
+
+                                default:
+                                    EmptyView()
+                                }
+                            }
+
+                            Divider()
+
+                            // Timer / State
                             HStack {
+                                VStack(alignment: .leading) {
+                                    Text("Temps restant")
+                                        .font(.caption)
+                                    Text("\(remainingTime) sec")
+                                        .font(.headline.bold())
+                                }
+
+                                Spacer()
+
                                 Label(
                                     "\(meditation.data.state.duration) min",
                                     systemImage: "clock"
                                 )
+                            }
+                            .onAppear {
+                                remainingTime = meditation.data.state.remainingTime
+                                isRunning = meditation.data.state.isRunning
+                                isPaused = meditation.data.state.isPaused
+                            }
 
-                                Spacer()
-
+                            // Meditation type + language
+                            HStack {
                                 Label(
                                     meditation.data.state.meditationType,
                                     systemImage: "heart.fill"
                                 )
                                 .foregroundStyle(.purple)
+
+                                Spacer()
+
+                                Text("🌍 \(meditation.data.state.language.uppercased())")
+                                    .font(.caption)
                             }
-                            .font(.caption.bold())
+
+                            // Background music
+                            Label(
+                                meditation.data.state.backgroundMusic,
+                                systemImage: "music.note"
+                            )
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+
+                            Divider()
+
+                            // Actions dynamiques
+                            HStack {
+                                ForEach(meditation.data.actions, id: \.id) { action in
+                                    Button {
+                                        handleAction(
+                                            action.type,
+                                            meditation: meditation
+                                        )
+                                    } label: {
+                                        Label(action.label, systemImage: action.icon)
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                }
+                            }
+
+                            Divider()
+
+                            // Metadata
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("Fonctionnalités")
+                                    .font(.caption.bold())
+
+                                ForEach(meditation.data.metadata.features, id: \.self) {
+                                    Text("• \($0)")
+                                        .font(.caption)
+                                }
+
+                                Text("Accessibilité")
+                                    .font(.caption.bold())
+                                    .padding(.top, 4)
+
+                                ForEach(meditation.data.metadata.accessibility, id: \.self) {
+                                    Text("• \($0)")
+                                        .font(.caption)
+                                }
+                            }
+                            .foregroundStyle(.secondary)
                         }
                         .padding()
                         .background(.ultraThinMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         .shadow(radius: 8)
                     }
-
-                    // ▶️ Bouton jouer
-                    Button {
-                        // Action play
-                        activeButton.toggle()
-                    } label: {
-                        HStack {
-                            Image(systemName: activeButton ? "pause" : "play.fill")
-                            Text(activeButton ? "Stopper la méditation" : "Commencer la méditation")
-                                .font(.headline)
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                    }
-                    .background(
-                        LinearGradient(
-                            colors: [.purple, .blue],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-                    .foregroundStyle(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 30))
-                    .shadow(radius: 10)
-                    .padding(.vertical, 30)
                 }
                 .padding(.horizontal)
             }
@@ -130,13 +217,30 @@ struct antiAnxietyView: View {
         }
     }
 
+    // MARK: - Action Handler
+    private func handleAction(_ type: String, meditation: Meditation) {
+        switch type {
+        case "play":
+            isRunning = true
+            isPaused = false
+            remainingTime = meditation.data.state.duration * 60
+
+        case "pause":
+            isPaused = true
+
+        case "stop":
+            isRunning = false
+            isPaused = false
+            remainingTime = meditation.data.state.duration * 60
+
+        default:
+            break
+        }
+    }
 }
 
-
-
-
-
-
 #Preview {
-    antiAnxietyView(antiAnxietyViewModel: AntiAnxietyViewModel())
+    antiAnxietyView(
+        antiAnxietyViewModel: AntiAnxietyViewModel()
+    )
 }
