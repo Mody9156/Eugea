@@ -169,6 +169,10 @@ struct antiAnxietyView: View {
                                             action.type,
                                             meditation: meditation
                                         )
+                                      
+                                        let sound  = meditation.data.state.backgroundMusic
+                                        
+                                        musicPlayerManager.playSong(song: sound)
                                     } label: {
                                         Label(action.label, systemImage: action.icon)
                                     }

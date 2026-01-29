@@ -34,7 +34,6 @@ class AntiAnxietyViewModel {
             
             self.meditation = [result]
             print("super")
-            print("meditation:\(meditation)")
         }catch{
             print("meditationType \(meditation.count)")
             print("meditationType \(meditation.description)")
