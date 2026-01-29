@@ -10,15 +10,33 @@ import Observation
 import AVFoundation
 class MusicPlayerManager {
     static var share = MusicPlayerManager()
-    private var player : AVPlayer?
+    private var player : AVAudioPlayer?
     var isPlaying : Bool = false
     var sound: String = ""
     
-    
-    
+    init() {
+        if let sound = Bundle.main.path(forResource: sound, ofType: "mp3"){
+            do {
+                self.player = try AVAudioPlayer(
+                    contentsOf: URL(fileURLWithPath: sound)
+                )
+            }catch{
+                print("AVAudioPlayer could not be instantiated.")
+            }
+        } else {
+            print("Audio file could not be found.")
+        }
+    }
     
     func playSong(song:String) {
-        player?.play()
-        isPlaying = true
+        guard let startPlayer = player else { return }
+        
+        if startPlayer.isPlaying {
+            startPlayer.pause()
+            isPlaying = false
+        } else {
+            startPlayer.play()
+            isPlaying = true
+        }
     }
 }
