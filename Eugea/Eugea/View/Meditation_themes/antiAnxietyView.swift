@@ -14,7 +14,7 @@ struct antiAnxietyView: View {
     @State private var backgroundMusic: String = "meditation-background-409198.mp3"
     @State private var duration: Int = 15
     @State private var meditationType: String = "loving-kindness"
-
+    var musicPlayerManager = MusicPlayerManager()
     // State dynamique
     @State private var isRunning: Bool = false
     @State private var isPaused: Bool = false
