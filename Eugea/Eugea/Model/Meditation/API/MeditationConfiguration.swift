@@ -40,9 +40,9 @@ class MeditationConfiguration {
         let data = try JSONEncoder().encode(meditation)
         request.httpBody = data
         
-        if let json = String(data: data, encoding: .utf8) {
-            print("📤 Body JSON:\n\(json)")
-        }
+//        if let json = String(data: data, encoding: .utf8) {
+//            print("📤 Body JSON:\n\(json)")
+//        }
         
         return request
     }

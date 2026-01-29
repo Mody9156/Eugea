@@ -12,12 +12,23 @@ class MusicPlayerManager {
     static var share = MusicPlayerManager()
     private var player : AVPlayer?
     var isPlaying : Bool = false
+    var sound: String = ""
+    
     
     
     func playSong(song:String) {
-//        let playerItem = AVPlayer
-//        player = AVPlayer(playerItem: AVPlayerItem()
-        player?.play()
-        isPlaying = true
+        guard let startPlayer = URL(string: song) else { return }
+        
+        if player == nil {
+            player = AVPlayer(url: startPlayer)
+        }
+        
+        if isPlaying {
+            player?.pause()
+            isPlaying = false
+        } else {
+            player?.play()
+            isPlaying = true
+        }
     }
 }
