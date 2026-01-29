@@ -19,7 +19,7 @@ struct antiAnxietyView: View {
     @State private var isRunning: Bool = false
     @State private var isPaused: Bool = false
     @State private var remainingTime: Int = 0
-
+    @State private var selectedSound : String = ""
     var body: some View {
         ZStack {
             LinearGradient(
@@ -51,6 +51,14 @@ struct antiAnxietyView: View {
                     // MARK: - Meditations
                     ForEach(antiAnxietyViewModel.meditation) { meditation in
                         VStack(alignment: .leading, spacing: 16) {
+                            
+                            
+//                            Text("Selectionne un sont de musique pour commencer")
+//                            Picker("Selectionne", selection: $selectedSound) {
+//                                ForEach(meditation.data.state.backgroundMusic, id: \.self) { sound in
+//                                    Text(sound).tag(sound)
+//                                }
+//                            }
 
                             // Title
                             Text(meditation.data.state.content.name)
@@ -169,10 +177,11 @@ struct antiAnxietyView: View {
                                             action.type,
                                             meditation: meditation
                                         )
-                                      
-                                        let sound  = meditation.data.state.backgroundMusic
                                         
-                                        musicPlayerManager.playSong(song: sound)
+                                        let sound = meditation.data.state.backgroundMusic
+                                        let trimmedSound = sound.replacingOccurrences(of: ".mp3", with: "")
+                                        musicPlayerManager.playSong(song: trimmedSound)
+                                        print("audio:\(trimmedSound)")
                                     } label: {
                                         Label(action.label, systemImage: action.icon)
                                     }
@@ -248,3 +257,4 @@ struct antiAnxietyView: View {
         antiAnxietyViewModel: AntiAnxietyViewModel()
     )
 }
+
