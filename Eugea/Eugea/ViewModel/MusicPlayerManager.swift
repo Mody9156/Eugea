@@ -12,9 +12,6 @@ class MusicPlayerManager {
     static var share = MusicPlayerManager()
     private var player : AVPlayer?
     var isPlaying : Bool = false
-    var sound: String = ""
-    
-    
     
     func playSong(song:String) {
         guard let startPlayer = URL(string: song) else { return }
