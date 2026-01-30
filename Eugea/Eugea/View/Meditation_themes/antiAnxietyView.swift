@@ -11,7 +11,7 @@ struct antiAnxietyView: View {
 
     var antiAnxietyViewModel: AntiAnxietyViewModel
 
-    @State private var backgroundMusic: String = "meditation-background-409198.mp3"
+    @State private var backgroundMusic: String = "meditation-background-409198"
     @State private var duration: Int = 15
     @State private var meditationType: String = "loving-kindness"
     var musicPlayerManager = MusicPlayerManager()
@@ -53,12 +53,12 @@ struct antiAnxietyView: View {
                         VStack(alignment: .leading, spacing: 16) {
                             
                             
-//                            Text("Selectionne un sont de musique pour commencer")
-//                            Picker("Selectionne", selection: $selectedSound) {
-//                                ForEach(meditation.data.state.backgroundMusic, id: \.self) { sound in
-//                                    Text(sound).tag(sound)
-//                                }
-//                            }
+                            Text("Selectionne un sont de musique pour commencer")
+                            Picker("Selectionne", selection: $selectedSound) {
+                                ForEach([meditation.data.state.backgroundMusic], id: \.self) { sound in
+                                    Text(sound).tag(sound)
+                                }
+                            }
 
                             // Title
                             Text(meditation.data.state.content.name)
@@ -179,7 +179,7 @@ struct antiAnxietyView: View {
                                         )
                                         
                                         let sound = meditation.data.state.backgroundMusic
-                                        let trimmedSound = sound.replacingOccurrences(of: ".mp3", with: "")
+                                        let trimmedSound = sound
                                         musicPlayerManager.playSong(song: trimmedSound)
                                         print("audio:\(trimmedSound)")
                                     } label: {
