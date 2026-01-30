@@ -176,26 +176,6 @@ struct CategoryCard: View {
     let sessions: String
     let colors: [Color]
     let type: String
-    
-    @ViewBuilder
-    var destination : some View {
-        switch type {
-        case "respiration":
-            SleepView()
-
-        case "sleep":
-            SleepView()
-
-        case "happiness":
-            SleepView()
-
-        case "stress":
-            SleepView() // ✅ Binding obligatoire
-
-        default:
-            EmptyView()
-        }
-    }
   
     
     @ViewBuilder
@@ -208,7 +188,7 @@ struct CategoryCard: View {
             SleepView()
 
         case .stress:
-            SleepView()
+            antiAnxietyView()
         }
     }
     var body: some View {
