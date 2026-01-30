@@ -8,28 +8,40 @@
 import Foundation
 import Observation
 import AVFoundation
+
 class MusicPlayerManager {
     static var share = MusicPlayerManager()
     private var player : AVPlayer?
     var isPlaying : Bool = false
     
+    // L'URL de base récupérée depuis les scripts de l'API
+    private let audioBaseURL = "https://elysiatools.com/public/samples/mp3/"
+    
     func playSong(song: String) {
-        print("🎵 Tentative de lecture : \(song)")
+        // 1. On construit l'URL complète (ex: base + "meditation-background-409198.mp3")
+        let fullURLString = audioBaseURL + song
         
-        guard let startPlayer = URL(string: song) else {
-            print("❌ Erreur : URL invalide pour la piste : \(song)")
+        print("🌐 Tentative de lecture : \(fullURLString)")
+        
+        guard let url = URL(string: fullURLString) else {
+            print("❌ Erreur : URL malformée")
             return
         }
         
+        // 2. Si le player n'existe pas ou si on change de musique
         if player == nil {
-            print("🛠 Initialisation du AVPlayer...")
-            player = AVPlayer(url: startPlayer)
+            player = AVPlayer(url: url)
+        } else {
+            // Permet de changer de morceau si on clique sur un autre
+            let newItem = AVPlayerItem(url: url)
+            player?.replaceCurrentItem(with: newItem)
         }
         
+        // 3. Logique Play/Pause
         if isPlaying {
             player?.pause()
             isPlaying = false
-            print("⏸ Musique mise en pause.")
+            print("⏸ Pause")
         } else {
             player?.play()
             isPlaying = true

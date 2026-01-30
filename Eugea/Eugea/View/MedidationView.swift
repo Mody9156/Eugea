@@ -188,7 +188,7 @@ struct CategoryCard: View {
             SleepView()
 
         case .stress:
-            antiAnxietyView()
+            antiAnxietyView(antiAnxietyViewModel: AntiAnxietyViewModel())
         }
     }
     var body: some View {
