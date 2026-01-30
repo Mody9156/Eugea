@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+enum MinuteurDeMédibtation : String, CaseIterable, Identifiable {
+    case meditationackground = "Meditation-background-409198"
+    case meditationMusic1 =  "Meditation Music 1"
+    case meditationMusic2 =  "Meditation Music 2"
+    case meditationMusic3 =  "Meditation Music 3"
+    case meditationMusic4 =  "Meditation Music 4"
+    case Yogameditation =  "Yoga Meditation"
+    case RelaxingYogaMusic = "Relaxing Yoga Music"
+    case DeepRelaxation = "Deep Relaxation"
+    
+    var id: String { self.rawValue }
+}
+
+
 struct antiAnxietyView: View {
 
     var antiAnxietyViewModel: AntiAnxietyViewModel
@@ -55,8 +69,10 @@ struct antiAnxietyView: View {
                             
                             Text("Selectionne un sont de musique pour commencer")
                             Picker("Selectionne", selection: $selectedSound) {
-                                ForEach([meditation.data.state.backgroundMusic], id: \.self) { sound in
-                                    Text(sound).tag(sound)
+                                ForEach(
+                                    MinuteurDeMédibtation.allCases
+                                ) { sound in
+                                    Text(sound.rawValue).tag(sound)
                                 }
                             }
 
@@ -178,10 +194,9 @@ struct antiAnxietyView: View {
                                             meditation: meditation
                                         )
                                         
-                                        let sound = meditation.data.state.backgroundMusic
-                                        let trimmedSound = sound
-                                        musicPlayerManager.playSong(song: trimmedSound)
-                                        print("audio:\(trimmedSound)")
+                                        musicPlayerManager.playSong(song: selectedSound)
+                                        
+                                        print("audio:\(selectedSound)")
                                     } label: {
                                         Label(action.label, systemImage: action.icon)
                                     }
@@ -221,9 +236,16 @@ struct antiAnxietyView: View {
                 .padding(.horizontal)
             }
         }
+//        .onChange(of: selectedSound){
+//            try? await antiAnxietyViewModel.showExercise(
+//                backgroundMusic: selectedSound,
+//                duration: duration,
+//                meditationType: meditationType
+//            )
+//        }
         .task {
             try? await antiAnxietyViewModel.showExercise(
-                backgroundMusic: backgroundMusic,
+                backgroundMusic: selectedSound,
                 duration: duration,
                 meditationType: meditationType
             )
