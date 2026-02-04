@@ -23,7 +23,7 @@ class MeditationConfiguration {
     func fetchUrlRequest(backgroundMusic: String,
                          duration: Int,
                          meditationType: String) throws  -> URLRequest {
-        guard let url = URL(string: "https://elysiatools.com/fr/api/tools/guided-meditation") else {
+        guard let url = URL(string: "https://elysiatools.com/fr/api/tools/meditation-timer") else {
             throw MeditationError.badUrl
         }
         

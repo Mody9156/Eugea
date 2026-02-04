@@ -41,4 +41,14 @@ class AntiAnxietyViewModel {
             throw ThrowableError.someError
         }
     }
+    
+    func toggleStart(for meditation: Meditation) {
+        guard let id = meditation.id else { return }
+        if let index = self.meditation.firstIndex(where: { $0.id == id }) {
+            self.meditation[index].data.state.isRunning.toggle()
+            print("toggle :\(self.meditation[index].data.state.isRunning.toggle())")
+            print("index :\(index)")
+        }
+        print("start toggleStart")
+    }
 }

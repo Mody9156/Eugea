@@ -193,6 +193,11 @@ struct antiAnxietyView: View {
                                             action.type,
                                             meditation: meditation
                                         )
+                                        antiAnxietyViewModel.toggleStart(for: meditation)
+                                        
+                                        
+                                        var data =  meditation.data.state
+                                        data.isRunning.toggle()
                                         
                                         musicPlayerManager.playSong(song: selectedSound)
                                         

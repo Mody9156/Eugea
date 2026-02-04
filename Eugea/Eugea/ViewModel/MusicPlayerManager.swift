@@ -31,10 +31,12 @@ class MusicPlayerManager {
         // 2. Si le player n'existe pas ou si on change de musique
         if player == nil {
             player = AVPlayer(url: url)
+            print("player == nil")
         } else {
             // Permet de changer de morceau si on clique sur un autre
             let newItem = AVPlayerItem(url: url)
             player?.replaceCurrentItem(with: newItem)
+            print("player != nil")
         }
         
         // 3. Logique Play/Pause
