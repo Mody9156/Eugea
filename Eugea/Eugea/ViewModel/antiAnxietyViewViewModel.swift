@@ -23,13 +23,13 @@ class AntiAnxietyViewModel {
     
     func showExercise(backgroundMusic: String,
                       duration: Int,
-                      meditationType: String) async throws {
+                      enableSound: Bool) async throws {
         
         do{
             let result = try await meditationConfiguration.fetchResult_ofMeditation(
                 backgroundMusic: backgroundMusic,
                 duration: duration,
-                meditationType: meditationType
+                enableSound: enableSound
             )
             
             self.meditation = [result]
