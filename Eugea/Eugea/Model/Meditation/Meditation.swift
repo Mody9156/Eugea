@@ -7,19 +7,18 @@
 
 import Foundation
 
-// MARK: - Welcome
+// MARK: - Meditation
 struct Meditation: Codable, Identifiable {
-    var data: MeditationDataClass
+    var data: DataClass
     var type: String
-    
     var id: String?
 }
 
 // MARK: - DataClass
-struct MeditationDataClass: Codable {
+struct DataClass: Codable {
     var result: String
     var interactive: Bool
-    var state: MeditationState
+    var state: StateMeditation
     var components: [Component]
     var actions: [Action]
     var styles, scripts: String
@@ -27,7 +26,7 @@ struct MeditationDataClass: Codable {
 }
 
 // MARK: - Action
-struct Action: Codable {
+struct Action: Codable, Hashable{
     var type, id, label, icon: String
     var callback: String
 }
@@ -35,31 +34,30 @@ struct Action: Codable {
 // MARK: - Component
 struct Component: Codable {
     var type, id: String
-    var config: Config
+    var config: ConfigMeditation
 }
 
 // MARK: - Config
-struct Config: Codable {
+struct ConfigMeditation: Codable {
     var label: String
-    var text: String?
-    var style: Style?
     var totalTime, currentTime: Int?
     var phases: [String]?
-    var colors: Colors?
+    var colors: ColorsMeditation?
+    var text: String?
+    var style: StyleMeditation?
 }
 
 // MARK: - Colors
-struct Colors: Codable {
-    var preparation, practice, completion: String
+struct ColorsMeditation: Codable {
+    var ready, meditation, completed: String
 }
 
 // MARK: - Style
-struct Style: Codable {
+struct StyleMeditation: Codable {
     var fontSize: String
-    var fontWeight, color: String?
-    var textAlign: String
-    var fontStyle, lineHeight, background, padding: String?
-    var borderRadius, border, whiteSpace, transition: String?
+    var fontWeight: String?
+    var color, textAlign: String
+    var fontStyle: String?
 }
 
 // MARK: - Metadata
@@ -69,18 +67,10 @@ struct Metadata: Codable {
 }
 
 // MARK: - State
-struct MeditationState: Codable {
-    var meditationType: String
+struct StateMeditation: Codable {
     var duration: Int
-    var backgroundMusic: String
-    var isRunning, isPaused: Bool
-    var remainingTime: Int
-    var language: String
-    var content: Content
-}
-
-// MARK: - Content
-struct Content: Codable {
-    var name, description: String
-    var steps: [String]
+    var musicTrack: String
+    var enableSound, isRunning, isPaused: Bool
+    var remainingTime, sessions: Int
+    var currentPhase: String
 }

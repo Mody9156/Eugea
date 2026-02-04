@@ -20,7 +20,7 @@ class MeditationConfiguration {
         case badUrl
     }
     
-    func fetchUrlRequest(backgroundMusic: String,
+    func fetchUrlRequest(musicTrack: String,
                          duration: Int,
                          enableSound: Bool) throws  -> URLRequest {
         guard let url = URL(string: "https://elysiatools.com/fr/api/tools/meditation-timer") else {
@@ -32,27 +32,26 @@ class MeditationConfiguration {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let meditation = MeditationSession(
-            backgroundMusic: backgroundMusic,
-            duration: duration,
-            enableSound:                          enableSound
+            duration: duration, musicTrack: musicTrack,
+            enableSound:enableSound
         )
         
         let data = try JSONEncoder().encode(meditation)
         request.httpBody = data
         
-//        if let json = String(data: data, encoding: .utf8) {
-//            print("📤 Body JSON:\n\(json)")
-//        }
+        if let json = String(data: data, encoding: .utf8) {
+            print("📤 Body JSON:\n\(json)")
+        }
         
         return request
     }
     
-    func fetchResult_ofMeditation( backgroundMusic: String,
+    func fetchResult_ofMeditation( musicTrack: String,
                                    duration: Int,
                                    enableSound: Bool) async throws -> Meditation {
         let (data,reponse) = try await session.fetchRequest(
             url: fetchUrlRequest(
-                backgroundMusic: backgroundMusic,
+                musicTrack: musicTrack,
                 duration: duration,
                 enableSound:enableSound
             )

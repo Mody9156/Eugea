@@ -7,33 +7,36 @@
 
 import SwiftUI
 
-enum MinuteurDeMédibtation : String, CaseIterable, Identifiable {
+enum MinuteurDeMédibtation: String, CaseIterable, Identifiable {
     case meditationackground = "Meditation-background-409198"
-    case meditationMusic1 =  "Meditation Music 1"
-    case meditationMusic2 =  "Meditation Music 2"
-    case meditationMusic3 =  "Meditation Music 3"
-    case meditationMusic4 =  "Meditation Music 4"
-    case Yogameditation =  "Yoga Meditation"
+    case meditationMusic1 = "Meditation Music 1"
+    case meditationMusic2 = "Meditation Music 2"
+    case meditationMusic3 = "Meditation Music 3"
+    case meditationMusic4 = "Meditation Music 4"
+    case Yogameditation = "Yoga Meditation"
     case RelaxingYogaMusic = "Relaxing Yoga Music"
     case DeepRelaxation = "Deep Relaxation"
-    
-    var id: String { self.rawValue }
-}
 
+    var id: String { rawValue }
+}
 
 struct antiAnxietyView: View {
 
     var antiAnxietyViewModel: AntiAnxietyViewModel
 
-    @State private var backgroundMusic: String = "meditation-background-409198"
+    // MARK: - Local State
+    @State private var backgroundMusic: String = "Meditation-background-409198"
     @State private var duration: Int = 15
-    @State private var meditationType: String = "loving-kindness"
-    var musicPlayerManager = MusicPlayerManager()
-    // State dynamique
+    @State private var meditationType: Bool = true
+
     @State private var isRunning: Bool = false
     @State private var isPaused: Bool = false
     @State private var remainingTime: Int = 0
-    @State private var selectedSound : String = ""
+
+    @State private var selectedSound: MinuteurDeMédibtation = .meditationackground
+
+    var musicPlayerManager = MusicPlayerManager()
+
     var body: some View {
         ZStack {
             LinearGradient(
@@ -65,35 +68,41 @@ struct antiAnxietyView: View {
                     // MARK: - Meditations
                     ForEach(antiAnxietyViewModel.meditation) { meditation in
                         VStack(alignment: .leading, spacing: 16) {
-                            
-                            
-                            Text("Selectionne un sont de musique pour commencer")
+
+                            // MARK: - Music Picker
+                            Text("Sélectionne un son de musique pour commencer")
+                                .font(.headline)
+
                             Picker("Selectionne", selection: $selectedSound) {
-                                ForEach(
-                                    MinuteurDeMédibtation.allCases
-                                ) { sound in
+                                ForEach(MinuteurDeMédibtation.allCases) { sound in
                                     Text(sound.rawValue).tag(sound)
                                 }
                             }
+                            .pickerStyle(.menu)
 
-                            // Title
-                            Text(meditation.data.state.content.name)
-                                .font(.title2.bold())
+                            // MARK: - Actions titles
+                            ForEach(meditation.data.actions, id: \.self) { action in
+                                Text(action.label)
+                                    .font(.title2.bold())
 
-                            // Description
-                            Text(meditation.data.state.content.description)
-                                .font(.body)
-                                .foregroundStyle(.secondary)
+                                Text(action.type)
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                            }
 
                             Divider()
 
-                            // Steps
+                            // MARK: - Steps (from components text)
                             VStack(alignment: .leading, spacing: 10) {
-                                ForEach(meditation.data.state.content.steps, id: \.self) { step in
+                                ForEach(
+                                    meditation.data.components.filter { $0.type == "text" },
+                                    id: \.id
+                                ) { component in
                                     HStack(alignment: .top) {
                                         Image(systemName: "checkmark.circle.fill")
                                             .foregroundStyle(.purple)
-                                        Text(step)
+
+                                        Text(component.config.text ?? "")
                                             .font(.callout)
                                     }
                                 }
@@ -101,19 +110,15 @@ struct antiAnxietyView: View {
 
                             Divider()
 
-                            // Components dynamiques
+                            // MARK: - Dynamic Components
                             ForEach(meditation.data.components, id: \.id) { component in
                                 switch component.type {
-
-                                case "text":
-                                    Text(component.config.text ?? "")
-                                        .font(.callout)
-                                        .foregroundStyle(.secondary)
 
                                 case "timer":
                                     VStack(alignment: .leading) {
                                         Text("Progression")
                                             .font(.caption)
+
                                         ProgressView(
                                             value: Double(component.config.currentTime ?? 0),
                                             total: Double(component.config.totalTime ?? 1)
@@ -125,8 +130,9 @@ struct antiAnxietyView: View {
                                         VStack(alignment: .leading) {
                                             Text("Phases")
                                                 .font(.caption.bold())
-                                            ForEach(phases, id: \.self) {
-                                                Text("• \($0)")
+
+                                            ForEach(phases, id: \.self) { phase in
+                                                Text("• \(phase)")
                                                     .font(.caption)
                                             }
                                         }
@@ -139,11 +145,12 @@ struct antiAnxietyView: View {
 
                             Divider()
 
-                            // Timer / State
+                            // MARK: - Timer State
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text("Temps restant")
                                         .font(.caption)
+
                                     Text("\(remainingTime) sec")
                                         .font(.headline.bold())
                                 }
@@ -159,25 +166,26 @@ struct antiAnxietyView: View {
                                 remainingTime = meditation.data.state.remainingTime
                                 isRunning = meditation.data.state.isRunning
                                 isPaused = meditation.data.state.isPaused
+                                backgroundMusic = meditation.data.state.musicTrack
                             }
 
-                            // Meditation type + language
+                            // MARK: - Meditation type & category
                             HStack {
                                 Label(
-                                    meditation.data.state.meditationType,
+                                    meditation.data.state.enableSound ? "Guidée" : "Silencieuse",
                                     systemImage: "heart.fill"
                                 )
                                 .foregroundStyle(.purple)
 
                                 Spacer()
 
-                                Text("🌍 \(meditation.data.state.language.uppercased())")
+                                Text("🌍 \(meditation.data.metadata.category.uppercased())")
                                     .font(.caption)
                             }
 
-                            // Background music
+                            // MARK: - Background music
                             Label(
-                                meditation.data.state.backgroundMusic,
+                                meditation.data.state.musicTrack,
                                 systemImage: "music.note"
                             )
                             .font(.caption)
@@ -185,23 +193,18 @@ struct antiAnxietyView: View {
 
                             Divider()
 
-                            // Actions dynamiques
+                            // MARK: - Dynamic Actions
                             HStack {
                                 ForEach(meditation.data.actions, id: \.id) { action in
                                     Button {
-                                        handleAction(
-                                            action.type,
-                                            meditation: meditation
-                                        )
+                                        handleAction(action.type, meditation: meditation)
+                                       
+                                        
                                         antiAnxietyViewModel.toggleStart(for: meditation)
-                                        
-                                        
-                                        var data =  meditation.data.state
-                                        data.isRunning.toggle()
-                                        
-                                        musicPlayerManager.playSong(song: selectedSound)
-                                        
-                                        print("audio:\(selectedSound)")
+
+                                        musicPlayerManager.playSong(
+                                            song: selectedSound.rawValue
+                                        )
                                     } label: {
                                         Label(action.label, systemImage: action.icon)
                                     }
@@ -211,7 +214,7 @@ struct antiAnxietyView: View {
 
                             Divider()
 
-                            // Metadata
+                            // MARK: - Metadata
                             VStack(alignment: .leading, spacing: 6) {
                                 Text("Fonctionnalités")
                                     .font(.caption.bold())
@@ -241,18 +244,11 @@ struct antiAnxietyView: View {
                 .padding(.horizontal)
             }
         }
-//        .onChange(of: selectedSound){
-//            try? await antiAnxietyViewModel.showExercise(
-//                backgroundMusic: selectedSound,
-//                duration: duration,
-//                meditationType: meditationType
-//            )
-//        }
         .task {
             try? await antiAnxietyViewModel.showExercise(
-                backgroundMusic: selectedSound,
+                musicTrack: backgroundMusic,
                 duration: duration,
-                meditationType: meditationType
+                enableSound: meditationType
             )
         }
     }
@@ -284,4 +280,3 @@ struct antiAnxietyView: View {
         antiAnxietyViewModel: AntiAnxietyViewModel()
     )
 }
-

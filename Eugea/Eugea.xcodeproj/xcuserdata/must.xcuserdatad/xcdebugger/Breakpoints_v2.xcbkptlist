@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "27"
             endingLineNumber = "27"
-            landmarkName = "showExercise(backgroundMusic:duration:meditationType:)"
+            landmarkName = "showExercise(musicTrack:duration:enableSound:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -32,7 +32,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
             endingLineNumber = "24"
-            landmarkName = "showExercise(backgroundMusic:duration:meditationType:)"
+            landmarkName = "showExercise(musicTrack:duration:enableSound:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
