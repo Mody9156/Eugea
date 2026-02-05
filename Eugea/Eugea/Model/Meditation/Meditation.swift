@@ -8,7 +8,8 @@
 import Foundation
 
 // MARK: - Welcome
-struct Meditation: Codable {
+struct Meditation: Codable, Identifiable{
+    var id: String?
     let data: DataClass
     let type: String
 }
@@ -25,7 +26,7 @@ struct DataClass: Codable {
 }
 
 // MARK: - Action
-struct Action: Codable {
+struct Action: Codable, Hashable {
     let type, id, label, icon: String
     let callback: String
 }
