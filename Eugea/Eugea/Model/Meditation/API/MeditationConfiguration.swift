@@ -33,8 +33,8 @@ class MeditationConfiguration {
         
         let meditation = MeditationSession(
             duration: duration,
-            musicTrack: type,
-            enableSound:backgroundMusic
+            type: type,
+            backgroundMusic:backgroundMusic
         )
         
         let data = try JSONEncoder().encode(meditation)
@@ -47,14 +47,14 @@ class MeditationConfiguration {
         return request
     }
     
-    func fetchResult_ofMeditation( musicTrack: String,
+    func fetchResult_ofMeditation( type: String,
                                    duration: Int,
-                                   enableSound: Bool) async throws -> Meditation {
+                                   backgroundMusic: String) async throws -> Meditation {
         let (data,reponse) = try await session.fetchRequest(
             url: fetchUrlRequest(
-                musicTrack: musicTrack,
+                type: type,
                 duration: duration,
-                                         backgroundMusic:enableSound
+                backgroundMusic:backgroundMusic
             )
         )
         
