@@ -33,7 +33,7 @@ class MeditationConfiguration {
         
         let meditation = MeditationSession(
             duration: duration,
-            type: type,
+            meditationType: type,
             backgroundMusic:backgroundMusic
         )
         

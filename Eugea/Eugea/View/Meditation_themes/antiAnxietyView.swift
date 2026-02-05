@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum MinuteurDeMédibtation: String, CaseIterable, Identifiable {
-    case meditationackground = "Meditation Background"
+    case meditationackground = "Meditation-background-409198"
     case meditationMusic1 = "Meditation Music 1"
     case meditationMusic2 = "Meditation Music 2"
     case meditationMusic3 = "Meditation Music 3"
@@ -18,8 +18,6 @@ enum MinuteurDeMédibtation: String, CaseIterable, Identifiable {
     case DeepRelaxation = "Deep Relaxation"
 
     var id: String { rawValue }
-    
-    
 }
 
 struct antiAnxietyView: View {
@@ -29,7 +27,7 @@ struct antiAnxietyView: View {
     // MARK: - Local State
     @State private var backgroundMusic: String = "Meditation-background-409198"
     @State private var duration: Int = 15
-    @State private var meditationType: Bool = false
+    @State private var meditationType: String = "Méditation de Bienveillance"
 
     @State private var isRunning: Bool = false
     @State private var isPaused: Bool = false
@@ -201,14 +199,12 @@ struct antiAnxietyView: View {
                                     Button {
                                         handleAction(action.type, meditation: meditation)
                                        
-                                            musicPlayerManager.playSong(
-                                                song: selectedSound.rawValue
-                                            )
-                                        meditationType.toggle()
-                                        antiAnxietyViewModel
-                                            .toggleStart(for: meditation)
-
                                         
+                                        antiAnxietyViewModel.toggleStart(for: meditation)
+
+                                        musicPlayerManager.playSong(
+                                            song: selectedSound.rawValue
+                                        )
                                     } label: {
                                         Label(action.label, systemImage: action.icon)
                                     }
@@ -250,9 +246,9 @@ struct antiAnxietyView: View {
         }
         .task {
             try? await antiAnxietyViewModel.showExercise(
-                musicTrack: backgroundMusic,
-                duration: duration,
-                enableSound: meditationType
+                type: "Méditation de Bienveillance",
+                duration: 15,
+                backgroundMusic: "Fond de Méditation"
             )
         }
     }

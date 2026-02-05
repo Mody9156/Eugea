@@ -13,7 +13,6 @@ class MusicPlayerManager {
     static var share = MusicPlayerManager()
     private var player : AVPlayer?
     var isPlaying : Bool = false
-    
     // L'URL de base récupérée depuis les scripts de l'API
      let audioBaseURL = "https://elysiatools.com/public/samples/mp3/"
     func playSong(song: String) {
