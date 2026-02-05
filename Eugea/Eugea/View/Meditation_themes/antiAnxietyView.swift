@@ -81,8 +81,11 @@ struct antiAnxietyView: View {
                         
                     } label: {
                         Image(systemName: "plus")
-                            .foregroundStyle(.pink)
+                            .foregroundStyle(.red)
+                            .font(.title)
+                            .foregroundStyle(.red)
                     }
+                    
                 }
                 
                 
@@ -138,19 +141,6 @@ private struct AntiAnxietyMeditationCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            
-//            // MARK: - Music Picker
-//            Text("Sélectionne un son de musique pour commencer")
-//                .font(.headline)
-//            
-//            Picker("Sélectionne", selection: $selectedSound) {
-//                ForEach(MinuteurDeMeditation.allCases) { sound in
-//                    Text(sound.rawValue).tag(sound)
-//                }
-//            }
-//            .pickerStyle(.menu)
-            
-            
             // Title
             Text(meditation.data.state.content.name)
                 .font(.title2.bold())
