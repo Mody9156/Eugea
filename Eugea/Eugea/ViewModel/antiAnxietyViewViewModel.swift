@@ -42,14 +42,16 @@ class AntiAnxietyViewModel {
         }
     }
     
-    func toggleStart(for meditation: Meditation) {
-        guard let id = meditation.id else { return }
-        if let index = self.meditation.firstIndex(where: { $0.id == id }) {
-            self.meditation[index].data.state.isRunning.toggle()
-            self.meditation[index].data.state.enableSound = true
-            print("toggle :\(self.meditation[index].data.state.isRunning.toggle())")
-            print("index :\(index)")
+    func toggleStart(for enableSound: Meditation) {
+        guard let id = enableSound.id else {
+            print("aucun id trouvé")
+         return
         }
-        print("start toggleStart")
+        
+        if let index = self.meditation.firstIndex(where: {$0.id == id }) {
+            self.meditation[index].data.state.enableSound.toggle()
+        }
+        
+        print("vous venez de terminer un exercice d'anxiété")
     }
 }
