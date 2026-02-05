@@ -203,7 +203,7 @@ struct antiAnxietyView: View {
                                                 song: selectedSound.rawValue
                                             )
                                         antiAnxietyViewModel
-                                            .toggleStart(for: meditation.id)
+                                            .toggleStart(for: meditation)
 
                                         
                                     } label: {
