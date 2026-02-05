@@ -7,70 +7,78 @@
 
 import Foundation
 
-// MARK: - Meditation
-struct Meditation: Codable, Identifiable {
-    var data: DataClass
-    var type: String
-    var id: String?
+// MARK: - Welcome
+struct Meditation: Codable {
+    let data: DataClass
+    let type: String
 }
 
 // MARK: - DataClass
 struct DataClass: Codable {
-    var result: String
-    var interactive: Bool
-    var state: StateMeditation
-    var components: [Component]
-    var actions: [Action]
-    var styles, scripts: String
-    var metadata: Metadata
+    let result: String
+    let interactive: Bool
+    let state: MeditationState
+    let components: [Component]
+    let actions: [Action]
+    let styles, scripts: String
+    let metadata: MeditationMetadata
 }
 
 // MARK: - Action
-struct Action: Codable, Hashable{
-    var type, id, label, icon: String
-    var callback: String
+struct Action: Codable {
+    let type, id, label, icon: String
+    let callback: String
 }
 
 // MARK: - Component
 struct Component: Codable {
-    var type, id: String
-    var config: ConfigMeditation
+    let type, id: String
+    let config: MeditationConfig
 }
 
 // MARK: - Config
-struct ConfigMeditation: Codable {
-    var label: String
-    var totalTime, currentTime: Int?
-    var phases: [String]?
-    var colors: ColorsMeditation?
-    var text: String?
-    var style: StyleMeditation?
+struct MeditationConfig: Codable {
+    let label: String
+    let text: String?
+    let style: MeditationStyle?
+    let totalTime, currentTime: Int?
+    let phases: [String]?
+    let colors: MeditationColors?
 }
 
 // MARK: - Colors
-struct ColorsMeditation: Codable {
-    var ready, meditation, completed: String
+struct MeditationColors: Codable {
+    let preparation, practice, completion: String
 }
 
 // MARK: - Style
-struct StyleMeditation: Codable {
-    var fontSize: String
-    var fontWeight: String?
-    var color, textAlign: String
-    var fontStyle: String?
+struct MeditationStyle: Codable {
+    let fontSize: String
+    let fontWeight, color: String?
+    let textAlign: String
+    let fontStyle, lineHeight, background, padding: String?
+    let borderRadius, border, whiteSpace, transition: String?
 }
 
 // MARK: - Metadata
-struct Metadata: Codable {
-    var category, toolType: String
-    var features, accessibility: [String]
+struct MeditationMetadata: Codable {
+    let category, toolType: String
+    let features, accessibility: [String]
 }
 
 // MARK: - State
-struct StateMeditation: Codable {
-    var duration: Int
-    var musicTrack: String
-    var enableSound, isRunning, isPaused: Bool
-    var remainingTime, sessions: Int
-    var currentPhase: String
+struct MeditationState: Codable {
+    let meditationType: String
+    let duration: Int
+    let backgroundMusic: String
+    let isRunning, isPaused: Bool
+    let remainingTime: Int
+    let language: String
+    let content: MeditationContent
+}
+
+// MARK: - Content
+struct MeditationContent: Codable {
+    let name, description: String
+    let steps: [String]
 }
