@@ -21,15 +21,15 @@ class AntiAnxietyViewModel {
         case someError
     }
     
-    func showExercise(musicTrack: String,
+    func showExercise(type: String,
                       duration: Int,
-                      enableSound: Bool) async throws {
+                      backgroundMusic: String) async throws {
         
         do{
             let result = try await meditationConfiguration.fetchResult_ofMeditation(
-                musicTrack: musicTrack,
+                type: type,
                 duration: duration,
-                enableSound: enableSound
+                backgroundMusic: backgroundMusic
             )
             
             self.meditation = [result]
@@ -42,14 +42,9 @@ class AntiAnxietyViewModel {
         }
     }
     
-    func toggleStart(for meditation: Meditation) {
-        guard let id = meditation.id else { return }
-        if let index = self.meditation.firstIndex(where: { $0.id == id }) {
-            self.meditation[index].data.state.isRunning.toggle()
-            self.meditation[index].data.state.enableSound = true
-            print("toggle :\(self.meditation[index].data.state.isRunning.toggle())")
-            print("index :\(index)")
-        }
-        print("start toggleStart")
+    func toggleStart(for item: Meditation) {
+       
+
+        print("vous venez de terminer un exercice d'anxiété")
     }
 }
