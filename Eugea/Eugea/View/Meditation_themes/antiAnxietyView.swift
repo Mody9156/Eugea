@@ -199,11 +199,9 @@ struct antiAnxietyView: View {
                                     Button {
                                         handleAction(action.type, meditation: meditation)
                                        
-                                        if isRunning {
                                             musicPlayerManager.playSong(
                                                 song: selectedSound.rawValue
                                             )
-                                        }
 //                                        antiAnxietyViewModel.toggleStart(for: meditation)
 
                                         
