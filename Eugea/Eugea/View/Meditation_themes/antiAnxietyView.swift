@@ -28,58 +28,72 @@ struct antiAnxietyView: View {
     var musicPlayerManager = MusicPlayerManager()
     
     var body: some View {
-        ZStack {
-            // MARK: - Background Gradient
-            LinearGradient(
-                colors: [Color.purple.opacity(0.4), Color.blue.opacity(0.3)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-            
-            ScrollView {
-                VStack(spacing: 24) {
-                    
-                    // MARK: - Header
-                    VStack(spacing: 8) {
-                        Image(systemName: "brain.head.profile")
-                            .font(.system(size: 40))
-                            .foregroundStyle(.white)
+        NavigationStack {
+            ZStack {
+                // MARK: - Background Gradient
+                LinearGradient(
+                    colors: [Color.purple.opacity(0.4), Color.blue.opacity(0.3)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+                
+                ScrollView {
+                    VStack(spacing: 24) {
                         
-                        Text("Anti-Anxiété")
-                            .font(.largeTitle.bold())
-                            .foregroundStyle(.white)
+                        // MARK: - Header
+                        VStack(spacing: 8) {
+                            Image(systemName: "brain.head.profile")
+                                .font(.system(size: 40))
+                                .foregroundStyle(.white)
+                            
+                            Text("Anti-Anxiété")
+                                .font(.largeTitle.bold())
+                                .foregroundStyle(.white)
+                            
+                            Text("Prenez un moment pour respirer")
+                                .font(.subheadline)
+                                .foregroundStyle(.white.opacity(0.8))
+                        }
+                        .padding(.top, 40)
                         
-                        Text("Prenez un moment pour respirer")
-                            .font(.subheadline)
-                            .foregroundStyle(.white.opacity(0.8))
+                        // MARK: - Meditations
+                        ForEach(antiAnxietyViewModel.meditation) { meditation in
+                            AntiAnxietyMeditationCard(
+                                meditation: meditation,
+                                selectedSound: $selectedSound,
+                                remainingTime: remainingTime,
+                                isRunning: isRunning,
+                                isPaused: isPaused,
+                                backgroundMusic: backgroundMusic,
+                                musicPlayerManager: musicPlayerManager,
+                                antiAnxietyViewModel: antiAnxietyViewModel,
+                                handleAction: handleAction
+                            )
+                        }
                     }
-                    .padding(.top, 40)
-                    
-                    // MARK: - Meditations
-                    ForEach(antiAnxietyViewModel.meditation) { meditation in
-                        AntiAnxietyMeditationCard(
-                            meditation: meditation,
-                            selectedSound: $selectedSound,
-                            remainingTime: remainingTime,
-                            isRunning: isRunning,
-                            isPaused: isPaused,
-                            backgroundMusic: backgroundMusic,
-                            musicPlayerManager: musicPlayerManager,
-                            antiAnxietyViewModel: antiAnxietyViewModel,
-                            handleAction: handleAction
-                        )
+                    .padding(.horizontal)
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                            .foregroundStyle(.red)
                     }
                 }
-                .padding(.horizontal)
+                
+                
             }
-        }
-        .task {
-            try? await antiAnxietyViewModel.showExercise(
-                type: "loving-kindness",
-                duration: 15,
-                backgroundMusic: "meditation-background-409198.mp3"
-            )
+            .task {
+                try? await antiAnxietyViewModel.showExercise(
+                    type: "loving-kindness",
+                    duration: 15,
+                    backgroundMusic: "meditation-background-409198.mp3"
+                )
+            }
         }
     }
     
