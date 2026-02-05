@@ -21,15 +21,15 @@ class AntiAnxietyViewModel {
         case someError
     }
     
-    func showExercise(musicTrack: String,
+    func showExercise(type: String,
                       duration: Int,
-                      enableSound: Bool) async throws {
+                      backgroundMusic: String) async throws {
         
         do{
             let result = try await meditationConfiguration.fetchResult_ofMeditation(
-                musicTrack: musicTrack,
+                type: type,
                 duration: duration,
-                enableSound: enableSound
+                backgroundMusic: backgroundMusic
             )
             
             self.meditation = [result]
