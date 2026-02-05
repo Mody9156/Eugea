@@ -9,6 +9,6 @@ import Foundation
 
 struct MeditationSession: Codable {
     var duration: Int
-    var musicTrack: String
-    var enableSound: Bool
+    var type: String
+    var backgroundMusic: String
 }

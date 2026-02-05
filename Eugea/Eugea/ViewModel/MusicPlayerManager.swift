@@ -15,12 +15,11 @@ class MusicPlayerManager {
     var isPlaying : Bool = false
     
     // L'URL de base récupérée depuis les scripts de l'API
-    private let audioBaseURL = "https://elysiatools.com/public/samples/mp3/"
-    
+     let audioBaseURL = "https://elysiatools.com/public/samples/mp3/"
     func playSong(song: String) {
         // 1. On construit l'URL complète (ex: base + "meditation-background-409198.mp3")
-        let fullURLString = audioBaseURL + song + ".mp3"
-        
+        let fullURLString = audioBaseURL + song
+//        let fullURLString = "https://elysiatools.com/public/samples/mp3/meditation-background-409198.mp3"
         print("🌐 Tentative de lecture : \(fullURLString)")
         
         guard let url = URL(string: fullURLString) else {
@@ -32,10 +31,12 @@ class MusicPlayerManager {
         if player == nil {
             player = AVPlayer(url: url)
             print("player == nil")
+            
         } else {
             // Permet de changer de morceau si on clique sur un autre
             let newItem = AVPlayerItem(url: url)
             player?.replaceCurrentItem(with: newItem)
+            player?.play()
             print("player != nil")
         }
         
