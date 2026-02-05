@@ -80,8 +80,8 @@ struct antiAnxietyView: View {
                     Button {
                         
                     } label: {
-                        Image(systemName: "square.and.arrow.up")
-                            .foregroundStyle(.red)
+                        Image(systemName: "plus")
+                            .foregroundStyle(.pink)
                     }
                 }
                 
