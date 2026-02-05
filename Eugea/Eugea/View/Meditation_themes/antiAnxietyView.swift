@@ -246,9 +246,9 @@ struct antiAnxietyView: View {
         }
         .task {
             try? await antiAnxietyViewModel.showExercise(
-                type: "Méditation de Bienveillance",
+                type: "loving-kindness",
                 duration: 15,
-                backgroundMusic: "Fond de Méditation"
+                backgroundMusic: "meditation-background-409198.mp3"
             )
         }
     }

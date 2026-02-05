@@ -32,9 +32,9 @@ class MeditationConfiguration {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let meditation = MeditationSession(
+            backgroundMusic:backgroundMusic,
             duration: duration,
-            meditationType: type,
-            backgroundMusic:backgroundMusic
+            meditationType: type
         )
         
         let data = try JSONEncoder().encode(meditation)
