@@ -125,16 +125,16 @@ private struct AntiAnxietyMeditationCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             
-            // MARK: - Music Picker
-            Text("Sélectionne un son de musique pour commencer")
-                .font(.headline)
-            
-            Picker("Sélectionne", selection: $selectedSound) {
-                ForEach(MinuteurDeMeditation.allCases) { sound in
-                    Text(sound.rawValue).tag(sound)
-                }
-            }
-            .pickerStyle(.menu)
+//            // MARK: - Music Picker
+//            Text("Sélectionne un son de musique pour commencer")
+//                .font(.headline)
+//            
+//            Picker("Sélectionne", selection: $selectedSound) {
+//                ForEach(MinuteurDeMeditation.allCases) { sound in
+//                    Text(sound.rawValue).tag(sound)
+//                }
+//            }
+//            .pickerStyle(.menu)
             
             
             // Title
