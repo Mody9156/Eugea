@@ -19,7 +19,7 @@ class MusicPlayerManager {
     
     func playSong(song: String) {
         // 1. On construit l'URL complète (ex: base + "meditation-background-409198.mp3")
-        let fullURLString = audioBaseURL + song
+        let fullURLString = audioBaseURL + song + "mp3"
         
         print("🌐 Tentative de lecture : \(fullURLString)")
         
