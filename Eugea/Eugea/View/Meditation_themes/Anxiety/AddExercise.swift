@@ -17,8 +17,15 @@ struct AddExercise: View {
             )
             .ignoresSafeArea()
             
-            VStack {
-                Text("Hello, World!")
+            VStack (spacing: 8){
+                // MARK: - Header
+                Image(systemName: "brain.head.profile")
+                    .font(.system(size: 40))
+                    .foregroundStyle(.white)
+                
+                Text("Anti-Anxiété")
+                    .font(.largeTitle.bold())
+                    .foregroundStyle(.white)
                 
                 Spacer()
                 
@@ -36,7 +43,7 @@ struct AddExercise: View {
             .padding()
             
             
-
+            
         }
     }
 }
