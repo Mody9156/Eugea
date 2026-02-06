@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Enum des sons de méditation
-enum MinuteurDeMeditation: String, CaseIterable, Identifiable {
+enum MeditationTimer: String, CaseIterable, Identifiable {
     case meditationBackground = "meditation-background-409198.mp3"
     case meditationMusic1 = "meditation-music-322801.mp3"
     case meditationMusic2 = "meditation-music-338902.mp3"
