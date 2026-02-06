@@ -16,7 +16,18 @@ struct AddExercise: View {
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
-            Text("Hello, World!")
+            
+            VStack {
+                Text("Hello, World!")
+                Button {
+                    
+                } label: {
+                    Text("Valider")
+                }
+            }
+            
+            
+
         }
     }
 }
