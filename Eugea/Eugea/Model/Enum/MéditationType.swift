@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+enum MéditationType : String, CaseIterable, Identifiable {
+    case MeditationBienVeillance = "Méditation de Bienveillance"
+    case MonitoringMonitoring = "Méditation de Monitoring Ouvert"
+    case MeditationBien = "Méditation d'attention focalisée"
+    
+    var id: String { rawValue }
+}

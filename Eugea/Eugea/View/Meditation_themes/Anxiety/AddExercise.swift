@@ -10,52 +10,113 @@ import SwiftUI
 struct AddExercise: View {
     @State private var backgroundMusic: String = ""
     @State private var type: String = ""
-    @State private var duration: String = ""
+    @State private var duration: Int = 10
     
     var body: some View {
         NavigationStack {
             ZStack {
+                
+                // MARK: - Background
                 LinearGradient(
-                    colors: [Color.purple.opacity(0.4), Color.blue.opacity(0.3)],
+                    colors: [
+                        Color.purple.opacity(0.4),
+                        Color.blue.opacity(0.3)
+                    ],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
                 .ignoresSafeArea()
                 
-                // MARK: - Header
-                VStack (spacing: 8){
+                VStack(spacing: 25) {
                     
-                    Image(systemName: "brain.head.profile")
-                        .font(.system(size: 40))
-                        .foregroundStyle(.white)
-                    
-                    Text("Anti-Anxiété")
-                        .font(.largeTitle.bold())
-                        .foregroundStyle(.white)
-                    
-                    Picker("Music",
-                           selection: $backgroundMusic
-                    ) {
-                            ForEach(MeditationTimer.allCases) { music in
-                                    Text(music.rawValue).tag(music)
-                        }
+                    // MARK: - Header
+                    VStack(spacing: 12) {
+                        Image(systemName: "brain.head.profile")
+                            .font(.system(size: 42))
+                            .foregroundStyle(.white)
+                            .padding()
+                            .background(.ultraThinMaterial)
+                            .clipShape(Circle())
+                        
+                        Text("Anti-Anxiété")
+                            .font(.largeTitle.bold())
+                            .foregroundStyle(.white)
                     }
-                    .foregroundStyle(backgroundMusic.isEmpty ? .gray: .primary)
-                    .pickerStyle(.navigationLink)
+                    .padding(.top, 30)
+                    
+                    
+                    // MARK: - Form Card
+                    VStack(spacing: 18) {
+                        
+                        // Music
+                        CustomPickerRow(
+                            title: "Musique",
+                            icon: "music.note",
+                            selection: $backgroundMusic
+                        )
+                        
+                        // Type
+                        CustomPickerRow(
+                            title: "Type",
+                            icon: "lotus",
+                            selection: $type
+                        )
+                        
+                        // Duration
+                        HStack {
+                            Label("Durée", systemImage: "timer")
+                                .foregroundStyle(.white.opacity(0.9))
+                            
+                            Spacer()
+                            
+                            TextField("10 min",
+                                      value: $duration,
+                                      formatter: NumberFormatter())
+                                .keyboardType(.numberPad)
+                                .multilineTextAlignment(.trailing)
+                                .foregroundStyle(.white)
+                        }
+                        .padding()
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                        
+                    }
+                    .padding()
+                    .background(.ultraThinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
+                    .shadow(color: .black.opacity(0.15),
+                            radius: 20,
+                            x: 0,
+                            y: 10)
+                    
                     
                     Spacer()
                     
+                    
+                    // MARK: - Validate Button
                     Button {
                         
                     } label: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 12)
-                                .frame(height: 50)
-                                .foregroundStyle(Color.indigo)
-                            Text("Valider")
-                                .foregroundStyle(.white)
+                        HStack {
+                            Image(systemName: "checkmark")
+                            Text("Valider la séance")
                                 .fontWeight(.bold)
                         }
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 55)
+                        .background(
+                            LinearGradient(
+                                colors: [.indigo, .purple],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                        .shadow(color: .indigo.opacity(0.4),
+                                radius: 12,
+                                x: 0,
+                                y: 6)
                     }
                 }
                 .padding()
@@ -63,6 +124,33 @@ struct AddExercise: View {
         }
     }
 }
+
+
+struct CustomPickerRow: View {
+    var title: String
+    var icon: String
+    @Binding var selection: String
+    
+    var body: some View {
+        HStack {
+            Label(title, systemImage: icon)
+                .foregroundStyle(.white.opacity(0.9))
+            
+            Spacer()
+            
+            Text(selection.isEmpty ? "Choisir" : selection)
+                .foregroundStyle(
+                    selection.isEmpty
+                    ? .white.opacity(0.5)
+                    : .white
+                )
+        }
+        .padding()
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 14))
+    }
+}
+
 
 #Preview {
     AddExercise()
