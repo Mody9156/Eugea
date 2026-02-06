@@ -22,7 +22,7 @@ struct antiAnxietyView: View {
     @State private var isRunning: Bool = false
     @State private var isPaused: Bool = false
     @State private var remainingTime: Int = 0
-    
+    @State private var activeNavigation : Bool = false
     @State private var selectedSound: MinuteurDeMeditation = .meditationBackground
     
     var musicPlayerManager = MusicPlayerManager()
@@ -77,6 +77,7 @@ struct antiAnxietyView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
+                    
                     Button {
                         
                     } label: {
@@ -84,6 +85,9 @@ struct antiAnxietyView: View {
                             .foregroundStyle(.red)
                             .font(.title)
                             .foregroundStyle(.red)
+                    }
+                    .navigationDestination(isPresented: $activeNavigation) {
+                        AddExercise()
                     }
                     
                 }
