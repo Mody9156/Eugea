@@ -9,7 +9,9 @@ import SwiftUI
 
 struct AddExercise: View {
     @State private var backgroundMusic: String = ""
-    
+    @State private var type: String = ""
+    @State private var duration: String = ""
+
     var body: some View {
         ZStack {
             LinearGradient(
