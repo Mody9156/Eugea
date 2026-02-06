@@ -19,6 +19,9 @@ struct AddExercise: View {
             
             VStack {
                 Text("Hello, World!")
+                
+                Spacer()
+                
                 Button {
                     
                 } label: {
