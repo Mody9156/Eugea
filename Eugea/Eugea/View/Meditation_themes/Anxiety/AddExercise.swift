@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct AddExercise: View {
+    @State private var backgroundMusic: String = ""
+    
     var body: some View {
         ZStack {
             LinearGradient(
@@ -27,6 +29,8 @@ struct AddExercise: View {
                     .font(.largeTitle.bold())
                     .foregroundStyle(.white)
                 
+//                MinuteurDeMeditation
+                
                 Spacer()
                 
                 Button {
@@ -35,8 +39,10 @@ struct AddExercise: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
                             .frame(height: 50)
+                            .foregroundStyle(Color.indigo)
                         Text("Valider")
                             .foregroundStyle(.white)
+                            .fontWeight(.bold)
                     }
                 }
             }
