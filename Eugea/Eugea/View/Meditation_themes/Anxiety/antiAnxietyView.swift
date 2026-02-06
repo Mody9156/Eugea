@@ -22,7 +22,7 @@ struct antiAnxietyView: View {
     @State private var isRunning: Bool = false
     @State private var isPaused: Bool = false
     @State private var remainingTime: Int = 0
-    @State private var activeNavigation : Bool = false
+    @State  var activeNavigation : Bool = false
     @State private var selectedSound: MinuteurDeMeditation = .meditationBackground
     
     var musicPlayerManager = MusicPlayerManager()
@@ -78,8 +78,9 @@ struct antiAnxietyView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     
+                 
                     Button {
-                        
+                        activeNavigation.toggle()
                     } label: {
                         Image(systemName: "plus")
                             .foregroundStyle(.red)

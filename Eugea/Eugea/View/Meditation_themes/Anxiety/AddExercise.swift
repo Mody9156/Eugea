@@ -9,7 +9,15 @@ import SwiftUI
 
 struct AddExercise: View {
     var body: some View {
-        Text("Hello, World!")
+        ZStack {
+            LinearGradient(
+                colors: [Color.purple.opacity(0.4), Color.blue.opacity(0.3)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+            Text("Hello, World!")
+        }
     }
 }
 
