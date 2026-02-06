@@ -32,9 +32,13 @@ struct AddExercise: View {
                     .foregroundStyle(.white)
                 
 //                MinuteurDeMeditation
-                Form {
-                    
+                Picker("Selct", selection: $backgroundMusic) {
+                    ForEach(MinuteurDeMeditation.allCases) { music in
+                        Text(music.rawValue).tag(music)
+                    }
                 }
+                .pickerStyle(.navigationLink)
+
                 
                 
                 Spacer()
