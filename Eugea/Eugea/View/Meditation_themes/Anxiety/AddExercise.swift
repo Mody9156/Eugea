@@ -28,6 +28,7 @@ struct AddExercise: View {
                     Text("Valider")
                 }
             }
+            .padding()
             
             
 
