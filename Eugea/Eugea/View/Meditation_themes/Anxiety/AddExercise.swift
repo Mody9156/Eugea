@@ -11,7 +11,7 @@ struct AddExercise: View {
     @State private var backgroundMusic: String = ""
     @State private var type: String = ""
     @State private var duration: Int = 10
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -52,14 +52,14 @@ struct AddExercise: View {
                         CustomPickerRow(
                             title: "Musique",
                             icon: "music.note",
-                            selection: $backgroundMusic
+                            selection: backgroundMusic
                         )
                         
                         // Type
                         CustomPickerRow(
                             title: "Type",
                             icon: "lotus",
-                            selection: $type
+                            selection: type
                         )
                         
                         // Duration
@@ -129,9 +129,10 @@ struct AddExercise: View {
 struct CustomPickerRow: View {
     var title: String
     var icon: String
-    @Binding var selection: String
+    @State var selection: String
     
     var body: some View {
+        
         HStack {
             Label(title, systemImage: icon)
                 .foregroundStyle(.gray)
