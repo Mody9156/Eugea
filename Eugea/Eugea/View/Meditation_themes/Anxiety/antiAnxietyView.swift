@@ -23,7 +23,7 @@ struct antiAnxietyView: View {
     @State private var isPaused: Bool = false
     @State private var remainingTime: Int = 0
     @State  var activeNavigation : Bool = false
-    @State private var selectedSound: MinuteurDeMeditation = .meditationBackground
+    @State private var selectedSound: MeditationTimer = .meditationBackground
     
     var musicPlayerManager = MusicPlayerManager()
     
@@ -130,7 +130,7 @@ struct antiAnxietyView: View {
 // MARK: - Carte pour chaque méditation
 private struct AntiAnxietyMeditationCard: View {
     let meditation: Meditation
-    @Binding var selectedSound: MinuteurDeMeditation
+    @Binding var selectedSound: MeditationTimer
     let remainingTime: Int
     let isRunning: Bool
     let isPaused: Bool
