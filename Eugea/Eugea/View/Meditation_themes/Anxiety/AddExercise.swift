@@ -65,16 +65,16 @@ struct AddExercise: View {
                         // Duration
                         HStack {
                             Label("Durée", systemImage: "timer")
-                                .foregroundStyle(.white.opacity(0.9))
+                                .foregroundStyle(.gray)
                             
                             Spacer()
                             
-                            TextField("10 min",
+                            TextField("",
                                       value: $duration,
                                       formatter: NumberFormatter())
                                 .keyboardType(.numberPad)
                                 .multilineTextAlignment(.trailing)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(.gray)
                         }
                         .padding()
                         .background(.ultraThinMaterial)
@@ -134,15 +134,14 @@ struct CustomPickerRow: View {
     var body: some View {
         HStack {
             Label(title, systemImage: icon)
-                .foregroundStyle(.white.opacity(0.9))
+                .foregroundStyle(.gray)
             
             Spacer()
             
             Text(selection.isEmpty ? "Choisir" : selection)
                 .foregroundStyle(
                     selection.isEmpty
-                    ? .white.opacity(0.5)
-                    : .white
+                    ? .gray : .gray
                 )
         }
         .padding()
