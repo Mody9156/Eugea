@@ -32,6 +32,10 @@ struct AddExercise: View {
                     .foregroundStyle(.white)
                 
 //                MinuteurDeMeditation
+                Form {
+                    
+                }
+                
                 
                 Spacer()
                 
