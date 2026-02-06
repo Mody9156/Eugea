@@ -25,7 +25,12 @@ struct AddExercise: View {
                 Button {
                     
                 } label: {
-                    Text("Valider")
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12)
+                            .frame(height: 50)
+                        Text("Valider")
+                            .foregroundStyle(.white)
+                    }
                 }
             }
             .padding()
