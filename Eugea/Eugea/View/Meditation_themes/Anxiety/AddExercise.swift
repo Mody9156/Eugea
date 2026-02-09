@@ -58,7 +58,7 @@ struct AddExercise: View {
                         // Type
                         CustomPickerRow(
                             title: "Type",
-                            icon: "lotus",
+                            icon: "leaf",
                             selection: type
                         )
                         
@@ -131,23 +131,44 @@ struct CustomPickerRow: View {
     var icon: String
     @State var selection: String
     
+    
     var body: some View {
+        let image = Image(systemName: icon)
         
         HStack {
-            Label(title, systemImage: icon)
-                .foregroundStyle(.gray)
-            
-            Spacer()
-            
-            Text(selection.isEmpty ? "Choisir" : selection)
-                .foregroundStyle(
-                    selection.isEmpty
-                    ? .gray : .gray
-                )
+            Picker("\(image) \(title)", selection: $selection) {
+               
+                if title == "Musique" {
+                    ForEach(
+                        MeditationTimer.allCases
+                    ) { index in
+                        
+                        Text( index.rawValue)
+                                .tag(index)
+                    }
+                }else {
+                    ForEach(
+                        MeditationType.allCases
+                    ) { index in
+                        
+                            Text(index.rawValue)
+                                .tag(index)
+                        
+                    }
+                }
+                
+            }
+            .foregroundStyle(
+                selection.isEmpty
+                ? .gray : .gray
+            )
+            .pickerStyle(.navigationLink)
         }
         .padding()
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 14))
+        
+       
     }
 }
 
