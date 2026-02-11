@@ -96,7 +96,7 @@ struct AddExercise: View {
                     
                     // MARK: - Validate Button
                     Button {
-                        
+                        dismiss()
                     } label: {
                         HStack {
                             Image(systemName: "checkmark")
