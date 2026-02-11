@@ -10,7 +10,7 @@ import SwiftUI
 struct AddExercise: View {
     @State private var backgroundMusic: String = ""
     @State private var type: String = ""
-    @State private var duration: Int = 10
+    @State private var duration: Int = 0
 
     var body: some View {
         NavigationStack {
@@ -124,7 +124,6 @@ struct AddExercise: View {
         }
     }
 }
-
 
 struct CustomPickerRow: View {
     var title: String
