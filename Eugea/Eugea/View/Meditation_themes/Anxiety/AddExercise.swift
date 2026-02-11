@@ -11,7 +11,8 @@ struct AddExercise: View {
     @State private var backgroundMusic: String = ""
     @State private var type: String = ""
     @State private var duration: Int = 0
-
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         NavigationStack {
             ZStack {
