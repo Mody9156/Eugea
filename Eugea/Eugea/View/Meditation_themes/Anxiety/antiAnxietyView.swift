@@ -12,13 +12,12 @@ import SwiftUI
 // MARK: - Vue principale
 struct antiAnxietyView: View {
     
-    var antiAnxietyViewModel: AntiAnxietyViewModel
+     var antiAnxietyViewModel: AntiAnxietyViewModel
     
     // MARK: - Local State
     @State private var backgroundMusic: String = ""
     @State private var duration: Int = 0
-    @State private var meditationType: String = "Méditation de Bienveillance"
-    @State private var type: String = ""
+    @State private var meditationType: String = ""
     @State private var isRunning: Bool = false
     @State private var isPaused: Bool = false
     @State private var remainingTime: Int = 0
@@ -88,7 +87,7 @@ struct antiAnxietyView: View {
                             .foregroundStyle(.red)
                     }
                     .navigationDestination(isPresented: $activeNavigation) {
-                        AddExercise(backgroundMusic: $backgroundMusic, type: $type, duration: $duration)
+                        AddExercise(backgroundMusic: $backgroundMusic, type: $meditationType, duration: $duration)
                     }
                     
                 }
@@ -97,7 +96,7 @@ struct antiAnxietyView: View {
             }
             .task {
                 try? await antiAnxietyViewModel.showExercise(
-                    type: type,
+                    type: meditationType,
                     duration: duration,
                     backgroundMusic: backgroundMusic
                 )
