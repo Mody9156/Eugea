@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct AddExercise: View {
-    @Binding private var backgroundMusic: String 
-    @Binding private var type: String
-    @Binding private var duration: Int
+    @Binding   var backgroundMusic: String
+    @Binding   var type: String
+    @Binding   var duration: Int
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -174,5 +174,8 @@ struct CustomPickerRow: View {
 
 
 #Preview {
-    AddExercise()
+    @Previewable @State var backgroundMusic: String = ""
+    @Previewable @State var type: String = ""
+    @Previewable @State var duration: Int = 0
+    AddExercise(backgroundMusic: $backgroundMusic, type: $type, duration: $duration)
 }

@@ -15,10 +15,10 @@ struct antiAnxietyView: View {
     var antiAnxietyViewModel: AntiAnxietyViewModel
     
     // MARK: - Local State
-    @State private var backgroundMusic: String = "meditation-background-409198.mp3"
-    @State private var duration: Int = 15
+    @State private var backgroundMusic: String = ""
+    @State private var duration: Int = 0
     @State private var meditationType: String = "Méditation de Bienveillance"
-    
+    @State private var type: String = ""
     @State private var isRunning: Bool = false
     @State private var isPaused: Bool = false
     @State private var remainingTime: Int = 0
@@ -88,7 +88,7 @@ struct antiAnxietyView: View {
                             .foregroundStyle(.red)
                     }
                     .navigationDestination(isPresented: $activeNavigation) {
-                        AddExercise()
+                        AddExercise(backgroundMusic: $backgroundMusic, type: $type, duration: $duration)
                     }
                     
                 }
