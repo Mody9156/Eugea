@@ -97,9 +97,9 @@ struct antiAnxietyView: View {
             }
             .task {
                 try? await antiAnxietyViewModel.showExercise(
-                    type: "loving-kindness",
-                    duration: 15,
-                    backgroundMusic: "meditation-background-409198.mp3"
+                    type: type,
+                    duration: duration,
+                    backgroundMusic: backgroundMusic
                 )
             }
         }
