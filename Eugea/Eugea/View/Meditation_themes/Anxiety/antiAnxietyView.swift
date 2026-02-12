@@ -25,7 +25,7 @@ struct antiAnxietyView: View {
     @State private var selectedSound: MeditationTimer = .meditationBackground
     
     var musicPlayerManager = MusicPlayerManager()
-    
+   
     var body: some View {
         NavigationStack {
             ZStack {
@@ -89,10 +89,7 @@ struct antiAnxietyView: View {
                     .navigationDestination(isPresented: $activeNavigation) {
                         AddExercise(backgroundMusic: $backgroundMusic, type: $meditationType, duration: $duration)
                     }
-                    
                 }
-                
-                
             }
             .task {
                 try? await antiAnxietyViewModel.showExercise(

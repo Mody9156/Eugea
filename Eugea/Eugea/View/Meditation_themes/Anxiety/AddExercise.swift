@@ -4,20 +4,37 @@
 //
 //  Created by Modibo on 06/02/2026.
 //
-
 import SwiftUI
 
 struct AddExercise: View {
+    
     @Binding var backgroundMusic: String
     @Binding var type: String
     @Binding var duration: Int
+    
     @Environment(\.dismiss) var dismiss
-   
+    
+    @AppStorage("backgroundMusic") var backgroundMusicSetting: String = ""
+    @AppStorage("type") var typeSetting: String = ""
+    @AppStorage("duration") var durationSetting: Int = 0
+    
+    // Formatter optimisé
+    private let formatter: NumberFormatter = {
+        let f = NumberFormatter()
+        f.numberStyle = .none
+        return f
+    }()
+    
+    var isFormValid: Bool {
+        !backgroundMusic.isEmpty &&
+        !type.isEmpty &&
+        duration != 0
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 
-                // MARK: - Background
                 LinearGradient(
                     colors: [
                         Color.purple.opacity(0.4),
@@ -30,7 +47,7 @@ struct AddExercise: View {
                 
                 VStack(spacing: 25) {
                     
-                    // MARK: - Header
+                    // Header
                     VStack(spacing: 12) {
                         Image(systemName: "brain.head.profile")
                             .font(.system(size: 42))
@@ -46,36 +63,34 @@ struct AddExercise: View {
                     .padding(.top, 30)
                     
                     
-                    // MARK: - Form Card
+                    // Form
                     VStack(spacing: 18) {
                         
-                        // Music
                         CustomPickerRow(
                             title: "Musique",
                             icon: "music.note",
-                            selection: backgroundMusic
+                            selection: $backgroundMusic
                         )
                         
-                        // Type
                         CustomPickerRow(
                             title: "Type",
                             icon: "leaf",
-                            selection: type
+                            selection: $type
                         )
                         
-                        // Duration
                         HStack {
                             Label("Durée", systemImage: "timer")
                                 .foregroundStyle(.gray)
                             
                             Spacer()
                             
-                            TextField("",
-                                      value: $duration,
-                                      formatter: NumberFormatter())
-                                .keyboardType(.numberPad)
-                                .multilineTextAlignment(.trailing)
-                                .foregroundStyle(.gray)
+                            TextField(
+                                "0",
+                                value: $duration,
+                                formatter: formatter
+                            )
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.trailing)
                         }
                         .padding()
                         .background(.ultraThinMaterial)
@@ -92,11 +107,12 @@ struct AddExercise: View {
                     
                     Spacer()
                     
-                    // MARK: - Validate Button
+                    // Button
                     Button {
-                      let _ =  MeditationSession(backgroundMusic: backgroundMusic, duration: duration, meditationType: type)
-                        
-                        if !backgroundMusic.isEmpty && !type.isEmpty && duration != 0 {
+                        if isFormValid {
+                            backgroundMusicSetting = backgroundMusic
+                            typeSetting = type
+                            durationSetting = duration
                             dismiss()
                         }
                     } label: {
@@ -121,59 +137,47 @@ struct AddExercise: View {
                                 x: 0,
                                 y: 6)
                     }
+                    .disabled(!isFormValid)
+                    .opacity(isFormValid ? 1 : 0.5)
                 }
                 .padding()
             }
         }
-        
     }
 }
+
 
 struct CustomPickerRow: View {
     var title: String
     var icon: String
-    @State var selection: String
+    @Binding var selection: String
     
     var body: some View {
-        let image = Image(systemName: icon)
-        
         HStack {
-            Picker("\(image) \(title)", selection: $selection) {
-               
+            Picker(selection: $selection) {
+                
                 if title == "Musique" {
-                    ForEach(
-                        MeditationTimer.allCases
-                    ) { index in
-                        
-                        Text( index.rawValue)
-                                .tag(index)
+                    ForEach(MeditationTimer.allCases) { item in
+                        Text(item.rawValue)
+                            .tag(item.rawValue)
                     }
-                }else {
-                    ForEach(
-                        MeditationType.allCases
-                    ) { index in
-                        
-                            Text(index.rawValue)
-                                .tag(index)
-                        
+                } else {
+                    ForEach(MeditationType.allCases) { item in
+                        Text(item.rawValue)
+                            .tag(item.rawValue)
                     }
                 }
                 
+            } label: {
+                Label(title, systemImage: icon)
             }
-            .foregroundStyle(
-                selection.isEmpty
-                ? .gray : .gray
-            )
             .pickerStyle(.navigationLink)
         }
         .padding()
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 14))
-        
-       
     }
 }
-
 
 #Preview {
     @Previewable @State var backgroundMusic: String = ""
