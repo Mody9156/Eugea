@@ -7,10 +7,9 @@
 import SwiftUI
 
 struct AddExercise: View {
-    
-    @Binding var backgroundMusic: String
-    @Binding var type: String
-    @Binding var duration: Int
+    @State var backgroundMusic: String = ""
+    @State var type: String = ""
+    @State var duration: Int = 0
     
     @Environment(\.dismiss) var dismiss
     
@@ -110,9 +109,11 @@ struct AddExercise: View {
                     // Button
                     Button {
                         if isFormValid {
-                            backgroundMusicSetting = backgroundMusic
-                            typeSetting = type
-                            durationSetting = duration
+                            MeditationSession(
+                                backgroundMusic: backgroundMusic,
+                                duration: duration,
+                                meditationType: type
+                            )
                             dismiss()
                         }
                     } label: {
