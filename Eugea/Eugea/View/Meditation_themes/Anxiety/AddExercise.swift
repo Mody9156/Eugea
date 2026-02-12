@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct AddExercise: View {
-    @Binding   var backgroundMusic: String
-    @Binding   var type: String
-    @Binding   var duration: Int
+    @Binding var backgroundMusic: String
+    @Binding var type: String
+    @Binding var duration: Int
     @Environment(\.dismiss) var dismiss
-    
+   
     var body: some View {
         NavigationStack {
             ZStack {
@@ -90,13 +90,15 @@ struct AddExercise: View {
                             x: 0,
                             y: 10)
                     
-                    
                     Spacer()
-                    
                     
                     // MARK: - Validate Button
                     Button {
-                        dismiss()
+                      let _ =  MeditationSession(backgroundMusic: backgroundMusic, duration: duration, meditationType: type)
+                        
+                        if !backgroundMusic.isEmpty && !type.isEmpty && duration != 0 {
+                            dismiss()
+                        }
                     } label: {
                         HStack {
                             Image(systemName: "checkmark")
@@ -123,6 +125,7 @@ struct AddExercise: View {
                 .padding()
             }
         }
+        
     }
 }
 
@@ -130,7 +133,6 @@ struct CustomPickerRow: View {
     var title: String
     var icon: String
     @State var selection: String
-    
     
     var body: some View {
         let image = Image(systemName: icon)
