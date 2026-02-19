@@ -15,14 +15,14 @@ struct antiAnxietyView: View {
      var antiAnxietyViewModel: AntiAnxietyViewModel
     
     // MARK: - Local State
-    @State private var backgroundMusic: String = ""
-    @State private var duration: Int = 0
-    @State private var meditationType: String = ""
-    @State private var isRunning: Bool = false
-    @State private var isPaused: Bool = false
-    @State private var remainingTime: Int = 0
+    @State var backgroundMusic: String = ""
+    @State var duration: Int = 0
+    @State  var meditationType: String = ""
+    @State  var isRunning: Bool = false
+    @State  var isPaused: Bool = false
+    @State  var remainingTime: Int = 0
     @State  var activeNavigation : Bool = false
-    @State private var selectedSound: MeditationTimer = .meditationBackground
+    @State  var selectedSound: MeditationTimer = .meditationBackground
     
     var musicPlayerManager = MusicPlayerManager()
 //    "var meditationsession : MeditationSession {
@@ -92,7 +92,7 @@ struct antiAnxietyView: View {
                             .foregroundStyle(.red)
                     }
                     .navigationDestination(isPresented: $activeNavigation) {
-                        AddExercise()
+                        AddExercise(backgroundMusic: $backgroundMusic, type: $meditationType, duration: $duration)
                     }
                 }
             }

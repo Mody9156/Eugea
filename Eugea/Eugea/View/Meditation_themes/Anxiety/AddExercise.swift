@@ -7,9 +7,9 @@
 import SwiftUI
 
 struct AddExercise: View {
-    @State var backgroundMusic: String = ""
-    @State var type: String = ""
-    @State var duration: Int = 0
+    @Binding var backgroundMusic: String 
+    @Binding var type: String
+    @Binding var duration: Int
     @Environment(\.dismiss) var dismiss
     @AppStorage("backgroundMusic") var backgroundMusicSetting: String = ""
     @AppStorage("type") var typeSetting: String = ""
