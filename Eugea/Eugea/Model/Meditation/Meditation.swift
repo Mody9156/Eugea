@@ -19,7 +19,7 @@ struct DataClass: Codable {
     let result: String
     let interactive: Bool
     let state: MeditationState
-    let components: [Component]
+    let components: [MeditationComponent]
     let actions: [Action]
     let styles, scripts: String
     let metadata: MeditationMetadata
@@ -32,7 +32,7 @@ struct Action: Codable, Hashable {
 }
 
 // MARK: - Component
-struct Component: Codable {
+struct MeditationComponent: Codable {
     let type, id: String
     let config: MeditationConfig
 }

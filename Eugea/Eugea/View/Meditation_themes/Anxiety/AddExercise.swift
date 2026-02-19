@@ -10,9 +10,7 @@ struct AddExercise: View {
     @State var backgroundMusic: String = ""
     @State var type: String = ""
     @State var duration: Int = 0
-    
     @Environment(\.dismiss) var dismiss
-    
     @AppStorage("backgroundMusic") var backgroundMusicSetting: String = ""
     @AppStorage("type") var typeSetting: String = ""
     @AppStorage("duration") var durationSetting: Int = 0
