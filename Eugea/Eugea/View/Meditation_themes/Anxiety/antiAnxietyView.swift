@@ -82,19 +82,21 @@ struct antiAnxietyView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     
-                 
-                    Button {
-                        activeNavigation.toggle()
+                    NavigationLink {
+                        AddExercise(backgroundMusic: $backgroundMusic, type: $meditationType, duration: $duration)
                     } label: {
-                        Image(systemName: "plus")
-                            .foregroundStyle(.red)
-                            .font(.title)
-                            .foregroundStyle(.red)
+                        Button {
+                            activeNavigation.toggle()
+                        } label: {
+                            Image(systemName: "plus")
+                                .foregroundStyle(.red)
+                                .font(.title)
+                                .foregroundStyle(.red)
+                        }
                     }
+
+                   
                 }
-            }
-            .navigationDestination(isPresented: $activeNavigation) {
-                AddExercise(backgroundMusic: $backgroundMusic, type: $meditationType, duration: $duration)
             }
             .task {
                 try? await antiAnxietyViewModel.showExercise(
