@@ -85,19 +85,25 @@ struct antiAnxietyView: View {
                     NavigationLink {
                         AddExercise(backgroundMusic: $backgroundMusic, type: $meditationType, duration: $duration)
                     } label: {
-                        Button {
-                            activeNavigation.toggle()
-                        } label: {
-                            Image(systemName: "plus")
-                                .foregroundStyle(.red)
-                                .font(.title)
-                                .foregroundStyle(.red)
-                        }
+                        Image(systemName: "plus")
+                            .foregroundStyle(.red)
+                            .font(.title)
+                            .foregroundStyle(.red)
                     }
 
-                   
+
+//                    Button {
+//                        activeNavigation.toggle()
+//                    } label: {
+//                        Image(systemName: "plus")
+//                            .foregroundStyle(.red)
+//                            .font(.title)
+//                            .foregroundStyle(.red)
+//                    }
+                
                 }
             }
+           
             .task {
                 try? await antiAnxietyViewModel.showExercise(
                     type: meditationType,

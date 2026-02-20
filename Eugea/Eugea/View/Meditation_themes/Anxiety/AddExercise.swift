@@ -112,7 +112,7 @@ struct AddExercise: View {
                                 duration: duration,
                                 meditationType: type
                             )
-//                            dismiss()
+                            dismiss()
                         }
                     } label: {
                         HStack {
