@@ -11,9 +11,6 @@ struct AddExercise: View {
     @Binding var type: String
     @Binding var duration: Int
     @Environment(\.dismiss) var dismiss
-    @AppStorage("backgroundMusic") var backgroundMusicSetting: String = ""
-    @AppStorage("type") var typeSetting: String = ""
-    @AppStorage("duration") var durationSetting: Int = 0
     
     // Formatter optimisé
     private let formatter: NumberFormatter = {
@@ -58,7 +55,6 @@ struct AddExercise: View {
                             .foregroundStyle(.white)
                     }
                     .padding(.top, 30)
-                    
                     
                     // Form
                     VStack(spacing: 18) {
@@ -107,12 +103,12 @@ struct AddExercise: View {
                     // Button
                     Button {
                         if isFormValid {
-                            MeditationSession(
-                                backgroundMusic: backgroundMusic,
-                                duration: duration,
-                                meditationType: type
-                            )
+                  
+                            print("backgroundMusic: \(backgroundMusic)")
+                            print("type: \(type)")
+                            print("duration: \(duration)")
                             dismiss()
+                            
                         }
                     } label: {
                         HStack {
@@ -145,7 +141,6 @@ struct AddExercise: View {
     }
 }
 
-
 struct CustomPickerRow: View {
     var title: String
     var icon: String
@@ -158,12 +153,12 @@ struct CustomPickerRow: View {
                 if title == "Musique" {
                     ForEach(MeditationTimer.allCases) { item in
                         Text(item.rawValue)
-                            .tag(item.rawValue)
+                            .tag(item)
                     }
                 } else {
                     ForEach(MeditationType.allCases) { item in
                         Text(item.rawValue)
-                            .tag(item.rawValue)
+                            .tag(item)
                     }
                 }
                 

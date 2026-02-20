@@ -15,7 +15,8 @@ struct Meditation: Codable, Identifiable{
 }
 
 // MARK: - DataClass
-struct DataClass: Codable {
+struct DataClass: Codable, Identifiable {
+    let id = UUID()
     let result: String
     let interactive: Bool
     let state: MeditationState

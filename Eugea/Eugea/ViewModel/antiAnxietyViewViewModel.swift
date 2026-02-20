@@ -11,7 +11,7 @@ import Observation
 @Observable
 class AntiAnxietyViewModel {
     let meditationConfiguration: MeditationConfiguration
-    var meditation : [Meditation] = []
+    var meditation : [DataClass] = []
     
     init(meditationConfiguration: MeditationConfiguration = MeditationConfiguration()) {
         self.meditationConfiguration = meditationConfiguration
@@ -42,7 +42,7 @@ class AntiAnxietyViewModel {
         }
     }
     
-    func toggleStart(for item: Meditation) {
+    func toggleStart(for item: DataClass) {
        
 
         print("vous venez de terminer un exercice d'anxiété")
