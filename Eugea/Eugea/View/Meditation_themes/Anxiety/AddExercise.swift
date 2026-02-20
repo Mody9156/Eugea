@@ -112,7 +112,7 @@ struct AddExercise: View {
                                 duration: duration,
                                 meditationType: type
                             )
-                            dismiss()
+//                            dismiss()
                         }
                     } label: {
                         HStack {
@@ -158,12 +158,12 @@ struct CustomPickerRow: View {
                 if title == "Musique" {
                     ForEach(MeditationTimer.allCases) { item in
                         Text(item.rawValue)
-                            .tag(item.rawValue)
+                            .tag(item)
                     }
                 } else {
                     ForEach(MeditationType.allCases) { item in
                         Text(item.rawValue)
-                            .tag(item.rawValue)
+                            .tag(item)
                     }
                 }
                 
