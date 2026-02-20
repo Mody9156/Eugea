@@ -145,7 +145,6 @@ struct AddExercise: View {
     }
 }
 
-
 struct CustomPickerRow: View {
     var title: String
     var icon: String
