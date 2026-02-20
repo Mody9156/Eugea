@@ -18,7 +18,7 @@ struct antiAnxietyView: View {
     @State  var isRunning: Bool = false
     @State  var isPaused: Bool = false
     @State  var remainingTime: Int = 0
-    @State  var selectedSound: MeditationTimer = .meditationBackground
+    @State  var selectedSound: MeditationTimer? = nil
     var musicPlayerManager = MusicPlayerManager()
 
     
@@ -71,7 +71,7 @@ struct antiAnxietyView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItem(placement: .topBarTrailing) {
                     
                     NavigationLink {
                         AddExercise(backgroundMusic: $backgroundMusic, type: $meditationType, duration: $duration)
@@ -81,11 +81,8 @@ struct antiAnxietyView: View {
                             .font(.title)
                             .foregroundStyle(.red)
                     }
-
-                
                 }
             }
-           
             .task {
                 try? await antiAnxietyViewModel.showExercise(
                     type: meditationType,
@@ -97,12 +94,12 @@ struct antiAnxietyView: View {
     }
     
     // MARK: - Action Handler
-    private func handleAction(_ type: String, meditation: Meditation) {
+    private func handleAction(_ type: String, meditation: DataClass) {
         switch type {
         case "play":
             isRunning = true
             isPaused = false
-            remainingTime = meditation.data.state.duration * 60
+            remainingTime = meditation.state.duration * 60
             
         case "pause":
             isPaused = true
@@ -110,7 +107,7 @@ struct antiAnxietyView: View {
         case "stop":
             isRunning = false
             isPaused = false
-            remainingTime = meditation.data.state.duration * 60
+            remainingTime = meditation.state.duration * 60
             
         default:
             break
@@ -120,15 +117,15 @@ struct antiAnxietyView: View {
 
 // MARK: - Carte pour chaque méditation
 private struct AntiAnxietyMeditationCard: View {
-    let meditation: Meditation
-    @Binding var selectedSound: MeditationTimer
+    let meditation: DataClass
+    @Binding var selectedSound: MeditationTimer?
     let remainingTime: Int
     let isRunning: Bool
     let isPaused: Bool
     let backgroundMusic: String
     let musicPlayerManager: MusicPlayerManager
     let antiAnxietyViewModel: AntiAnxietyViewModel
-    let handleAction: (String, Meditation) -> Void
+    let handleAction: (String, DataClass) -> Void
     
     @State private var localRemainingTime: Int = 0
     @State private var localIsRunning: Bool = false
@@ -138,11 +135,11 @@ private struct AntiAnxietyMeditationCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             // Title
-            Text(meditation.data.state.content.name)
+            Text(meditation.state.content.name)
                 .font(.title2.bold())
             
             // Description
-            Text(meditation.data.state.content.description)
+            Text(meditation.state.content.description)
                 .font(.body)
                 .foregroundStyle(.secondary)
             
@@ -151,7 +148,7 @@ private struct AntiAnxietyMeditationCard: View {
             // MARK: - Steps (from components text)
             VStack(alignment: .leading, spacing: 10) {
                 
-                ForEach(meditation.data.state.content.steps, id: \.self) { step in
+                ForEach(meditation.state.content.steps, id: \.self) { step in
                     HStack(alignment: .top) {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundStyle(.purple)
@@ -165,7 +162,7 @@ private struct AntiAnxietyMeditationCard: View {
             Divider()
             
             // MARK: - Dynamic Components
-            ForEach(meditation.data.components, id: \.id) { component in
+            ForEach(meditation.components, id: \.id) { component in
                 switch component.type {
                     
                 case "timer":
@@ -212,28 +209,28 @@ private struct AntiAnxietyMeditationCard: View {
                 Spacer()
                 
                 Label(
-                    "\(meditation.data.state.duration) min",
+                    "\(meditation.state.duration) min",
                     systemImage: "clock"
                 )
             }
             .onAppear {
-                localRemainingTime = meditation.data.state.remainingTime
-                localIsRunning = meditation.data.state.isRunning
-                localIsPaused = meditation.data.state.isPaused
-                localBackgroundMusic = meditation.data.state.backgroundMusic
+                localRemainingTime = meditation.state.remainingTime
+                localIsRunning = meditation.state.isRunning
+                localIsPaused = meditation.state.isPaused
+                localBackgroundMusic = meditation.state.backgroundMusic
             }
             
             HStack {
                 
                 Spacer()
                 
-                Text("🌍 \(meditation.data.metadata.category.uppercased())")
+                Text("🌍 \(meditation.metadata.category.uppercased())")
                     .font(.caption)
             }
             
             // MARK: - Background music
             Label(
-                meditation.data.state.backgroundMusic,
+                meditation.state.backgroundMusic,
                 systemImage: "music.note"
             )
             .font(.caption)
@@ -243,14 +240,14 @@ private struct AntiAnxietyMeditationCard: View {
             
             // MARK: - Dynamic Actions
             HStack {
-                ForEach(meditation.data.actions, id: \.id) { action in
+                ForEach(meditation.actions, id: \.id) { action in
                     Button {
                         handleAction(action.type, meditation)
                         
                         antiAnxietyViewModel.toggleStart(for: meditation)
                         
                         musicPlayerManager.playSong(
-                            song: selectedSound.rawValue
+                            song: selectedSound?.rawValue ?? ""
                         )
                     } label: {
                         Label(action.label, systemImage: action.icon)
@@ -266,7 +263,7 @@ private struct AntiAnxietyMeditationCard: View {
                 Text("Fonctionnalités")
                     .font(.caption.bold())
                 
-                ForEach(meditation.data.metadata.features, id: \.self) {
+                ForEach(meditation.metadata.features, id: \.self) {
                     Text("• \($0)")
                         .font(.caption)
                 }
@@ -275,7 +272,7 @@ private struct AntiAnxietyMeditationCard: View {
                     .font(.caption.bold())
                     .padding(.top, 4)
                 
-                ForEach(meditation.data.metadata.accessibility, id: \.self) {
+                ForEach(meditation.metadata.accessibility, id: \.self) {
                     Text("• \($0)")
                         .font(.caption)
                 }
