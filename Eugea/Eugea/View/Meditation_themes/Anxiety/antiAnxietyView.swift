@@ -7,13 +7,10 @@
 
 import SwiftUI
 
-
-
 // MARK: - Vue principale
 struct antiAnxietyView: View {
     
-     var antiAnxietyViewModel: AntiAnxietyViewModel
-    
+    var antiAnxietyViewModel: AntiAnxietyViewModel
     // MARK: - Local State
     @State var backgroundMusic: String = ""
     @State var duration: Int = 0
@@ -22,13 +19,8 @@ struct antiAnxietyView: View {
     @State  var isPaused: Bool = false
     @State  var remainingTime: Int = 0
     @State  var selectedSound: MeditationTimer = .meditationBackground
-    
     var musicPlayerManager = MusicPlayerManager()
-//    "var meditationsession : MeditationSession {
-//        ForEach(MeditationSession,id: \.self) { index in
-//            Text()
-//        }
-//    }"
+
     
     var body: some View {
         NavigationStack {
