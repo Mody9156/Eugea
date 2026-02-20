@@ -91,10 +91,10 @@ struct antiAnxietyView: View {
                             .font(.title)
                             .foregroundStyle(.red)
                     }
-                    .navigationDestination(isPresented: $activeNavigation) {
-                        AddExercise(backgroundMusic: $backgroundMusic, type: $meditationType, duration: $duration)
-                    }
                 }
+            }
+            .navigationDestination(isPresented: $activeNavigation) {
+                AddExercise(backgroundMusic: $backgroundMusic, type: $meditationType, duration: $duration)
             }
             .task {
                 try? await antiAnxietyViewModel.showExercise(
